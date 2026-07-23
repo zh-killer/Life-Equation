@@ -1,0 +1,29 @@
+# Build output (除了 JAR)
+target/classes/
+target/generated-sources/
+target/generated-test-sources/
+target/maven-status/
+target/test-classes/
+target/surefire-reports/
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Uploads (本地开发文件，不打包进镜像)
+uploads/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 文档
+*.md
+docs/

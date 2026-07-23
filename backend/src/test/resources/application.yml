@@ -1,0 +1,65 @@
+spring:
+  # H2 内存数据库 — 用于 Mapper 层测试替代 MySQL
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+  h2:
+    console:
+      enabled: true
+
+  # 测试环境 Redis 禁用自动配置，由 TestConfig 提供 mock
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+
+  # Jackson 配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+# MyBatis-Plus 测试配置（覆盖主配置中的逻辑删除）
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      # 测试环境关闭逻辑删除（H2 兼容性更好）
+      logic-delete-field: ""
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+
+# JWT 测试配置
+jwt:
+  secret: test-secret-key-for-unit-testing-purposes
+  expiration: 86400000
+
+# AI 服务测试配置（mock, 不实际调用）
+deepseek:
+  api:
+    key: test-key
+    url: http://localhost/mock/deepseek
+    model: deepseek-chat
+
+zhipuai:
+  api:
+    key: test-key
+    url: http://localhost/mock/zhipu
+    model: glm-4-flash
+
+# 文件上传
+app:
+  base-url: http://localhost:8888
+
+file:
+  upload:
+    path: ./uploads-test

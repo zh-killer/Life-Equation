@@ -1,0 +1,51 @@
+# ======================
+# 通用
+# ======================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.bak
+
+# ======================
+# IDE
+# ======================
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# ======================
+# 后端 (Spring Boot / Maven)
+# ======================
+backend/target/
+backend/uploads/
+backend/*.log
+!backend/src/
+
+# ======================
+# Web 前端 (Vue3 / Vite)
+# ======================
+web/node_modules/
+web/dist/
+web/git/
+
+# ======================
+# 小程序 (Uni-app / Vite)
+# ======================
+mini/node_modules/
+mini/dist/
+
+# ======================
+# 环境变量 / 密钥
+# ======================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+application-local.yml
+application-prod.yml

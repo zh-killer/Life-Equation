@@ -1,0 +1,102 @@
+# ============================================================
+# 生命方程式 - Docker Compose 编排
+# 启动: docker compose up -d
+# 查看: docker compose ps
+# 停止: docker compose down
+# ============================================================
+# 敏感配置通过 .env 文件或环境变量注入。
+# 首次使用请复制 .env.example 为 .env 并修改其中的值。
+# ============================================================
+
+services:
+  # --- MySQL 数据库 ---
+  mysql:
+    image: mysql:8.0
+    container_name: life-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-123456}
+      MYSQL_DATABASE: life_equation
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - life-net
+
+  # --- Redis 缓存 ---
+  redis:
+    image: redis:7-alpine
+    container_name: life-redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-123456}
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - life-net
+
+  # --- 后端 Spring Boot ---
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: life-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads-data:/app/uploads
+    environment:
+      # 数据库 & Redis（与上方服务一致）
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-123456}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-123456}
+      # JWT
+      JWT_SECRET: ${JWT_SECRET:-life-equation-jwt-secret}
+      # AI API Keys
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      ZHIPUAI_API_KEY: ${ZHIPUAI_API_KEY:-}
+      # Spring profile
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - life-net
+
+  # --- 前端 Vue + Nginx ---
+  frontend:
+    build:
+      context: ../life_eqation
+      dockerfile: Dockerfile
+    container_name: life-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - life-net
+
+volumes:
+  mysql-data:
+  redis-data:
+  uploads-data:
+
+networks:
+  life-net:
+    driver: bridge

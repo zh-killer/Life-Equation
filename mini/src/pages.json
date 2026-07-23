@@ -1,0 +1,157 @@
+{
+  "pages": [
+    {
+      "path": "pages/login/login",
+      "style": { "navigationBarTitleText": "登录", "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/detail/hospital",
+      "style": { "navigationBarTitleText": "医院详情" }
+    },
+    {
+      "path": "pages/detail/doctor",
+      "style": { "navigationBarTitleText": "医生详情" }
+    },
+    {
+      "path": "pages/patient/index/index",
+      "style": { "navigationBarTitleText": "生命方程式", "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/patient/medical/medical",
+      "style": { "navigationBarTitleText": "医院·医生" }
+    },
+    {
+      "path": "pages/patient/ai/ai",
+      "style": { "navigationBarTitleText": "AI 智能导诊" }
+    },
+    {
+      "path": "pages/patient/ai/health-advice",
+      "style": { "navigationBarTitleText": "AI 健康建议" }
+    },
+    {
+      "path": "pages/patient/ai/report",
+      "style": { "navigationBarTitleText": "AI 报告解读" }
+    },
+    {
+      "path": "pages/patient/appointment/appointment",
+      "style": { "navigationBarTitleText": "我的预约" }
+    },
+    {
+      "path": "pages/patient/mine/mine",
+      "style": { "navigationBarTitleText": "我的", "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/patient/disease/disease",
+      "style": { "navigationBarTitleText": "疾病百科" }
+    },
+    {
+      "path": "pages/patient/disease/detail",
+      "style": { "navigationBarTitleText": "疾病详情" }
+    },
+    {
+      "path": "pages/patient/drug/drug",
+      "style": { "navigationBarTitleText": "药品查询" }
+    },
+    {
+      "path": "pages/patient/drug/detail",
+      "style": { "navigationBarTitleText": "药品详情" }
+    },
+    {
+      "path": "pages/patient/pharmacy/pharmacy",
+      "style": { "navigationBarTitleText": "药店查询" }
+    },
+    {
+      "path": "pages/patient/pharmacy/detail",
+      "style": { "navigationBarTitleText": "药店详情" }
+    },
+    {
+      "path": "pages/patient/article/article",
+      "style": { "navigationBarTitleText": "健康资讯" }
+    },
+    {
+      "path": "pages/patient/article/detail",
+      "style": { "navigationBarTitleText": "资讯详情" }
+    },
+    {
+      "path": "pages/patient/guide/guide",
+      "style": { "navigationBarTitleText": "就诊指南" }
+    },
+    {
+      "path": "pages/patient/health/health",
+      "style": { "navigationBarTitleText": "我的咨询" }
+    },
+    {
+      "path": "pages/patient/consultation/list",
+      "style": { "navigationBarTitleText": "问答社区" }
+    },
+    {
+      "path": "pages/patient/consultation/detail",
+      "style": { "navigationBarTitleText": "咨询详情" }
+    },
+    {
+      "path": "pages/patient/records/records",
+      "style": { "navigationBarTitleText": "我的病历" }
+    },
+    {
+      "path": "pages/patient/notifications/notifications",
+      "style": { "navigationBarTitleText": "消息中心" }
+    },
+    {
+      "path": "pages/patient/family/list",
+      "style": { "navigationBarTitleText": "就诊人管理" }
+    },
+    {
+      "path": "pages/patient/family/edit",
+      "style": { "navigationBarTitleText": "添加就诊人" }
+    },
+    {
+      "path": "pages/patient/favorite/list",
+      "style": { "navigationBarTitleText": "我的收藏" }
+    },
+    {
+      "path": "pages/patient/review/create",
+      "style": { "navigationBarTitleText": "写评价" }
+    },
+    {
+      "path": "pages/patient/reminder/list",
+      "style": { "navigationBarTitleText": "用药提醒" }
+    },
+    {
+      "path": "pages/patient/reminder/edit",
+      "style": { "navigationBarTitleText": "设置提醒" }
+    },
+    {
+      "path": "pages/doctor/dashboard/dashboard",
+      "style": { "navigationBarTitleText": "医生工作台", "navigationStyle": "custom" }
+    },
+    {
+      "path": "pages/doctor/consult/consult",
+      "style": { "navigationBarTitleText": "咨询回复" }
+    },
+    {
+      "path": "pages/doctor/schedule/schedule",
+      "style": { "navigationBarTitleText": "排班管理" }
+    },
+    {
+      "path": "pages/doctor/mine/mine",
+      "style": { "navigationBarTitleText": "我的" }
+    },
+    {
+      "path": "pages/doctor/patients/patients",
+      "style": { "navigationBarTitleText": "患者管理" }
+    },
+    {
+      "path": "pages/doctor/reviews/reviews",
+      "style": { "navigationBarTitleText": "患者评价" }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "生命方程式",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F5F7FA"
+  },
+  "easycom": {
+    "autoscan": true
+  }
+}
