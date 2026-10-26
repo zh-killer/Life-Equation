@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { getUserAppointments, createAppointment, getDoctors, verifyIdentity, getFamilyMembers } from '@/utils/api'
+import { getUserAppointments, createAppointment, cancelAppointment, payAppointment, getDoctors, verifyIdentity, getFamilyMembers } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
 const appointments = ref([])
@@ -14,10 +14,10 @@ const loading = ref(false)
 const familyMembers = ref([])
 const selectedMemberId = ref('')
 
-const timeSlots = ['上午', '下午', '晚上']
-const statusMap = { PENDING: '待确认', CONFIRMED: '已确认', COMPLETED: '已完成', CANCELLED: '已取消' }
-const statusColor = { PENDING: '#FF9500', CONFIRMED: '#34C759', COMPLETED: '#C7C7CC', CANCELLED: '#C7C7CC' }
-const statusBg = { PENDING: '#E6FAF5', CONFIRMED: '#E8F5E9', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }
+const timeSlots = ['上午', '下午']
+const statusMap = { UNPAID: '待支付', PENDING: '待确认', CONFIRMED: '已确认', COMPLETED: '已完成', CANCELLED: '已取消' }
+const statusColor = { UNPAID: '#FF3B30', PENDING: '#FF9500', CONFIRMED: '#34C759', COMPLETED: '#C7C7CC', CANCELLED: '#C7C7CC' }
+const statusBg = { UNPAID: '#FFF1F0', PENDING: '#E6FAF5', CONFIRMED: '#E8F5E9', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }
 
 const ID_CARD_REGEX = /^[1-9]\d{5}(18|19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]$/
 
@@ -80,12 +80,55 @@ async function submitBook() {
   if (!bookForm.value.appointmentDate) { uni.showToast({ title: '请选择日期', icon: 'none' }); return }
   loading.value = true
   try {
-    await createAppointment(bookForm.value)
-    uni.showToast({ title: '预约成功' })
+    const res = await createAppointment(bookForm.value)
+    const apptId = res.data
+    const fee = doctors.value.find(d => d.id === bookForm.value.doctorId)?.consultationFee
     showCreate.value = false
-    const res = await getUserAppointments({ page: 1, size: 50 })
-    appointments.value = res.data.records || []
+    await refreshList()
+    askPay(apptId, fee)
   } catch {} finally { loading.value = false }
+}
+
+async function refreshList() {
+  const res = await getUserAppointments({ page: 1, size: 50 })
+  appointments.value = res.data.records || []
+}
+
+function askPay(apptId, fee) {
+  uni.showModal({
+    title: '预约成功，待支付',
+    content: `请支付挂号费 ¥${fee}，支付后等待医生确认。`,
+    confirmText: '立即支付',
+    cancelText: '稍后支付',
+    confirmColor: '#2DD4BF',
+    success: async (r) => {
+      if (!r.confirm) return
+      try {
+        await payAppointment(apptId)
+        uni.showToast({ title: '支付成功' })
+        refreshList()
+      } catch {}
+    },
+  })
+}
+
+async function payAppt(a) {
+  const ok = await new Promise(resolve => {
+    uni.showModal({
+      title: '支付挂号费',
+      content: `应付 ¥${a.amount}（${a.doctorName} · ${a.department}）`,
+      confirmText: '模拟支付',
+      confirmColor: '#2DD4BF',
+      success: r => resolve(r.confirm),
+      fail: () => resolve(false),
+    })
+  })
+  if (!ok) return
+  try {
+    await payAppointment(a.id)
+    uni.showToast({ title: '支付成功' })
+    refreshList()
+  } catch {}
 }
 
 async function loadFamilyMembers() {
@@ -96,6 +139,26 @@ async function loadFamilyMembers() {
       const def = familyMembers.value.find(m => m.isDefault === 1)
       selectedMemberId.value = def ? def.id : familyMembers.value[0].id
     }
+  } catch {}
+}
+
+async function cancelAppt(a) {
+  const ok = await new Promise(resolve => {
+    uni.showModal({
+      title: '取消预约',
+      content: `确定取消 ${a.doctorName}（${a.appointmentDate} ${a.timeSlot}）的预约吗？取消后号源将退回。`,
+      confirmText: '确定取消',
+      confirmColor: '#FF3B30',
+      success: r => resolve(r.confirm),
+      fail: () => resolve(false),
+    })
+  })
+  if (!ok) return
+  try {
+    await cancelAppointment(a.id)
+    uni.showToast({ title: '已取消，号源已退回' })
+    const res = await getUserAppointments({ page: 1, size: 50 })
+    appointments.value = res.data.records || []
   } catch {}
 }
 
@@ -143,9 +206,19 @@ function goReview(a) {
           </view>
         </view>
         <text class="card-symptom" v-if="a.symptomDesc">{{ a.symptomDesc?.substring(0, 50) }}</text>
-        <view v-if="a.status === 'COMPLETED'" class="review-action" @click="goReview(a)">
-          <ui-icon name="edit" :size="48" color="#2DD4BF" />
-          <text>去评价</text>
+        <view class="card-actions" v-if="a.status !== 'CANCELLED'">
+          <view v-if="a.status === 'UNPAID'" class="pay-action" @click="payAppt(a)">
+            <ui-icon name="checkCircle" :size="44" color="#2DD4BF" />
+            <text>支付挂号费 ¥{{ a.amount }}</text>
+          </view>
+          <view v-if="a.status === 'UNPAID' || a.status === 'PENDING' || a.status === 'CONFIRMED'" class="cancel-action" @click="cancelAppt(a)">
+            <ui-icon name="close" :size="44" color="#FF3B30" />
+            <text>取消预约</text>
+          </view>
+          <view v-if="a.status === 'COMPLETED'" class="review-action" @click="goReview(a)">
+            <ui-icon name="edit" :size="48" color="#2DD4BF" />
+            <text>去评价</text>
+          </view>
         </view>
       </view>
       <view v-if="!appointments.length" class="empty-state">
@@ -310,11 +383,23 @@ function goReview(a) {
 .verify-error text { font-size: 12px; color: #FF3B30; }
 .verify-disclaimer { font-size: 11px; color: #C7C7CC; text-align: center; display: block; margin-top: 12px; }
 
+.card-actions { display: flex; gap: 8px; margin-top: 10px; }
 .review-action {
   display: flex; align-items: center; gap: 4px;
-  padding: 8px 12px; margin-top: 8px;
+  padding: 8px 12px;
   background: #E6FAF5; border-radius: 10px;
-  align-self: flex-start;
 }
 .review-action text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
+.cancel-action {
+  display: flex; align-items: center; gap: 4px;
+  padding: 8px 12px;
+  background: #FFF1F0; border-radius: 10px;
+}
+.cancel-action text { font-size: 13px; color: #FF3B30; font-weight: 600; }
+.pay-action {
+  display: flex; align-items: center; gap: 4px;
+  padding: 8px 12px;
+  background: #E6FAF5; border-radius: 10px;
+}
+.pay-action text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
 </style>

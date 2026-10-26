@@ -53,7 +53,7 @@ async function submit() {
 <template>
   <view class="page">
     <view class="target-info">
-      <text class="target-label">评价{{ targetType === 'doctor' ? '医生' : '医院' }}</text>
+      <text class="target-label">评价{{ targetType === 'doctor' ? '医生' : '本院' }}</text>
       <text class="target-name">{{ targetName }}</text>
     </view>
 

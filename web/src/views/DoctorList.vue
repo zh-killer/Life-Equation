@@ -60,7 +60,7 @@ function clearAll() { keyword.value = ''; department.value = ''; page.value = 1;
     <div class="hero">
       <div class="hero-text">
         <h2>👨‍⚕️ 医生团队</h2>
-        <p>汇集全国优质医疗资源，找到适合您的医生</p>
+        <p>本院专家团队，为您提供专业诊疗服务</p>
       </div>
       <div class="hero-stats">
         <div class="hs-item">

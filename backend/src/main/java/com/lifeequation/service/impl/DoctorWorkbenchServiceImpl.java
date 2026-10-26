@@ -44,11 +44,11 @@ public class DoctorWorkbenchServiceImpl implements DoctorWorkbenchService {
         LocalDate today = LocalDate.now();
         DoctorWorkbenchDTO dto = new DoctorWorkbenchDTO();
 
-        // 2. 查询该医生的所有有效预约（排除已取消的）
+        // 2. 查询该医生的所有有效预约（排除已取消和未支付的）
         List<Appointment> todayAppts = appointmentMapper.selectList(
                 new LambdaQueryWrapper<Appointment>()
                         .eq(Appointment::getDoctorId, doctorId)
-                        .ne(Appointment::getStatus, "CANCELLED")
+                        .notIn(Appointment::getStatus, "CANCELLED", "UNPAID")
                         .orderByAsc(Appointment::getAppointmentDate)
                         .orderByAsc(Appointment::getTimeSlot));
         dto.setTodayAppointmentCount(todayAppts.size());

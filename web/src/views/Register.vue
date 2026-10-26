@@ -104,11 +104,11 @@ async function handleRegister() {
             </g>
           </svg>
         </div>
-        <h1 class="brand-title">生命方程式</h1>
-        <p class="brand-desc">加入我们，开启智能健康管理</p>
+        <h1 class="brand-title">湖南省三甲医院</h1>
+        <p class="brand-desc">加入我们，开启便捷就医服务</p>
         <div class="brand-features">
           <div class="feature-item"><span class="feature-dot"></span><span>AI 智能导诊辅助</span></div>
-          <div class="feature-item"><span class="feature-dot"></span><span>多医院在线预约</span></div>
+          <div class="feature-item"><span class="feature-dot"></span><span>在线预约挂号</span></div>
           <div class="feature-item"><span class="feature-dot"></span><span>个人健康档案管理</span></div>
         </div>
         <svg class="heartbeat" viewBox="0 0 200 40" fill="none">

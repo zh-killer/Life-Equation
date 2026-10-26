@@ -1,15 +1,12 @@
 <template>
   <div class="page">
-    <h2>🏥 药店导航</h2>
+    <h2>🏪 院内药房</h2>
 
     <!-- Search bar -->
     <div class="search-bar">
-      <el-select v-model="city" placeholder="选择城市" clearable @change="handleSearch" class="city-select">
-        <el-option v-for="c in cities" :key="c" :label="c" :value="c" />
-      </el-select>
       <el-input
         v-model="keyword"
-        placeholder="搜索药店名称或地址..."
+        placeholder="搜索药房名称或地址..."
         clearable
         @keyup.enter="handleSearch"
         class="search-input"
@@ -41,14 +38,13 @@
             <p class="addr">📍 {{ pharmacy.address }}</p>
             <p class="phone" v-if="pharmacy.phone">📞 {{ pharmacy.phone }}</p>
             <p class="hours">🕐 {{ pharmacy.businessHours || '暂无营业时间信息' }}</p>
-            <el-tag v-if="pharmacy.city" size="small" type="info">{{ pharmacy.city }}</el-tag>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
     <!-- Empty -->
-    <el-empty v-if="!loading && list.length === 0" description="未找到匹配的药店" />
+    <el-empty v-if="!loading && list.length === 0" description="未找到匹配的药房" />
 
     <!-- Pagination -->
     <div class="pagination" v-if="total > 10">
@@ -67,23 +63,17 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Search } from '@element-plus/icons-vue'
-import { getPharmacies, getPharmacyCities } from '@/api/pharmacy'
+import { getPharmacies } from '@/api/pharmacy'
 
 const router = useRouter()
 const list = ref([])
 const total = ref(0)
 const loading = ref(false)
-const cities = ref([])
-const city = ref('')
 const keyword = ref('')
 const is24h = ref(false)
 const page = ref(1)
 
-onMounted(async () => {
-  try {
-    const res = await getPharmacyCities()
-    cities.value = res.data || []
-  } catch (e) { /* ignore */ }
+onMounted(() => {
   fetchData()
 })
 
@@ -94,7 +84,6 @@ async function fetchData() {
       page: page.value,
       size: 10,
       keyword: keyword.value || undefined,
-      city: city.value || undefined,
       is24h: is24h.value ? 1 : undefined
     })
     list.value = res.data.records || []
@@ -123,7 +112,6 @@ function goDetail(id) {
 h2 { color: #1A3C6E; margin-bottom: 20px; font-size: 22px; }
 
 .search-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
-.city-select { width: 140px; }
 .search-input { flex: 1; min-width: 200px; }
 .h24-check { white-space: nowrap; }
 

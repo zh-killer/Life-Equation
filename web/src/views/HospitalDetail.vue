@@ -67,7 +67,7 @@ onMounted(async () => {
           </div>
           <div class="hero-stat-item">
             <span class="hero-stat-num" :style="{ background: levelInfo.color }">{{ hospital.level }}</span>
-            <span class="hero-stat-label">医院等级</span>
+            <span class="hero-stat-label">本院等级</span>
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@ onMounted(async () => {
       <div class="info-card">
         <div class="info-icon-wrap" style="background:#E3F2FD"><span>📍</span></div>
         <div class="info-body">
-          <strong>医院地址</strong>
+          <strong>本院地址</strong>
           <p>{{ hospital.address }}</p>
         </div>
       </div>
@@ -99,16 +99,16 @@ onMounted(async () => {
       <div class="info-card">
         <div class="info-icon-wrap" style="background:#FCE4EC"><span>🏷️</span></div>
         <div class="info-body">
-          <strong>医院等级</strong>
+          <strong>本院等级</strong>
           <p>{{ levelInfo.label }}</p>
         </div>
       </div>
     </div>
 
-    <!-- ====== 医院介绍 ====== -->
+    <!-- ====== 本院介绍 ====== -->
     <div class="section">
       <div class="section-top">
-        <h3>📖 医院介绍</h3>
+        <h3>📖 本院介绍</h3>
         <span class="doctor-count">👨‍⚕️ {{ doctors.length }} 位医生</span>
       </div>
       <div class="intro-text">
@@ -215,7 +215,7 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-      <p v-else class="empty-hint">暂未收录该院医生信息</p>
+      <p v-else class="empty-hint">暂未收录本院医生信息</p>
     </div>
 
     <!-- ====== 底部操作 ====== -->

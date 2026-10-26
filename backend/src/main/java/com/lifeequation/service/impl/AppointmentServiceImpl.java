@@ -79,7 +79,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         appt.setAppointmentDate(appointmentDate);
         appt.setTimeSlot(timeSlot);
         appt.setSymptomDesc(params.getOrDefault("symptomDesc", "").toString());
-        appt.setStatus("PENDING");
+        appt.setStatus("UNPAID");
         this.save(appt);
         return appt.getId();
     }
@@ -91,6 +91,47 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         Page<Appointment> result = this.page(new Page<>(page, size), w);
         populateAppointmentNames(result.getRecords());
         return result;
+    }
+
+    @Override
+    @Transactional
+    public void cancelAppointment(Long id, Long userId) {
+        Appointment appt = this.getById(id);
+        if (appt == null) {
+            throw new RuntimeException("预约不存在");
+        }
+        if (!appt.getUserId().equals(userId)) {
+            throw new RuntimeException("无权取消他人的预约");
+        }
+        if ("CANCELLED".equals(appt.getStatus())) {
+            throw new RuntimeException("该预约已取消");
+        }
+        if ("COMPLETED".equals(appt.getStatus())) {
+            throw new RuntimeException("该预约已完成，无法取消");
+        }
+
+        // 先归还号源，再改状态；两步在同一事务内，失败一起回滚
+        releaseSlot(appt);
+        appt.setStatus("CANCELLED");
+        this.updateById(appt);
+    }
+
+    @Override
+    @Transactional
+    public void payAppointment(Long id, Long userId) {
+        Appointment appt = this.getById(id);
+        if (appt == null) {
+            throw new RuntimeException("预约不存在");
+        }
+        if (!appt.getUserId().equals(userId)) {
+            throw new RuntimeException("无权支付他人的预约");
+        }
+        if (!"UNPAID".equals(appt.getStatus())) {
+            throw new RuntimeException("该预约无需支付");
+        }
+        // 模拟支付：真实项目这里应对接支付网关回调，成功后才改状态
+        appt.setStatus("PENDING");
+        this.updateById(appt);
     }
 
     // ==================== Admin methods ====================
@@ -108,11 +149,46 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     }
 
     @Override
+    @Transactional
     public void updateAppointmentStatus(Long id, String status) {
         Appointment a = this.getById(id);
         if (a == null) throw new RuntimeException("预约不存在");
+        String old = a.getStatus();
+        if (status.equals(old)) return;
+
+        // 后台把预约改成已取消时，同样要归还号源；从已取消恢复时重新占用
+        if ("CANCELLED".equals(status)) {
+            releaseSlot(a);
+        } else if ("CANCELLED".equals(old)) {
+            occupySlot(a);
+        }
         a.setStatus(status);
         this.updateById(a);
+    }
+
+    /** 按 医生+日期+时段 找到对应排班；找不到说明该排班已被删除 */
+    private DoctorSchedule findSchedule(Appointment a) {
+        return scheduleMapper.selectOne(
+                new LambdaQueryWrapper<DoctorSchedule>()
+                        .eq(DoctorSchedule::getDoctorId, a.getDoctorId())
+                        .eq(DoctorSchedule::getScheduleDate, a.getAppointmentDate())
+                        .eq(DoctorSchedule::getTimeSlot, a.getTimeSlot()));
+    }
+
+    private void releaseSlot(Appointment a) {
+        DoctorSchedule s = findSchedule(a);
+        if (s != null) {
+            scheduleMapper.atomicDecrementBookedCount(s.getId());
+        }
+    }
+
+    private void occupySlot(Appointment a) {
+        DoctorSchedule s = findSchedule(a);
+        if (s == null) return;
+        int updated = scheduleMapper.atomicIncrementBookedCount(s.getId(), s.getMaxSlots());
+        if (updated == 0) {
+            throw new RuntimeException("该时段号源已满，无法恢复为接诊状态");
+        }
     }
 
     private void populateAppointmentNames(java.util.List<Appointment> list) {
@@ -121,6 +197,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
             if (d != null) {
                 a.setDoctorName(d.getName());
                 a.setDepartment(d.getDepartment());
+                a.setAmount(d.getConsultationFee());
             }
             Hospital h = hospitalMapper.selectById(a.getHospitalId());
             if (h != null) a.setHospitalName(h.getName());

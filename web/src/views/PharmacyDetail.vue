@@ -36,7 +36,7 @@
       <el-card>
         <template #header><h3>📋 基本信息</h3></template>
         <el-descriptions :column="1" border>
-          <el-descriptions-item label="药店名称">{{ pharmacy.name }}</el-descriptions-item>
+          <el-descriptions-item label="药房名称">{{ pharmacy.name }}</el-descriptions-item>
           <el-descriptions-item label="详细地址">{{ pharmacy.address }}</el-descriptions-item>
           <el-descriptions-item label="所在城市">{{ pharmacy.city || '-' }}</el-descriptions-item>
           <el-descriptions-item label="联系电话">{{ pharmacy.phone || '-' }}</el-descriptions-item>

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { getDoctorDetail } from '@/api/doctor'
 
 const route = useRoute()
@@ -49,10 +49,21 @@ function handleBook() {
 async function submitBook() {
   if (!bookForm.value.appointmentDate) { ElMessage.warning('请选择预约日期'); return }
   try {
-    const { createAppointment } = await import('@/api/appointment')
-    await createAppointment(bookForm.value)
-    ElMessage.success('预约成功！等待医生确认')
+    const { createAppointment, payAppointment } = await import('@/api/appointment')
+    const res = await createAppointment(bookForm.value)
     bookDialog.value = false
+    try {
+      await ElMessageBox.confirm(
+        `应付挂号费 ¥${doctor.value.consultationFee}，支付后等待医生确认。`,
+        '预约成功，请支付',
+        { confirmButtonText: '立即支付', cancelButtonText: '稍后支付' }
+      )
+    } catch {
+      ElMessage.info('预约已保存，可在「我的预约」中支付')
+      return
+    }
+    await payAppointment(res.data)
+    ElMessage.success('支付成功，等待医生确认')
   } catch {}
 }
 </script>

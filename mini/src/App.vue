@@ -1,8 +1,40 @@
 <script>
+import { getDueReminders } from '@/utils/api'
+
+// 避免短时间内重复弹窗
+let lastMedReminderTime = 0
+
 export default {
   onLaunch() {},
-  onShow() {},
+  onShow() {
+    checkMedReminders()
+  },
   onHide() {}
+}
+
+async function checkMedReminders() {
+  const token = uni.getStorageSync('token')
+  if (!token) return
+  // 5分钟内不重复弹窗
+  const now = Date.now()
+  if (now - lastMedReminderTime < 5 * 60 * 1000) return
+  try {
+    const res = await getDueReminders()
+    const due = res.data || []
+    if (due.length) {
+      lastMedReminderTime = now
+      const names = due.map(r => r.drugName).join('、')
+      uni.showModal({
+        title: '⏰ 用药提醒',
+        content: `您有 ${due.length} 个用药提醒到期：${names}`,
+        confirmText: '查看',
+        cancelText: '知道了',
+        success: (r) => {
+          if (r.confirm) uni.navigateTo({ url: '/pages/patient/reminder/list' })
+        }
+      })
+    }
+  } catch {}
 }
 </script>
 

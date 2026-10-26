@@ -1,10 +1,10 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { getDoctorDetail, createAppointment, verifyIdentity, checkFavorite, toggleFavorite, getFamilyMembers, getTargetReviews, getDoctorSchedulesPublic } from '@/utils/api'
+import { getDoctorDetail, createAppointment, payAppointment, verifyIdentity, checkFavorite, toggleFavorite, getFamilyMembers, getTargetReviews, getDoctorSchedulesPublic } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
-const TIME_SLOTS = ['上午', '下午', '晚上']
+const TIME_SLOTS = ['上午', '下午']
 
 const doctor = ref(null)
 const id = ref('')
@@ -177,11 +177,29 @@ async function submitBook() {
   if (!bookForm.value.timeSlot) { uni.showToast({ title: '请选择时段', icon: 'none' }); return }
   loading.value = true
   try {
-    await createAppointment(bookForm.value)
-    uni.showToast({ title: '预约成功' })
+    const res = await createAppointment(bookForm.value)
+    const apptId = res.data
     showBook.value = false
     fetchSchedules()
+    askPay(apptId, doctor.value?.consultationFee)
   } catch {} finally { loading.value = false }
+}
+
+function askPay(apptId, amount) {
+  uni.showModal({
+    title: '预约成功，待支付',
+    content: `请支付挂号费 ¥${amount}，支付后等待医生确认。`,
+    confirmText: '立即支付',
+    cancelText: '稍后支付',
+    confirmColor: '#2DD4BF',
+    success: async (r) => {
+      if (!r.confirm) return
+      try {
+        await payAppointment(apptId)
+        uni.showToast({ title: '支付成功' })
+      } catch {}
+    },
+  })
 }
 </script>
 
@@ -200,7 +218,8 @@ async function submitBook() {
       </view>
       <text class="hero-dept">{{ doctor.department }} · {{ doctor.hospitalName }}</text>
       <view class="fav-btn-hero" @click.stop="handleFav">
-        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : 'rgba(255,255,255,0.6)'" />
+        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+        <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
       </view>
     </view>
 
@@ -220,7 +239,7 @@ async function submitBook() {
       </view>
       <view class="info-divider" />
       <view class="info-item">
-        <text class="ii-label">医院</text>
+        <text class="ii-label">所在医院</text>
         <text class="ii-val-text">{{ doctor.hospitalLevel || '三甲' }}</text>
       </view>
     </view>
@@ -485,7 +504,8 @@ async function submitBook() {
 .no-slot-hint text { font-size: 13px; color: #C7C7CC; }
 
 /* Favorite button */
-.fav-btn-hero { padding: 8px; margin-top: 4px; }
+.fav-btn-hero { display: flex; align-items: center; gap: 4px; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 20px; }
+.fav-text { font-size: 12px; color: #fff; font-weight: 500; }
 
 /* Reviews section */
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }

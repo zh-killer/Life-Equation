@@ -105,8 +105,7 @@ onMounted(fetchData)
 <template>
   <div class="admin-page">
     <div class="page-header">
-      <h2>🏥 医院管理</h2>
-      <el-button type="primary" :icon="Plus" @click="openCreate">新建医院</el-button>
+      <h2>🏥 本院信息</h2>
     </div>
 
     <div class="search-bar">
@@ -136,7 +135,6 @@ onMounted(fetchData)
           <el-button :type="row.status === 1 ? 'warning' : 'success'" size="small" link @click="handleToggleStatus(row)">
             {{ row.status === 1 ? '禁用' : '启用' }}
           </el-button>
-          <el-button type="danger" size="small" link @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -145,7 +143,7 @@ onMounted(fetchData)
       <el-pagination v-model:current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next" @current-change="handlePageChange" />
     </div>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑医院' : '新建医院'" width="640px">
+    <el-dialog v-model="dialogVisible" title="编辑本院信息" width="640px">
       <el-form ref="formRef" :model="editForm" :rules="rules" label-width="80px">
         <el-row :gutter="16">
           <el-col :span="16">

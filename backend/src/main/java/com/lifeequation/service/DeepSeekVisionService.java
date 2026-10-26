@@ -14,37 +14,43 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.util.*;
 import java.util.List;
 
 /**
- * 智谱AI GLM-4V 视觉服务
+ * DeepSeek 视觉服务（deepseek-flash 原生多模态）
  * 单次调用：图片压缩 + 数据提取 + 医学解读
+ *
+ * 2026-09 起 DeepSeek V4.1-Flash 支持图片输入（input_modalities: text + image），
+ * 与原智谱 GLM-4V 走同一套 OpenAI 兼容的 chat/completions 协议，故直接复用 deepseek.api 配置。
  */
 @Service
-public class ZhipuAiVisionService {
+public class DeepSeekVisionService {
 
-    @Value("${zhipuai.api.key:}")
+    @Value("${deepseek.api.key:}")
     private String apiKey;
 
-    @Value("${zhipuai.api.url:https://open.bigmodel.cn/api/paas/v4/chat/completions}")
+    @Value("${deepseek.api.url:https://api.deepseek.com/v1/chat/completions}")
     private String apiUrl;
 
-    @Value("${zhipuai.api.model:glm-4v-flash}")
+    /** 多模态模型。deepseek-chat 也会路由到同一个模型，但显式写 vision 模型更清楚 */
+    @Value("${deepseek.api.vision-model:deepseek-flash}")
     private String model;
 
+    /** 单次输出上限。关掉思考后 3000 足够输出完整四段式解读 */
+    @Value("${deepseek.api.vision-max-tokens:3000}")
+    private int maxTokens;
+
     /**
-     * 应用访问基准 URL（用于智谱 API 访问上传的图片）。
-     * 本地开发时配置为 http://localhost:8888（需要 ngrok 等工具或智谱能访问 localhost）。
-     * 生产环境配置为公网域名。
+     * 应用访问基准 URL（用于按 URL 传图时拼出完整地址）。
+     * 本地开发时为 http://localhost:8888，DeepSeek 服务器无法访问，需 ngrok 等内网穿透。
      */
     @Value("${app.base-url:http://localhost:8888}")
     private String appBaseUrl;
 
     private final RestTemplate restTemplate;
 
-    public ZhipuAiVisionService(RestTemplate restTemplate) {
+    public DeepSeekVisionService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -62,8 +68,8 @@ public class ZhipuAiVisionService {
 
     /**
      * 分析报告图片（base64 模式 — 推荐）。
-     * 图片以 data URI 形式直接嵌入 API 请求体，无需智谱服务器下载外部 URL。
-     * 适用于本地开发、内网环境等没有公网 IP 的场景。
+     * 图片以 data URI 形式直接嵌入请求体，不需要 API 服务器回访公网 URL，
+     * 本地开发、内网环境都能用。
      *
      * @param imageBytes 图片原始字节
      * @param mimeType   图片 MIME 类型 (e.g. "image/jpeg", "image/png")
@@ -72,58 +78,90 @@ public class ZhipuAiVisionService {
      */
     public String analyzeReportFromBytes(byte[] imageBytes, String mimeType, String reportType) {
         if (!isConfigured() || imageBytes == null || imageBytes.length == 0) {
-            return "ApiError:智谱AI未配置或无图片数据";
+            return "ApiError:DeepSeek 未配置或无图片数据";
         }
 
-        // 压缩图片以减少 base64 体积（GLM-4V 对图片大小有限制）
-        byte[] compressed = compressImage(imageBytes, mimeType);
-        String base64 = Base64.getEncoder().encodeToString(compressed);
-        String dataUri = "data:" + (mimeType != null ? mimeType : "image/jpeg") + ";base64," + base64;
+        String actualMime = (mimeType != null && mimeType.startsWith("image/")) ? mimeType : "image/jpeg";
+        byte[] compressed = compressImage(imageBytes, actualMime);
+        // 压缩后统一按 JPEG 输出，MIME 也要跟着改，否则 API 解不出来
+        if (compressed != imageBytes) actualMime = "image/jpeg";
 
-        System.err.println("[ZhipuAI] Base64 mode, image size: " + imageBytes.length
-            + " bytes → compressed: " + compressed.length + " bytes → base64: " + base64.length() + " chars");
+        String dataUri = "data:" + actualMime + ";base64," + Base64.getEncoder().encodeToString(compressed);
 
-        String userPrompt = buildPrompt(reportType);
-        System.err.println("[ZhipuAI] Calling " + model + " with base64 data URI...");
-        return callVisionApi(userPrompt, dataUri);
+        System.err.println("[DeepSeekVision] Base64 mode, image: " + imageBytes.length
+            + " bytes → compressed: " + compressed.length + " bytes");
+        System.err.println("[DeepSeekVision] Calling " + model + "...");
+        return callVisionApi(buildPrompt(reportType), dataUri);
     }
 
     /**
      * 分析报告图片（URL 模式 — 备选）。
-     * GLM-4V-Flash 免费版只支持 HTTP URL，不支持 base64 data URI。
-     * 调用前会检测图片 URL 是否能从公网访问，如果不可达会直接返回错误提示。
+     * 需要图片能被打公网访问到；本地 localhost 地址会被直接拒绝。
      *
-     * @param imageUrl   图片路径（如 /uploads/reports/1/xxx.jpg）
+     * @param imageUrl   图片路径（如 /uploads/reports/1/xxx.jpg）或完整 http URL
      * @param reportType 报告类型
      * @return 解读文本，或 ApiError:xxx 格式的错误信息
      */
     public String analyzeReport(String imageUrl, String reportType) {
         if (!isConfigured() || imageUrl == null || imageUrl.isBlank()) {
-            return "ApiError:智谱AI未配置或无图片URL";
+            return "ApiError:DeepSeek 未配置或无图片URL";
         }
 
         String fullUrl = imageUrl.startsWith("http") ? imageUrl : (appBaseUrl + imageUrl);
-        System.err.println("[ZhipuAI] Image URL: " + fullUrl);
+        System.err.println("[DeepSeekVision] Image URL: " + fullUrl);
 
-        // 预检：如果 URL 是 localhost/127.0.0.1，智谱服务器无法访问，直接提示用户
         if (fullUrl.contains("localhost") || fullUrl.contains("127.0.0.1")) {
-            return "ApiError:图片URL为本地地址(" + fullUrl + ")，智谱API无法访问。"
-                + "请用 ngrok 做内网穿透（ngrok http 8888），"
-                + "然后把 application.yml 中的 app.base-url 改为 ngrok 提供的公网URL。";
+            return "ApiError:图片URL为本地地址(" + fullUrl + ")，DeepSeek 服务器无法访问。"
+                + "请改用 base64 模式上传图片，或用 ngrok 做内网穿透并修改 app.base-url。";
         }
-
-        String userPrompt = buildPrompt(reportType);
-        System.err.println("[ZhipuAI] Calling " + model + " with URL...");
-        return callVisionApi(userPrompt, fullUrl);
+        return callVisionApi(buildPrompt(reportType), fullUrl);
     }
 
     /**
-     * 保留旧签名（兼容性）：直接使用 base64 模式。
-     * @deprecated 请使用 {@link #analyzeReportFromBytes(byte[], String, String)}
+     * 自检：现场画一张带检验数值的小图发给模型，验证 Key、网络、多模态能力是否都正常。
+     * 不依赖任何外网图片，几十 KB，调用成本可以忽略。
      */
-    @Deprecated
-    public String analyzeReport(byte[] rawBytes, String mimeType, String reportType) {
-        return analyzeReportFromBytes(rawBytes, mimeType, reportType);
+    public Map<String, Object> selfTest() {
+        Map<String, Object> status = new LinkedHashMap<>();
+        status.put("model", model);
+        status.put("configured", isConfigured());
+
+        if (!isConfigured()) {
+            status.put("status", "UNCONFIGURED");
+            status.put("suggestion", "deepseek.api.key 为空，请检查 config/application-local.yml");
+            return status;
+        }
+
+        byte[] png = buildTestImage();
+        String result = callVisionApi("请读出图中第二行出现的那个带小数的数字，只回答数字本身，不要解释。",
+            "data:image/png;base64," + Base64.getEncoder().encodeToString(png));
+
+        status.put("testResult", result != null && result.length() > 200 ? result.substring(0, 200) : result);
+
+        if (result == null || result.isBlank()) {
+            status.put("status", "UNREACHABLE");
+            status.put("suggestion", "API 完全无响应，请检查网络或 API Key 是否有效");
+        } else if (result.startsWith("ApiError:")) {
+            status.put("status", "ERROR");
+            if (result.contains("401") || result.contains("unauthorized") || result.contains("invalid")) {
+                status.put("suggestion", "API Key 无效或已过期，请到 https://platform.deepseek.com 重新获取");
+            } else if (result.contains("402") || result.contains("Insufficient") || result.contains("余额")) {
+                status.put("suggestion", "账户余额不足，请到 DeepSeek 开放平台充值");
+            } else if (result.contains("429") || result.contains("quota") || result.contains("limit")) {
+                status.put("suggestion", "请求频率超限或额度用尽，请稍后重试或检查账户余额");
+            } else if (result.contains("Connection refused") || result.contains("timeout") || result.contains("UnknownHost")) {
+                status.put("suggestion", "无法连接到 DeepSeek API 服务器，请检查网络");
+            } else {
+                status.put("suggestion", "请根据测试返回内容排查具体原因");
+            }
+        } else if (result.contains("12.5")) {
+            status.put("status", "OK");
+            status.put("suggestion", "视觉服务正常，能正确识别图片中的检验数值");
+        } else {
+            status.put("status", "DEGRADED");
+            status.put("suggestion", "接口有响应，但没读出测试图里的 12.5，可能是模型改动或图片被压缩过度");
+        }
+        return status;
     }
 
     // ================================================================
@@ -133,7 +171,7 @@ public class ZhipuAiVisionService {
         try {
             BufferedImage img = ImageIO.read(new ByteArrayInputStream(input));
             if (img == null) {
-                System.err.println("[ZhipuAI] Cannot decode image, using raw bytes");
+                System.err.println("[DeepSeekVision] Cannot decode image, using raw bytes");
                 return input;
             }
 
@@ -152,10 +190,10 @@ public class ZhipuAiVisionService {
                 g.drawImage(img, 0, 0, w, h, null);
                 g.dispose();
                 img = scaled;
-                System.err.println("[ZhipuAI] Resized to " + w + "x" + h);
+                System.err.println("[DeepSeekVision] Resized to " + w + "x" + h);
             }
 
-            // JPEG 压缩 92% 质量（保留更多细节，化验单小字不能糊）
+            // JPEG 压缩 92% 质量（化验单小字不能糊）
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
             ImageWriteParam param = writer.getDefaultWriteParam();
@@ -167,8 +205,30 @@ public class ZhipuAiVisionService {
             return out.toByteArray();
 
         } catch (Exception e) {
-            System.err.println("[ZhipuAI] Compression failed: " + e.getMessage() + ", using raw");
+            System.err.println("[DeepSeekVision] Compression failed: " + e.getMessage() + ", using raw");
             return input;
+        }
+    }
+
+    /** 画一张自检用的小图：白底黑字，第二行带一个固定数值 12.5 */
+    private byte[] buildTestImage() {
+        int width = 520, height = 160;
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, width, height);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("SansSerif", Font.BOLD, 24));
+        g.drawString("BLOOD TEST REPORT", 30, 60);
+        g.drawString("WBC 12.5 x10^9/L   ref 4.0-10.0   H", 30, 115);
+        g.dispose();
+
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            ImageIO.write(img, "png", out);
+            return out.toByteArray();
+        } catch (Exception e) {
+            return new byte[0];
         }
     }
 
@@ -208,41 +268,41 @@ public class ZhipuAiVisionService {
     // API 调用
     // ================================================================
     /**
-     * @param imageUrl  图片的 HTTP URL（不是 data URI）
+     * @param userPrompt 用户提示
+     * @param imageRef   图片地址：data URI 或 http URL
      */
-    private String callVisionApi(String userPrompt, String imageUrl) {
+    private String callVisionApi(String userPrompt, String imageRef) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setBearerAuth(apiKey);
 
-            // system instruction — 智谱 GLM-4 系列支持 system message
-            // 但某些旧版 / vision 模式下可能不支持，改为合并在 user prompt 最前面
             String systemInstruction = "你是一个专业的医学检验报告解读助手。你的核心能力是从化验单图片中精准识别所有文字和数字，并基于临床参考范围进行专业解读。你必须仔细查看图片中的每一个数据，不要跳过任何项目。";
 
-            // user — system instruction + text query + image
             Map<String, Object> user = new LinkedHashMap<>();
             user.put("role", "user");
             List<Map<String, Object>> content = new ArrayList<>();
 
-            // 将 system instruction 作为 user 文本的首段
-            Map<String, Object> sysAsText = new LinkedHashMap<>();
-            sysAsText.put("type", "text");
-            sysAsText.put("text", systemInstruction + "\n\n" + userPrompt);
-            content.add(sysAsText);
+            Map<String, Object> text = new LinkedHashMap<>();
+            text.put("type", "text");
+            text.put("text", systemInstruction + "\n\n" + userPrompt);
+            content.add(text);
 
             Map<String, Object> img = new LinkedHashMap<>();
             img.put("type", "image_url");
             Map<String, String> url = new LinkedHashMap<>();
-            url.put("url", imageUrl);
+            url.put("url", imageRef);
             img.put("image_url", url);
             content.add(img);
 
             user.put("content", content);
 
-            // request body — GLM-4V-Flash 不支持 temperature/max_tokens
             Map<String, Object> body = new LinkedHashMap<>();
             body.put("model", model);
+            // 关掉思考：读单 + 结构化解读不需要长链推理，
+            // 开着会把 max_tokens 全烧在 reasoning_tokens 上，导致正文被截断
+            body.put("thinking", Map.of("type", "disabled"));
+            body.put("max_tokens", maxTokens);
             body.put("messages", List.of(user));
 
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
@@ -250,20 +310,18 @@ public class ZhipuAiVisionService {
             @SuppressWarnings("unchecked")
             ResponseEntity<Map> resp = restTemplate.postForEntity(apiUrl, entity, Map.class);
 
-            // 诊断：打印 HTTP 状态码
-            System.err.println("[ZhipuAI] HTTP status: " + resp.getStatusCode().value());
+            System.err.println("[DeepSeekVision] HTTP status: " + resp.getStatusCode().value());
 
             Map<String, Object> respBody = resp.getBody();
             if (respBody == null) {
                 return "ApiError:HTTP " + resp.getStatusCode().value() + " — 响应体为空";
             }
 
-            // 检查 API 错误
             if (respBody.containsKey("error")) {
                 Object err = respBody.get("error");
                 String errStr = err instanceof Map ? err.toString() : String.valueOf(err);
-                System.err.println("[ZhipuAI] API error: " + errStr);
-                return "ApiError:智谱API错误(HTTP " + resp.getStatusCode().value() + ") — " + errStr;
+                System.err.println("[DeepSeekVision] API error: " + errStr);
+                return "ApiError:DeepSeek API错误(HTTP " + resp.getStatusCode().value() + ") — " + errStr;
             }
 
             @SuppressWarnings("unchecked")
@@ -278,26 +336,25 @@ public class ZhipuAiVisionService {
                 return "ApiError:响应中没有 message";
             }
 
-            String content_result = (String) msg.get("content");
-            if (content_result == null || content_result.isBlank()) {
-                return "ApiError:返回内容为空";
+            String contentResult = (String) msg.get("content");
+            if (contentResult == null || contentResult.isBlank()) {
+                String finish = String.valueOf(choices.get(0).get("finish_reason"));
+                return "ApiError:返回内容为空（finish_reason=" + finish + "，可能是 max_tokens 不足）";
             }
 
-            System.err.println("[ZhipuAI] Success, " + content_result.length() + " chars");
-            return content_result;
+            System.err.println("[DeepSeekVision] Success, " + contentResult.length() + " chars");
+            return contentResult;
 
         } catch (Exception e) {
-            // 捕获完整异常链，方便诊断
             String detail = e.getMessage();
             if (detail == null) detail = e.getClass().getSimpleName();
-            // 尝试获取 cause 信息
             Throwable cause = e.getCause();
             String causeMsg = cause != null ? cause.getMessage() : null;
             if (causeMsg != null && !causeMsg.equals(detail)) {
                 detail = detail + " [Cause: " + causeMsg + "]";
             }
             if (detail.length() > 500) detail = detail.substring(0, 500);
-            System.err.println("[ZhipuAI] Exception: " + detail);
+            System.err.println("[DeepSeekVision] Exception: " + detail);
             e.printStackTrace(System.err);
             return "ApiError:调用失败 — " + detail;
         }

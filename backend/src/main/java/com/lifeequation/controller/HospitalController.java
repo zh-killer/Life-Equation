@@ -26,11 +26,6 @@ public class HospitalController {
         return Result.ok(result);
     }
 
-    @GetMapping("/cities")
-    public Result<?> cities() {
-        return Result.ok(hospitalService.getHospitalCities());
-    }
-
     @GetMapping("/{id}")
     public Result<?> detail(@PathVariable Long id) {
         return Result.ok(hospitalService.getHospitalDetail(id));

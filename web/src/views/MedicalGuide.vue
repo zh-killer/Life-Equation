@@ -7,7 +7,7 @@ const activeFaq = ref([])
 const deptFilter = ref('')
 
 const steps = [
-  { icon: '📱',  title: '在线预约', desc: '选择医院 → 科室 → 医生 → 时段，一键预约挂号', color: '#3B6FB6' },
+  { icon: '📱',  title: '在线预约', desc: '选择科室 → 医生 → 时段，一键预约挂号', color: '#3B6FB6' },
   { icon: '🪪',  title: '携带证件', desc: '身份证、医保卡、既往病历资料、检查报告单', color: '#4CAF50' },
   { icon: '🏥',  title: '到院取号', desc: '提前15分钟到达，自助机或窗口取号，候诊区等候', color: '#FF9800' },
   { icon: '🩺',  title: '医生问诊', desc: '详细描述症状、发病时间，告知用药史和过敏史', color: '#E91E63' },
@@ -25,9 +25,9 @@ const tips = [
 const faqs = [
   { q: '如何取消预约？', a: '在「我的预约」中找到对应记录，点击取消即可。请至少提前2小时操作，以免影响信用。' },
   { q: '预约后能不能改时间？', a: '暂不支持直接改期，需先取消原预约再重新预约新的时间段。' },
-  { q: '到医院后怎么取号？', a: '凭身份证或预约码在自助取号机上扫码取号，部分医院支持窗口人工取号。' },
+  { q: '到医院后怎么取号？', a: '凭身份证或预约码在自助取号机上扫码取号，也可到门诊窗口人工取号。' },
   { q: '可以帮家人预约吗？', a: '目前暂不支持代预约功能，后续版本将上线就诊人管理，届时可帮家人预约。' },
-  { q: '医保能报销多少？', a: '具体报销比例因地区医保政策和医院等级而异，建议就诊前咨询当地医保局或医院医保办。' },
+  { q: '医保能报销多少？', a: '具体报销比例因医保政策和本院等级而异，建议就诊前咨询当地医保局或本院医保办。' },
 ]
 
 const deptGuide = [
@@ -175,10 +175,10 @@ const filteredDept = computed(() => {
     <div class="cta-bar">
       <div class="cta-text">
         <span class="cta-title">准备好了吗？</span>
-        <span class="cta-desc">选择医院和医生，立即预约挂号</span>
+        <span class="cta-desc">选择科室和医生，立即预约挂号</span>
       </div>
       <div class="cta-actions">
-        <el-button size="large" @click="router.push('/hospitals')" class="cta-btn-primary">
+        <el-button size="large" @click="router.push('/hospitals/1')" class="cta-btn-primary">
           立即预约挂号
         </el-button>
         <el-button size="large" plain @click="router.push('/ai/consultation')" class="cta-btn-secondary">

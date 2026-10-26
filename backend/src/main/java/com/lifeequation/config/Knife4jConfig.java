@@ -23,7 +23,7 @@ public class Knife4jConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("生命方程式 - 医疗健康综合服务平台 API")
+                        .title("湖南省三甲医院 - 患者服务平台 API")
                         .version("1.0.0")
                         .description("基于 Spring Boot + Vue 3 的医疗健康综合服务平台，"
                                 + "集成 DeepSeek 大模型实现 AI 导诊、健康建议、报告解读等功能。"

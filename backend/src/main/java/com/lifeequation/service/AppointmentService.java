@@ -12,6 +12,12 @@ public interface AppointmentService extends IService<Appointment> {
 
     Page<Appointment> getUserAppointments(Long userId, int page, int size);
 
+    /** 用户取消自己的预约，并归还该时段号源 */
+    void cancelAppointment(Long id, Long userId);
+
+    /** 模拟支付挂号费：UNPAID -> PENDING */
+    void payAppointment(Long id, Long userId);
+
     // Admin methods
     Page<Appointment> getAppointmentPageAdmin(int page, int size, String status);
     void updateAppointmentStatus(Long id, String status);

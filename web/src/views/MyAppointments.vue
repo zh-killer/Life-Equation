@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getUserAppointments } from '@/api/appointment'
+import { ElMessageBox, ElMessage } from 'element-plus'
+import { getUserAppointments, cancelAppointment, payAppointment } from '@/api/appointment'
 
 const list = ref([])
 const total = ref(0)
@@ -14,8 +15,42 @@ async function fetchData() {
   total.value = res.data.total
 }
 
-const statusMap = { PENDING: '待确认', CONFIRMED: '已确认', CANCELLED: '已取消', COMPLETED: '已完成' }
-const statusType = { PENDING: 'warning', CONFIRMED: 'success', CANCELLED: 'info', COMPLETED: '' }
+async function handleCancel(row) {
+  try {
+    await ElMessageBox.confirm(
+      `确定取消 ${row.doctorName}（${row.appointmentDate} ${row.timeSlot}）的预约吗？取消后号源将退回。`,
+      '取消预约',
+      { type: 'warning', confirmButtonText: '确定取消', cancelButtonText: '再想想' }
+    )
+  } catch {
+    return
+  }
+  try {
+    await cancelAppointment(row.id)
+    ElMessage.success('已取消预约，号源已退回')
+    fetchData()
+  } catch {}
+}
+
+async function handlePay(row) {
+  try {
+    await ElMessageBox.confirm(
+      `应付挂号费 ¥${row.amount}（${row.doctorName} · ${row.department}）`,
+      '支付挂号费',
+      { confirmButtonText: '模拟支付', cancelButtonText: '稍后再说' }
+    )
+  } catch {
+    return
+  }
+  try {
+    await payAppointment(row.id)
+    ElMessage.success('支付成功，等待医生确认')
+    fetchData()
+  } catch {}
+}
+
+const statusMap = { UNPAID: '待支付', PENDING: '待确认', CONFIRMED: '已确认', CANCELLED: '已取消', COMPLETED: '已完成' }
+const statusType = { UNPAID: 'danger', PENDING: 'warning', CONFIRMED: 'success', CANCELLED: 'info', COMPLETED: '' }
 </script>
 
 <template>
@@ -34,6 +69,19 @@ const statusType = { PENDING: 'warning', CONFIRMED: 'success', CANCELLED: 'info'
         </template>
       </el-table-column>
       <el-table-column prop="createTime" label="提交时间" min-width="160" />
+      <el-table-column label="挂号费" width="100" align="center">
+        <template #default="{ row }">¥{{ row.amount }}</template>
+      </el-table-column>
+      <el-table-column label="操作" width="170" align="center">
+        <template #default="{ row }">
+          <el-button v-if="row.status === 'UNPAID'" type="primary" link @click="handlePay(row)">去支付</el-button>
+          <el-button
+            v-if="row.status === 'UNPAID' || row.status === 'PENDING' || row.status === 'CONFIRMED'"
+            type="danger" link @click="handleCancel(row)"
+          >取消预约</el-button>
+          <span v-if="row.status === 'CANCELLED' || row.status === 'COMPLETED'" style="color:#c0c4cc">—</span>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="page-bar" v-if="total > 10">
       <el-pagination layout="prev, pager, next" :total="total" :page-size="10" v-model:current-page="page" @current-change="fetchData" />

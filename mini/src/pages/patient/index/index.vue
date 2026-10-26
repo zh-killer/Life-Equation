@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
-import { getHome, getArticles, getUserAppointments, getMyConsultationList, getDueReminders, getUserInfo } from '@/utils/api'
+import { getHome, getArticles, getUserAppointments, getMyConsultationList, getDueReminders, getUserInfo, getAvatarBase64 } from '@/utils/api'
 import config from '@/utils/config'
 import UiIcon from '@/components/ui-icon.vue'
 
@@ -10,6 +10,7 @@ const statusBarHeight = uni.getSystemInfoSync().statusBarHeight || 20
 // 用户信息
 const userInfo = ref(null)
 const unreadCount = ref(0)
+const avatarDataUri = ref('')
 
 // 首页数据
 const banners = ref([])
@@ -48,10 +49,10 @@ const aiCards = [
 
 // 服务入口
 const services = [
-  { icon: 'hospital', label: '医院医生', url: '/pages/patient/medical/medical', color: '#2DD4BF' },
+  { icon: 'hospital', label: '本院医生', url: '/pages/patient/medical/medical', color: '#2DD4BF' },
   { icon: 'virus', label: '疾病百科', url: '/pages/patient/disease/disease', color: '#FF9500' },
   { icon: 'pill', label: '药品查询', url: '/pages/patient/drug/drug', color: '#AF52DE' },
-  { icon: 'store', label: '药店查询', url: '/pages/patient/pharmacy/pharmacy', color: '#2DD4BF' },
+  { icon: 'store', label: '院内药房', url: '/pages/patient/pharmacy/pharmacy', color: '#2DD4BF' },
   { icon: 'message', label: '问答社区', url: '/pages/patient/consultation/list', color: '#7FDBFF' },
   { icon: 'news', label: '健康资讯', url: '/pages/patient/article/article', color: '#FF9500' },
   { icon: 'clipboard', label: '就诊指南', url: '/pages/patient/guide/guide', color: '#34C759' },
@@ -81,10 +82,17 @@ async function initPage() {
   if (medReminders.value.length) {
     showMedModal.value = true
   }
+  // 头像在数据加载完后单独拉取
+  await loadAvatarForIndex()
 }
 
 onMounted(initPage)
-onShow(() => { loadReminders() })
+onShow(() => {
+  loadReminders()
+  loadMedReminders().then(() => {
+    if (medReminders.value.length) showMedModal.value = true
+  })
+})
 
 function getReadNotiIds() {
   try { return JSON.parse(uni.getStorageSync('readNotiIds') || '[]') } catch { return [] }
@@ -100,7 +108,13 @@ async function loadReminders() {
 
   try {
     // 待确认的预约
-    const apptRes = await getUserAppointments({ page: 1, size: 10 }).catch(() => ({ data: { records: [] } }))
+    const apptRes = await getUserAppointments({ page: 1, size: 30 }).catch(() => ({ data: { records: [] } }))
+    const unpaid = (apptRes.data?.records || []).filter(a => a.status === 'UNPAID')
+    if (unpaid.length) {
+      list.push({ type: 'unpaid', text: `您有 ${unpaid.length} 个预约待支付`, time: unpaid[0]?.appointmentDate, url: '/pages/patient/appointment/appointment' })
+      unread += unpaid.filter(a => !readIds.includes(`appt_unpaid_${a.id}`)).length
+    }
+
     const pending = (apptRes.data?.records || []).filter(a => a.status === 'PENDING' || a.status === 'CONFIRMED')
     if (pending.length) {
       list.push({ type: 'appointment', text: `您有 ${pending.length} 个待就诊预约`, time: pending[0]?.appointmentDate, url: '/pages/patient/appointment/appointment' })
@@ -113,7 +127,7 @@ async function loadReminders() {
     }
 
     // 已回复的咨询
-    const consultRes = await getMyConsultationList({ page: 1, size: 20 }).catch(() => ({ data: { records: [] } }))
+    const consultRes = await getMyConsultationList({ page: 1, size: 30 }).catch(() => ({ data: { records: [] } }))
     const answered = (consultRes.data?.records || []).filter(c => c.status === 'ANSWERED')
     if (answered.length) {
       list.push({ type: 'reply', text: `医生回复了您的咨询`, time: answered[0]?.replyTime || answered[0]?.answeredAt, url: '/pages/patient/health/health' })
@@ -144,6 +158,23 @@ async function loadUserInfo() {
     uni.setStorageSync('userInfo', JSON.stringify(res.data))
   } catch {}
 }
+
+// 单独加载头像 base64
+async function loadAvatarForIndex() {
+  const token = uni.getStorageSync('token')
+  if (!token) { uni.showToast({ title: '首页无token', icon: 'none' }); return }
+  try {
+    const avRes = await getAvatarBase64()
+    if (avRes.data) {
+      avatarDataUri.value = avRes.data
+      uni.showToast({ title: '头像加载成功', icon: 'none', duration: 1000 })
+    } else {
+      uni.showToast({ title: '后端返回空', icon: 'none' })
+    }
+  } catch (e) {
+    uni.showToast({ title: '头像API失败: ' + String(e?.message || '').substring(0, 20), icon: 'none' })
+  }
+}
 </script>
 
 <template>
@@ -154,7 +185,7 @@ async function loadUserInfo() {
       <view class="header-top">
         <view class="header-user" @click="goPage('/pages/patient/mine/mine')">
           <view class="user-avatar">
-            <image v-if="userInfo?.avatarUrl" class="avatar-img" :src="config.uploadBase + userInfo.avatarUrl" mode="aspectFill" />
+            <image v-if="avatarDataUri" class="avatar-img" :src="avatarDataUri" mode="aspectFill" />
             <text v-else>{{ userInfo?.realName?.charAt(0) || userInfo?.username?.charAt(0) || '你' }}</text>
           </view>
           <view>
@@ -171,7 +202,7 @@ async function loadUserInfo() {
       <!-- 搜索栏 -->
       <view class="search-bar" @click="goPage('/pages/patient/medical/medical')">
         <ui-icon name="search" :size="64" color="#C7C7CC" />
-        <text class="search-ph">搜索医院、医生、疾病、药品...</text>
+        <text class="search-ph">搜索本院医生姓名、职称、专长...</text>
       </view>
     </view>
 
@@ -357,6 +388,7 @@ async function loadUserInfo() {
 .reminder-item:last-child { border-bottom: none; }
 .reminder-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .reminder-dot.appointment { background: #2DD4BF; }
+.reminder-dot.unpaid { background: #FF3B30; }
 .reminder-dot.reply { background: #34C759; }
 .reminder-dot.pill { background: #FF9500; }
 .reminder-item.med { background: #FFF8F0; }

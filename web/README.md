@@ -1,29 +1,41 @@
-# 生命方程式 - 前端
+# 湖南省三甲医院 · 患者服务平台 - 前端
 
-健康咨询和医疗预约系统前端代码
+单家医院（湖南省三甲医院）的智慧医疗服务平台 Web 端，覆盖患者服务、医生工作台、后台管理三套界面。
 
 ## 技术栈
 
-Vue 3 + Vite + Element Plus
+Vue 3.5 + Vite 8 + Element Plus + Vue Router + Axios
 
-## 推荐 IDE
+## 功能
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+**患者端**：首页与本院概况、科室医生、医生详情与排班、在线预约挂号（下单 → 模拟支付 → 取消）、我的预约、健康档案、AI 智能导诊、AI 健康建议、AI 报告解读（上传化验单图片自动识别）、问答社区、收藏、评价、用药提醒。
+
+**医生端**：工作台、排班管理、预约处理、患者病历、咨询回复、评价查看。
+
+**管理端**：数据看板、本院信息、医生、文章、疾病、药品、药房、预约、咨询、用户与角色管理。
 
 ## 项目启动
 
 ```sh
 npm install
+npm run dev      # 开发模式，默认 http://localhost:5173
+npm run build    # 生产构建，产物在 dist/
 ```
 
-### 开发模式（热更新）
+后端需先运行在 `http://localhost:8888`，开发环境代理已在 `vite.config.js` 中配置（`/api`、`/uploads`）。
 
-```sh
-npm run dev
+## 目录结构
+
+```
+src/
+├── api/       接口封装（按模块拆分）
+├── layouts/   主布局与侧边栏
+├── router/    路由表
+├── views/     页面（含 admin/ 管理端、doctor/ 医生端）
+└── utils/     请求拦截器等
 ```
 
-### 生产构建
+## 说明
 
-```sh
-npm run build
-```
+- 挂号支付为**模拟支付**，未对接任何真实支付网关。
+- AI 生成内容仅供参考，不构成医疗建议。

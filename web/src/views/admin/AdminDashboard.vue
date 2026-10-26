@@ -14,8 +14,8 @@ const groups = [
     cards: [
       { key: 'totalUsers',     label: '注册用户', icon: '👥', color: '#4A90D9', bg: '#EBF3FB' },
       { key: 'totalDoctors',   label: '入驻医生', icon: '👨‍⚕️', color: '#5CB85C', bg: '#EDF7ED' },
-      { key: 'totalHospitals', label: '合作医院', icon: '🏥', color: '#F0AD4E', bg: '#FEF8EE' },
-      { key: 'totalPharmacies',label: '合作药店', icon: '🏪', color: '#E67E22', bg: '#FEF4EC' },
+      { key: 'totalHospitals', label: '本院',     icon: '🏥', color: '#F0AD4E', bg: '#FEF8EE' },
+      { key: 'totalPharmacies',label: '院内药房', icon: '🏪', color: '#E67E22', bg: '#FEF4EC' },
     ],
   },
   {
@@ -89,12 +89,12 @@ const showUpdateTime = computed(() => !loading.value && lastUpdate.value)
       <h3>⚡ 快捷入口</h3>
       <div class="link-grid">
         <router-link to="/admin/users"       class="link-item">👥 用户管理</router-link>
-        <router-link to="/admin/hospitals"   class="link-item">🏥 医院管理</router-link>
+        <router-link to="/admin/hospitals"   class="link-item">🏥 本院信息</router-link>
         <router-link to="/admin/doctors"     class="link-item">👨‍⚕️ 医生管理</router-link>
         <router-link to="/admin/articles"    class="link-item">📝 文章管理</router-link>
         <router-link to="/admin/diseases"    class="link-item">🦠 疾病管理</router-link>
         <router-link to="/admin/drugs"       class="link-item">💊 药品管理</router-link>
-        <router-link to="/admin/pharmacies"  class="link-item">🏪 药店管理</router-link>
+        <router-link to="/admin/pharmacies"  class="link-item">🏪 药房管理</router-link>
       </div>
     </div>
   </div>

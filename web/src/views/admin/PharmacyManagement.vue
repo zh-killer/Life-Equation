@@ -20,7 +20,7 @@ const editForm = reactive({
 })
 
 const rules = {
-  name: [{ required: true, message: '请输入药店名称', trigger: 'blur' }],
+  name: [{ required: true, message: '请输入药房名称', trigger: 'blur' }],
 }
 
 const formRef = ref(null)
@@ -99,8 +99,8 @@ onMounted(fetchData)
 <template>
   <div class="admin-page">
     <div class="page-header">
-      <h2>🏪 药店管理</h2>
-      <el-button type="primary" :icon="Plus" @click="openCreate">新建药店</el-button>
+      <h2>🏪 药房管理</h2>
+      <el-button type="primary" :icon="Plus" @click="openCreate">新建药房</el-button>
     </div>
 
     <div class="search-bar">
@@ -140,7 +140,7 @@ onMounted(fetchData)
       <el-pagination v-model:current-page="currentPage" :page-size="pageSize" :total="total" layout="total, prev, pager, next" @current-change="handlePageChange" />
     </div>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑药店' : '新建药店'" width="560px">
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑药房' : '新建药房'" width="560px">
       <el-form ref="formRef" :model="editForm" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name"><el-input v-model="editForm.name" /></el-form-item>
         <el-row :gutter="16">

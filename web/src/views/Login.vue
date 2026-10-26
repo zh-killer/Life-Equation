@@ -106,8 +106,8 @@ async function handleLogin() {
             </g>
           </svg>
         </div>
-        <h1 class="brand-title">生命方程式</h1>
-        <p class="brand-desc">健康与医疗综合服务平台</p>
+        <h1 class="brand-title">湖南省三甲医院</h1>
+        <p class="brand-desc">医院患者服务平台</p>
         <div class="brand-features">
           <div class="feature-item">
             <span class="feature-dot"></span>

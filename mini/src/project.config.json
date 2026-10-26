@@ -12,7 +12,8 @@
       "outputPath": ""
     },
     "useCompilerPlugins": false,
-    "minifyWXML": true
+    "minifyWXML": true,
+    "urlCheck": false
   },
   "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},
@@ -20,6 +21,6 @@
     "ignore": [],
     "include": []
   },
-  "appid": "touristappid",
+  "appid": "wx5b6730e12c9f2469",
   "editorSetting": {}
 }

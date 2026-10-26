@@ -8,8 +8,6 @@ import com.lifeequation.mapper.HospitalMapper;
 import com.lifeequation.service.HospitalService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> implements HospitalService {
 
@@ -34,21 +32,6 @@ public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> i
         Hospital h = this.getById(id);
         if (h == null) throw new RuntimeException("医院不存在");
         return h;
-    }
-
-    @Override
-    public List<String> getHospitalCities() {
-        // 从已有数据中提取不重复的城市列表
-        return this.lambdaQuery()
-                .select(Hospital::getCity)
-                .eq(Hospital::getStatus, 1)
-                .isNotNull(Hospital::getCity)
-                .groupBy(Hospital::getCity)
-                .list()
-                .stream()
-                .map(Hospital::getCity)
-                .distinct()
-                .toList();
     }
 
     // ==================== Admin methods ====================

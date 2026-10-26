@@ -30,6 +30,7 @@ const unreadCount = computed(() => {
 // 图标与颜色映射
 const typeConfig = {
   appointment_confirmed: { icon: 'calendar', color: '#2DD4BF', bg: '#E6FAF5', label: '预约确认' },
+  appointment_unpaid: { icon: 'calendar', color: '#FF3B30', bg: '#FFF1F0', label: '待支付' },
   appointment_reminder: { icon: 'clock', color: '#FF9500', bg: '#FFF4E5', label: '预约提醒' },
   consult_replied: { icon: 'message', color: '#34C759', bg: '#E9F7EF', label: '咨询回复' },
   system: { icon: 'shield', color: '#7FDBFF', bg: '#E6FAF5', label: '系统通知' },
@@ -49,7 +50,16 @@ onMounted(async () => {
 
     // 预约通知
     for (const a of (apptRes.data?.records || [])) {
-      if (a.status === 'CONFIRMED') {
+      if (a.status === 'UNPAID') {
+        list.push({
+          id: `appt_unpaid_${a.id}`,
+          type: 'appointment_unpaid',
+          title: '预约待支付',
+          content: `${a.doctorName} 医生（${a.appointmentDate} ${a.timeSlot}）挂号费 ¥${a.amount} 待支付，支付后等待医生确认`,
+          time: a.createTime || a.appointmentDate,
+          link: '/pages/patient/appointment/appointment',
+        })
+      } else if (a.status === 'CONFIRMED') {
         list.push({
           id: `appt_confirmed_${a.id}`,
           type: 'appointment_confirmed',

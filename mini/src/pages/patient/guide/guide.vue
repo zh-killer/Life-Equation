@@ -5,7 +5,7 @@ import UiIcon from '@/components/ui-icon.vue'
 const keyword = ref('')
 
 const steps = [
-  { icon: 'calendar', title: '在线预约', desc: '选择医院→科室→医生→时段，一键预约挂号', color: '#2DD4BF' },
+  { icon: 'calendar', title: '在线预约', desc: '选择科室→医生→时段，一键预约挂号', color: '#2DD4BF' },
   { icon: 'file', title: '携带证件', desc: '身份证、医保卡、既往病历资料、检查报告单', color: '#FF9500' },
   { icon: 'hospital', title: '到院取号', desc: '提前15分钟到达，自助机或窗口取号，候诊区等候', color: '#2DD4BF' },
   { icon: 'stethoscope', title: '医生问诊', desc: '详细描述症状、发病时间，告知用药史和过敏史', color: '#7FDBFF' },

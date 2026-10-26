@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { getUserInfo, updateProfile, changePassword, setPassword, uploadAvatar } from '@/utils/api'
+import { getUserInfo, updateProfile, changePassword, setPassword, uploadAvatarBase64, getAvatarBase64 } from '@/utils/api'
 import config from '@/utils/config'
 import UiIcon from '@/components/ui-icon.vue'
 
@@ -13,8 +13,17 @@ const showSetPwd = ref(false)
 const editForm = ref({ realName: '', phone: '', email: '' })
 const pwdForm = ref({ oldPassword: '', newPassword: '', confirmPassword: '' })
 const setPwdForm = ref({ newPassword: '', confirmPassword: '' })
+const avatarDataUri = ref('')
 
 const isWxUser = computed(() => !!userInfo.value?.openid)
+
+// 从后端 API 获取头像 base64（纯 API 调用，走代理）
+async function loadAvatar() {
+  try {
+    const res = await getAvatarBase64()
+    if (res.data) avatarDataUri.value = res.data
+  } catch {}
+}
 
 onMounted(async () => {
   const token = uni.getStorageSync('token')
@@ -26,25 +35,36 @@ onMounted(async () => {
       userInfo.value = res.data
       uni.setStorageSync('userInfo', JSON.stringify(res.data))
     } catch {}
+    await loadAvatar()
   }
 })
 
 function goLogin() { uni.navigateTo({ url: '/pages/login/login' }) }
 
-// 头像上传
+// 头像上传 — base64 走 wx.request，上传完直接拿 data URI 显示
 async function uploadAvatarHandler() {
   uni.chooseImage({
     count: 1, sizeType: ['compressed'], sourceType: ['album', 'camera'],
     success: async (res) => {
       try {
         uni.showLoading({ title: '上传中...' })
-        const result = await uploadAvatar(res.tempFilePaths[0])
+        const fs = uni.getFileSystemManager()
+        const base64 = fs.readFileSync(res.tempFilePaths[0], 'base64')
+        const ext = (res.tempFilePaths[0].split('.').pop() || 'jpg').toLowerCase()
+        // 1. 上传
+        const result = await uploadAvatarBase64({ file: base64, ext })
         const avatarUrl = result.data
         userInfo.value = { ...userInfo.value, avatarUrl }
         uni.setStorageSync('userInfo', JSON.stringify(userInfo.value))
+        // 2. 拿 data URI 直接显示（不上传拿，后端返回更快）
+        const avRes = await getAvatarBase64()
+        if (avRes.data) avatarDataUri.value = avRes.data
         uni.hideLoading()
         uni.showToast({ title: '头像已更新' })
-      } catch { uni.hideLoading() }
+      } catch (e) {
+        uni.hideLoading()
+        uni.showToast({ title: '上传失败: ' + String(e?.message || e?.errMsg || '').substring(0, 30), icon: 'none' })
+      }
     }
   })
 }
@@ -92,7 +112,7 @@ const groups = [
     items: [
       { icon: 'virus', label: '疾病百科', url: '/pages/patient/disease/disease', color: '#FF9500' },
       { icon: 'pill', label: '药品查询', url: '/pages/patient/drug/drug', color: '#AF52DE' },
-      { icon: 'store', label: '药店查询', url: '/pages/patient/pharmacy/pharmacy', color: '#2DD4BF' },
+      { icon: 'store', label: '院内药房', url: '/pages/patient/pharmacy/pharmacy', color: '#2DD4BF' },
       { icon: 'news', label: '健康资讯', url: '/pages/patient/article/article', color: '#2DD4BF' },
       { icon: 'clipboard', label: '就诊指南', url: '/pages/patient/guide/guide', color: '#34C759' },
     ],
@@ -143,6 +163,7 @@ function logout() {
       if (!res.confirm) return
       uni.removeStorageSync('token')
       uni.removeStorageSync('userInfo')
+      uni.removeStorageSync('readNotiIds')
       isLoggedIn.value = false
       userInfo.value = null
       uni.showToast({ title: '已退出' })
@@ -157,9 +178,10 @@ function logout() {
     <view class="header" :style="{ paddingTop: statusBarHeight + 'px' }">
       <view v-if="isLoggedIn" class="user-card">
         <view class="avatar" @click="uploadAvatarHandler">
-          <image v-if="userInfo?.avatarUrl" class="avatar-img" :src="config.uploadBase + userInfo.avatarUrl" mode="aspectFill" />
+          <image v-if="avatarDataUri" class="avatar-img" :src="avatarDataUri" mode="aspectFill" />
           <text v-else>{{ userInfo?.realName?.charAt(0) || 'U' }}</text>
         </view>
+        <text style="color:#FF0;font-size:10px;position:absolute;top:4px;right:8px;">v8</text>
         <view class="user-info">
           <text class="user-name">{{ userInfo?.realName || userInfo?.username }}</text>
           <text class="user-role">{{ userInfo?.role === 'DOCTOR' ? '医生' : '普通用户' }}{{ isWxUser ? ' · 微信' : '' }}</text>

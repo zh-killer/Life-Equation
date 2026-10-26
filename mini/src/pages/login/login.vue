@@ -95,8 +95,8 @@ async function handleRegister() {
       <view class="hero-icon-wrap">
         <ui-icon name="pulse" :size="64" color="#2DD4BF" />
       </view>
-      <text class="hero-title">生命方程式</text>
-      <text class="hero-desc">健康与医疗综合服务平台</text>
+      <text class="hero-title">湖南省三甲医院</text>
+      <text class="hero-desc">医院患者服务平台</text>
     </view>
 
     <!-- ===== 微信登录模式 ===== -->

@@ -79,7 +79,8 @@ function openLocation() {
           <ui-icon name="hospital" :size="54" color="#fff" />
         </view>
         <view class="fav-btn-hero" @click.stop="handleFav" style="margin-left:auto">
-          <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : 'rgba(255,255,255,0.6)'" />
+          <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+          <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
         </view>
         <view class="hero-info">
           <view class="hero-name-row">
@@ -114,7 +115,7 @@ function openLocation() {
 
     <!-- 医院介绍 -->
     <view class="section" v-if="hospital.introduction">
-      <text class="section-title">医院介绍</text>
+      <text class="section-title">本院介绍</text>
       <view class="content-card">
         <text class="s-text">{{ hospital.introduction }}</text>
       </view>
@@ -305,7 +306,8 @@ function openLocation() {
 }
 
 /* Favorite button */
-.fav-btn-hero { padding: 8px; }
+.fav-btn-hero { display: flex; align-items: center; gap: 4px; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 20px; }
+.fav-text { font-size: 12px; color: #fff; font-weight: 500; }
 
 /* Reviews section */
 .rating-summary { display: flex; align-items: center; gap: 4px; }

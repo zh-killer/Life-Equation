@@ -18,7 +18,7 @@ const isAdmin = computed(() => role.value === 'ADMIN')
 const isDoctor = computed(() => role.value === 'DOCTOR')
 
 // 展开的菜单组
-const expandedGroups = ref(['医疗服务', '药品与药店', 'AI 智能助手', '健康资讯', '个人中心'])
+const expandedGroups = ref(['医疗服务', '药品与药房', 'AI 智能助手', '健康资讯', '个人中心'])
 
 function toggleGroup(name) {
   const idx = expandedGroups.value.indexOf(name)
@@ -52,17 +52,17 @@ const menuGroups = computed(() => [
     icon: '🏥',
     children: [
       { path: '/diseases',     icon: Search,          label: '疾病与症状', match: '/diseases' },
-      { path: '/hospitals',    icon: OfficeBuilding,  label: '医疗机构',   match: '/hospitals' },
+      { path: '/hospitals',    icon: OfficeBuilding,  label: '本院概况',   match: '/hospitals' },
       { path: '/doctors',      icon: UserFilled,      label: '医生团队',   match: '/doctors' },
       { path: '/guide',        icon: Notebook,        label: '就诊指南',   match: '/guide' },
     ]
   },
   {
-    name: '药品与药店',
+    name: '药品与药房',
     icon: '💊',
     children: [
       { path: '/drugs',        icon: Goods,           label: '药品查询',   match: '/drugs' },
-      { path: '/pharmacies',   icon: MapLocation,     label: '药店导航',   match: '/pharmacies' },
+      { path: '/pharmacies',   icon: MapLocation,     label: '院内药房',   match: '/pharmacies' },
     ]
   },
   {
@@ -111,8 +111,8 @@ async function handleLogout() {
     <!-- 侧边栏 -->
     <aside class="sidebar">
       <div class="logo-area">
-        <h1>生命方程式</h1>
-        <span>{{ isDoctor ? '医生工作站' : 'Life Equation' }}</span>
+        <h1>湖南省三甲医院</h1>
+        <span>{{ isDoctor ? '医生工作站' : '患者服务平台' }}</span>
       </div>
       <nav class="nav-menu">
 
@@ -138,7 +138,7 @@ async function handleLogout() {
               <el-icon><UserFilled /></el-icon> 用户管理
             </router-link>
             <router-link to="/admin/hospitals" class="nav-item sub-item" :class="{ active: route.path.startsWith('/admin/hospitals') }">
-              <el-icon><OfficeBuilding /></el-icon> 医院管理
+              <el-icon><OfficeBuilding /></el-icon> 本院信息
             </router-link>
             <router-link to="/admin/doctors" class="nav-item sub-item" :class="{ active: route.path.startsWith('/admin/doctors') }">
               <el-icon><UserFilled /></el-icon> 医生管理
@@ -159,7 +159,7 @@ async function handleLogout() {
               <el-icon><Goods /></el-icon> 药品管理
             </router-link>
             <router-link to="/admin/pharmacies" class="nav-item sub-item" :class="{ active: route.path.startsWith('/admin/pharmacies') }">
-              <el-icon><MapLocation /></el-icon> 药店管理
+              <el-icon><MapLocation /></el-icon> 药房管理
             </router-link>
           </div>
         </template>

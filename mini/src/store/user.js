@@ -41,6 +41,7 @@ export function useUserStore() {
     state.userInfo = null
     uni.removeStorageSync('token')
     uni.removeStorageSync('userInfo')
+    uni.removeStorageSync('readNotiIds') // 登出时清理已读记录
   }
 
   async function checkLogin() {

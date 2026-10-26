@@ -1,36 +1,28 @@
-# equation-of-life-web
+# Hunan Grade-A Hospital · Patient Service Platform (Web)
 
-#### Description
-健康咨询和医疗预约系统前端代码
+Web frontend for a single-hospital smart healthcare platform. Includes three sets of interfaces: patient portal, doctor workbench, and admin console.
 
-#### Software Architecture
-Software architecture description
+## Tech Stack
 
-#### Installation
+Vue 3.5 + Vite 8 + Element Plus + Vue Router + Axios
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Features
 
-#### Instructions
+- **Patient**: hospital overview, departments & doctors, doctor schedules, online appointment booking (mock payment, cancellation), health records, AI triage, AI health advice, AI lab-report interpretation (image upload), Q&A community, favorites, reviews, medication reminders.
+- **Doctor**: workbench, schedule management, appointment handling, patient records, consultation replies, reviews.
+- **Admin**: dashboard, hospital info, doctors, articles, diseases, drugs, pharmacies, appointments, consultations, users & roles.
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Getting Started
 
-#### Contribution
+```sh
+npm install
+npm run dev      # development, http://localhost:5173
+npm run build    # production build into dist/
+```
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+The backend must be running at `http://localhost:8888`; the dev proxy for `/api` and `/uploads` is configured in `vite.config.js`.
 
+## Notes
 
-#### Gitee Feature
-
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- Payment is **mocked**; no real payment gateway is integrated.
+- AI-generated content is for reference only and is not medical advice.

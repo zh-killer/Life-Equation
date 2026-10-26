@@ -81,7 +81,7 @@ onMounted(async () => {
       <el-button size="large" @click="router.back()">← 返回列表</el-button>
       <div class="action-right">
         <el-button size="large" @click="router.push('/ai/health-advice')">🤖 AI 健康建议</el-button>
-        <el-button size="large" type="primary" @click="router.push('/pharmacies')">🏥 附近药店购药</el-button>
+        <el-button size="large" type="primary" @click="router.push('/pharmacies')">🏪 院内药房取药</el-button>
       </div>
     </div>
   </div>

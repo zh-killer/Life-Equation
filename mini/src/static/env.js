@@ -5,11 +5,11 @@
  *   'lan'  → 手机真机（局域网IP）
  * 改完保存，重新编译即可
  */
-var CURRENT_ENV = 'dev'
+var CURRENT_ENV = 'lan'
 
 var ENV_LIST = {
   dev:        'http://localhost:8888/api',
-  lan:        'http://192.168.83.152:8888/api',
+  lan:        'http://10.16.18.201:8888/api',
   production: 'https://your-server.com/api',
 }
 

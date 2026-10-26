@@ -29,4 +29,8 @@ public class Appointment {
     private String hospitalName;
     @TableField(exist = false)
     private String department;
+
+    /** 挂号费，取自医生当前挂号费，仅用于展示和支付，不落库 */
+    @TableField(exist = false)
+    private java.math.BigDecimal amount;
 }

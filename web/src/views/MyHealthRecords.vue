@@ -6,7 +6,7 @@ import request from '@/api/request'
 const records = ref([])
 const loading = ref(false)
 const showAddDialog = ref(false)
-const form = ref({ recordType: 'CHECKUP', recordTitle: '', recordContent: '', recordDate: '', hospitalName: '', doctorName: '', isPublic: 1 })
+const form = ref({ recordType: 'CHECKUP', recordTitle: '', recordContent: '', recordDate: '', hospitalName: '湖南省三甲医院', doctorName: '', isPublic: 1 })
 
 const recordTypes = [
   { value: 'BASIC_INFO', label: '基本信息' },
@@ -39,7 +39,7 @@ async function handleAdd() {
     await request.post('/health-records', form.value)
     ElMessage.success('添加成功')
     showAddDialog.value = false
-    form.value = { recordType: 'CHECKUP', recordTitle: '', recordContent: '', recordDate: '', hospitalName: '', doctorName: '', isPublic: 1 }
+    form.value = { recordType: 'CHECKUP', recordTitle: '', recordContent: '', recordDate: '', hospitalName: '湖南省三甲医院', doctorName: '', isPublic: 1 }
     await loadData()
   } catch (e) {
     ElMessage.error('添加失败')
@@ -109,7 +109,7 @@ function getTypeLabel(type) {
           <el-date-picker v-model="form.recordDate" type="date" placeholder="选择日期" format="YYYY-MM-DD" value-format="YYYY-MM-DD" />
         </el-form-item>
         <el-form-item label="就诊医院">
-          <el-input v-model="form.hospitalName" placeholder="医院名称" />
+          <el-input v-model="form.hospitalName" disabled />
         </el-form-item>
         <el-form-item label="就诊医生">
           <el-input v-model="form.doctorName" placeholder="医生姓名" />

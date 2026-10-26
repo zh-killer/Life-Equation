@@ -4,7 +4,8 @@
   "description": "生命方程式 - 微信小程序",
   "scripts": {
     "dev:mp-weixin": "uni -p mp-weixin",
-    "build:mp-weixin": "uni build -p mp-weixin"
+    "set-ip": "node scripts/set-lan-ip.js",
+    "build:mp-weixin": "npm run set-ip && uni build -p mp-weixin"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-4020920240930001",

@@ -11,7 +11,7 @@ const loading = ref(true)
 
 // 醒目的大图标服务入口
 const services = [
-  { key: 'appointment',  label: '预约挂号',  icon: '📅', color: '#4A90D9', path: '/hospitals', desc: '在线预约，免排队' },
+  { key: 'appointment',  label: '预约挂号',  icon: '📅', color: '#4A90D9', path: '/hospitals/1', desc: '本院在线预约，免排队' },
   { key: 'consult',     label: '在线咨询',  icon: '💬', color: '#5CB85C', path: '/consultations', desc: '医生在线解答' },
   { key: 'disease',     label: '疾病查询',  icon: '🔍', color: '#F0AD4E', path: '/diseases', desc: '症状自查·用药参考' },
   { key: 'article',     label: '健康资讯',  icon: '📋', color: '#D9534F', path: '/articles', desc: '科学养生·防病知识' },
@@ -23,7 +23,7 @@ const services = [
 const tools = [
   { label: '我的预约',   icon: '📋', path: '/my-appointments' },
   { label: '就诊指南',   icon: '🗺️', path: '/guide' },
-  { label: '药店导航',   icon: '📍', path: '/pharmacies' },
+  { label: '院内药房',   icon: '📍', path: '/pharmacies' },
 ]
 
 // 加载首页数据
@@ -59,7 +59,7 @@ onMounted(async () => {
         </div>
         <div class="welcome-text">
           <h2>你好，{{ userInfo.realName || userInfo.username }}</h2>
-          <p>生命方程式 · 健康与医疗综合服务平台</p>
+          <p>湖南省三甲医院 · 患者服务平台</p>
         </div>
       </div>
 

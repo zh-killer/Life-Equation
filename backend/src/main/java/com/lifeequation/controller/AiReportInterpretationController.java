@@ -62,7 +62,7 @@ public class AiReportInterpretationController {
     }
 
     /**
-     * 诊断接口：测试智谱 AI 视觉服务连接状态
+     * 诊断接口：测试 DeepSeek 视觉服务连接状态（现场画一张带检验数值的小图发给模型，能读对才算通）
      */
     @GetMapping("/diagnose")
     public Result<?> diagnoseVisionService() {

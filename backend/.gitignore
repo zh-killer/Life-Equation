@@ -1,0 +1,18 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+.idea/
+*.iws
+*.iml
+*.ipr
+
+logs/
+*.log
+
+# 本地密钥（模板见 config/application-local.yml.example）
+/config/application-local.yml
+.vscode/
+uploads/
+*.DS_Store

@@ -1,172 +1,164 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getHospitals, getDoctors, getHospitalCities } from '@/utils/api'
+import { ref, computed, onMounted } from 'vue'
+import { getHospitalDetail, getDoctors } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
-const tab = ref(0)
-const hospitals = ref([])
+const hospital = ref(null)
 const doctors = ref([])
-const cities = ref([])
-const keyword = ref('')
-const city = ref('')
-const level = ref('')
 const department = ref('')
-const loading = ref(false)
+const keyword = ref('')
+const loading = ref(true)
 
-onMounted(async () => {
-  try { cities.value = (await getHospitalCities()).data || [] } catch {}
-  fetchHospitals()
+const departments = computed(() => {
+  const set = new Set()
+  doctors.value.forEach(d => { if (d.department) set.add(d.department) })
+  return Array.from(set)
 })
 
-async function fetchHospitals() {
+const deptCount = computed(() => {
+  const raw = hospital.value?.departments
+  if (raw) return raw.split(/[,，]/).filter(Boolean).length
+  return departments.value.length
+})
+
+const filteredDoctors = computed(() => {
+  const kw = keyword.value.trim()
+  return doctors.value.filter(d => {
+    if (department.value && d.department !== department.value) return false
+    if (!kw) return true
+    return [d.name, d.title, d.specialty, d.department].some(v => (v || '').includes(kw))
+  })
+})
+
+onMounted(loadData)
+
+async function loadData() {
   loading.value = true
   try {
-    const res = await getHospitals({
-      page: 1, size: 50,
-      keyword: keyword.value || undefined,
-      city: city.value || undefined,
-      level: level.value || undefined,
-    })
-    hospitals.value = res.data.records || []
-  } catch {} finally { loading.value = false }
+    const [hRes, dRes] = await Promise.all([
+      getHospitalDetail(1).catch(() => ({ data: null })),
+      getDoctors({ page: 1, size: 200, hospitalId: 1 }).catch(() => ({ data: { records: [] } })),
+    ])
+    hospital.value = hRes.data || null
+    doctors.value = dRes.data?.records || []
+  } finally {
+    loading.value = false
+  }
 }
 
-async function fetchDoctors() {
-  loading.value = true
-  try {
-    const res = await getDoctors({
-      page: 1, size: 50,
-      keyword: keyword.value || undefined,
-      department: department.value || undefined,
-    })
-    doctors.value = res.data.records || []
-  } catch {} finally { loading.value = false }
-}
-
-function onTabChange(t) { tab.value = t; keyword.value = ''; if (t === 0) fetchHospitals(); else fetchDoctors() }
-function goHospital(id) { uni.navigateTo({ url: '/pages/detail/hospital?id=' + id }) }
+function resetFilter() { keyword.value = ''; department.value = '' }
+function goHospital() { uni.navigateTo({ url: '/pages/detail/hospital?id=1' }) }
 function goDoctor(id) { uni.navigateTo({ url: '/pages/detail/doctor?id=' + id }) }
+function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appointment' }) }
 </script>
 
 <template>
   <view class="page has-tabbar">
-    <!-- Tab -->
-    <view class="tabs">
-      <view class="tab-item" :class="{ active: tab === 0 }" @click="onTabChange(0)">
-        <ui-icon name="hospital" :size="64" :color="tab === 0 ? '#2DD4BF' : '#C7C7CC'" />
-        <text>医院</text>
-        <view v-if="tab === 0" class="tab-dot" />
-      </view>
-      <view class="tab-item" :class="{ active: tab === 1 }" @click="onTabChange(1)">
-        <ui-icon name="stethoscope" :size="64" :color="tab === 1 ? '#2DD4BF' : '#C7C7CC'" />
-        <text>医生</text>
-        <view v-if="tab === 1" class="tab-dot" />
-      </view>
-    </view>
-
-    <!-- 搜索 -->
-    <view class="search-bar">
-      <ui-icon name="search" :size="64" color="#C7C7CC" />
-      <input v-model="keyword" class="search-input" placeholder-class="ph"
-        :placeholder="tab === 0 ? '搜索医院名称' : '搜索医生姓名或专长'"
-        @confirm="tab === 0 ? fetchHospitals() : fetchDoctors()" />
-      <view class="search-btn" @click="tab === 0 ? fetchHospitals() : fetchDoctors()">
-        <text>搜索</text>
-      </view>
-    </view>
-
-    <!-- 筛选 -->
-    <view class="filters" v-if="tab === 0">
-      <picker mode="selector" :range="['全部','三甲','三乙','二甲','二乙']" @change="e => { level = ['全部','三甲','三乙','二甲','二乙'][e.detail.value]; if(level==='全部')level=''; fetchHospitals() }">
-        <view class="filter-chip">
-          <text>{{ level || '等级' }}</text>
-          <ui-icon name="chevronRight" :size="50" color="#C7C7CC" />
-        </view>
-      </picker>
-      <picker mode="selector" :range="['全部', ...cities]" @change="e => { city = e.detail.value === 0 ? '' : cities[e.detail.value - 1]; fetchHospitals() }">
-        <view class="filter-chip">
-          <text>{{ city || '城市' }}</text>
-          <ui-icon name="chevronRight" :size="50" color="#C7C7CC" />
-        </view>
-      </picker>
-    </view>
-
-    <!-- 医院列表 -->
-    <scroll-view v-if="tab === 0" scroll-y class="list">
-      <template v-if="loading">
-        <view v-for="i in 4" :key="i" class="card">
-          <view class="skeleton" style="width: 60%; height: 18px; margin-bottom: 10px;" />
-          <view class="skeleton" style="width: 80%; height: 14px; margin-bottom: 6px;" />
-          <view class="skeleton" style="width: 40%; height: 12px;" />
-        </view>
-      </template>
-      <template v-else-if="hospitals.length">
-        <view v-for="h in hospitals" :key="h.id" class="card hospital-card" @click="goHospital(h.id)">
-          <view class="card-top">
-            <view class="hospital-icon-box">
-              <ui-icon name="hospital" :size="44" color="#7FDBFF" />
+    <scroll-view scroll-y class="list">
+      <!-- 本院概况 -->
+      <view class="hospital-card" @click="goHospital">
+        <view class="hc-main">
+          <view class="hc-icon">
+            <ui-icon name="hospital" :size="52" color="#2DD4BF" />
+          </view>
+          <view class="hc-info">
+            <view class="hc-name-row">
+              <text class="hc-name">{{ hospital?.name || '湖南省三甲医院' }}</text>
+              <view class="hc-badge"><text>{{ hospital?.level || '三甲' }}</text></view>
             </view>
-            <view class="card-info">
-              <view class="name-row">
-                <text class="card-name">{{ h.name }}</text>
-                <view class="level-badge" :class="{ top: h.level === '三甲' }">
-                  <text>{{ h.level }}</text>
+            <text class="hc-addr">{{ hospital?.address || '湖南省郴州市北湖区人民西路' }}</text>
+          </view>
+          <ui-icon name="chevronRight" :size="48" color="#C7C7CC" />
+        </view>
+        <view class="hc-foot">
+          <view class="hc-stat">
+            <text class="hc-num">{{ deptCount }}</text>
+            <text class="hc-label">临床医技科室</text>
+          </view>
+          <view class="hc-line" />
+          <view class="hc-stat">
+            <text class="hc-num">{{ doctors.length }}</text>
+            <text class="hc-label">本院医生</text>
+          </view>
+          <view class="hc-appoint" @click.stop="goAppoint">
+            <text>预约挂号</text>
+            <ui-icon name="chevronRight" :size="40" color="#2DD4BF" />
+          </view>
+        </view>
+      </view>
+
+      <!-- 搜索医生 -->
+      <view class="search-bar">
+        <ui-icon name="search" :size="64" color="#C7C7CC" />
+        <input v-model="keyword" class="search-input" placeholder-class="ph"
+          placeholder="搜索医生姓名、职称或专长" />
+        <view v-if="keyword" class="search-clear" @click="keyword = ''">
+          <ui-icon name="close" :size="40" color="#C7C7CC" />
+        </view>
+      </view>
+
+      <!-- 科室筛选 -->
+      <scroll-view scroll-x class="dept-bar" :show-scrollbar="false">
+        <view class="dept-inner">
+          <view class="dept-chip" :class="{ active: department === '' }" @click="department = ''">
+            <text>全部</text>
+          </view>
+          <view v-for="d in departments" :key="d" class="dept-chip"
+            :class="{ active: department === d }" @click="department = d">
+            <text>{{ d }}</text>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 结果统计 -->
+      <view class="result-tip" v-if="!loading">
+        <text>共 {{ filteredDoctors.length }} 位医生</text>
+        <text v-if="department || keyword" class="result-reset" @click="resetFilter">重置筛选</text>
+      </view>
+
+      <!-- 医生列表 -->
+      <view class="doc-list">
+        <template v-if="loading">
+          <view v-for="i in 5" :key="i" class="card">
+            <view class="doc-skeleton-row">
+              <view class="skeleton" style="width: 48px; height: 48px; border-radius: 14px;" />
+              <view style="flex:1">
+                <view class="skeleton" style="width: 40%; height: 16px; margin-bottom: 8px;" />
+                <view class="skeleton" style="width: 70%; height: 12px;" />
+              </view>
+            </view>
+          </view>
+        </template>
+        <template v-else-if="filteredDoctors.length">
+          <view v-for="d in filteredDoctors" :key="d.id" class="card doctor-card" @click="goDoctor(d.id)">
+            <view class="doc-avatar">{{ d.name?.charAt(0) }}</view>
+            <view class="doc-body">
+              <view class="doc-name-row">
+                <text class="doc-name">{{ d.name }}</text>
+                <text class="doc-title">{{ d.title }}</text>
+              </view>
+              <text class="doc-dept">{{ d.department }}</text>
+              <text class="doc-spec" v-if="d.specialty">擅长：{{ d.specialty }}</text>
+              <view class="doc-bottom">
+                <view class="doc-fee">
+                  <text class="fee-symbol">¥</text>
+                  <text class="fee-num">{{ d.consultationFee }}</text>
+                </view>
+                <view class="doc-status" :class="{ off: !d.isAvailable }">
+                  <view class="status-dot" :class="{ off: !d.isAvailable }" />
+                  <text>{{ d.isAvailable ? '可预约' : '停诊' }}</text>
                 </view>
               </view>
-              <text class="card-addr">{{ h.city }} · {{ h.address?.substring(0, 25) }}</text>
-              <text class="card-dept" v-if="h.departments">{{ h.departments.split(/[,，]/).length }} 个科室</text>
             </view>
           </view>
-        </view>
-      </template>
-      <view v-else class="empty-state">
-        <view class="empty-icon">
-          <ui-icon name="hospital" :size="54" color="#C7C7CC" />
-        </view>
-        <text class="empty-text">未找到医院</text>
-      </view>
-    </scroll-view>
-
-    <!-- 医生列表 -->
-    <scroll-view v-if="tab === 1" scroll-y class="list">
-      <template v-if="loading">
-        <view v-for="i in 4" :key="i" class="card">
-          <view class="doc-skeleton-row">
-            <view class="skeleton" style="width: 48px; height: 48px; border-radius: 50%;" />
-            <view style="flex:1">
-              <view class="skeleton" style="width: 40%; height: 16px; margin-bottom: 6px;" />
-              <view class="skeleton" style="width: 60%; height: 12px;" />
-            </view>
+        </template>
+        <view v-else class="empty-state">
+          <view class="empty-icon">
+            <ui-icon name="stethoscope" :size="54" color="#C7C7CC" />
           </view>
+          <text class="empty-text">没有匹配的医生</text>
+          <view class="empty-btn" @click="resetFilter"><text>查看全部医生</text></view>
         </view>
-      </template>
-      <template v-else-if="doctors.length">
-        <view v-for="d in doctors" :key="d.id" class="card doctor-card" @click="goDoctor(d.id)">
-          <view class="doc-avatar">{{ d.name?.charAt(0) }}</view>
-          <view class="doc-body">
-            <view class="doc-name-row">
-              <text class="doc-name">{{ d.name }}</text>
-              <text class="doc-title">{{ d.title }}</text>
-            </view>
-            <text class="doc-dept">{{ d.department }} · {{ d.hospitalName }}</text>
-            <view class="doc-bottom">
-              <view class="doc-fee">
-                <text class="fee-symbol">¥</text>
-                <text class="fee-num">{{ d.consultationFee }}</text>
-              </view>
-              <view class="doc-status" :class="{ off: !d.isAvailable }">
-                <view class="status-dot" :class="{ off: !d.isAvailable }" />
-                <text>{{ d.isAvailable ? '可约' : '停诊' }}</text>
-              </view>
-            </view>
-          </view>
-        </view>
-      </template>
-      <view v-else class="empty-state">
-        <view class="empty-icon">
-          <ui-icon name="stethoscope" :size="54" color="#C7C7CC" />
-        </view>
-        <text class="empty-text">未找到医生</text>
       </view>
     </scroll-view>
 
@@ -177,100 +169,106 @@ function goDoctor(id) { uni.navigateTo({ url: '/pages/detail/doctor?id=' + id })
 
 <style scoped>
 .page { height: 100vh; background: var(--c-bg); display: flex; flex-direction: column; }
+.list { flex: 1; padding: 12px 16px 0; }
 
-/* Tab */
-.tabs {
-  display: flex; background: #fff;
-  border-bottom: 1px solid #F2F2F7;
+/* 本院概况 */
+.hospital-card {
+  background: linear-gradient(135deg, #E6FAF5 0%, #F7FFFD 60%, #FFFFFF 100%);
+  border-radius: 16px; padding: 16px; margin-bottom: 12px;
 }
-.tab-item {
-  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 12px 0;
-  position: relative;
+.hc-main { display: flex; align-items: center; gap: 12px; }
+.hc-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
-.tab-item text { font-size: 14px; color: #C7C7CC; }
-.tab-item.active text { color: #2DD4BF; font-weight: 700; }
-.tab-dot {
-  position: absolute; bottom: 0;
-  width: 24px; height: 3px; border-radius: 2px;
-  background: #2DD4BF;
+.hc-info { flex: 1; min-width: 0; }
+.hc-name-row { display: flex; align-items: center; gap: 8px; }
+.hc-name { font-size: 17px; font-weight: 700; color: var(--c-text); }
+.hc-badge { padding: 1px 8px; border-radius: 4px; background: #FFEBEA; flex-shrink: 0; }
+.hc-badge text { font-size: 10px; color: #FF3B30; font-weight: 700; }
+.hc-addr {
+  font-size: 12px; color: var(--c-text-3); display: block; margin-top: 5px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+.hc-foot {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid rgba(45, 212, 191, 0.12);
+}
+.hc-stat { display: flex; flex-direction: column; align-items: flex-start; }
+.hc-num { font-size: 20px; font-weight: 800; color: #2DD4BF; line-height: 1.1; }
+.hc-label { font-size: 11px; color: var(--c-text-3); margin-top: 2px; }
+.hc-line { width: 1px; height: 26px; background: rgba(45, 212, 191, 0.15); }
+.hc-appoint {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 2px;
+  background: #fff; border-radius: 16px; padding: 7px 14px;
+}
+.hc-appoint text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
 
 /* 搜索 */
 .search-bar {
   display: flex; align-items: center; gap: 8px;
-  padding: 10px 16px;
-  background: #fff;
-  border-bottom: 1px solid #F2F2F7;
+  height: 40px; padding: 0 14px;
+  background: #fff; border-radius: 20px;
+  margin-bottom: 10px;
 }
-.search-input {
-  flex: 1; height: 36px; background: #FFFFFF;
-  border-radius: 18px; padding: 0 14px; font-size: 14px;
-}
+.search-input { flex: 1; height: 100%; font-size: 14px; }
 .ph { color: #C7C7CC; }
-.search-btn {
-  height: 36px; padding: 0 16px;
-  background: #2DD4BF; border-radius: 18px;
+.search-clear {
+  width: 20px; height: 20px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
+  background: #F2F2F7;
 }
-.search-btn text { color: #fff; font-size: 14px; }
 
-/* 筛选 */
-.filters { display: flex; gap: 8px; padding: 8px 16px; background: #fff; }
-.filter-chip {
-  display: flex; align-items: center; gap: 2px;
-  background: #FFFFFF; border-radius: 16px;
-  padding: 4px 10px;
+/* 科室筛选 */
+.dept-bar { width: 100%; margin-bottom: 4px; }
+.dept-inner { display: flex; gap: 8px; padding: 2px 0 8px; white-space: nowrap; }
+.dept-chip {
+  flex-shrink: 0;
+  padding: 6px 14px; border-radius: 16px;
+  background: #fff;
 }
-.filter-chip text { font-size: 13px; color: #8E8E93; }
+.dept-chip text { font-size: 13px; color: var(--c-text-2); }
+.dept-chip.active { background: #2DD4BF; }
+.dept-chip.active text { color: #fff; font-weight: 600; }
+
+/* 结果统计 */
+.result-tip {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 4px 2px 8px;
+}
+.result-tip text { font-size: 12px; color: var(--c-text-3); }
+.result-reset { color: #2DD4BF; }
 
 /* 列表 */
-.list { flex: 1; padding: 12px 16px; }
+.doc-list { padding-bottom: 16px; }
 
 /* 通用卡片 */
 .card {
   background: #fff; border-radius: 14px;
   padding: 14px 16px; margin-bottom: 10px;
-  box-shadow: none;
 }
-
-/* 医院卡片 */
-.hospital-card { padding: 16px; }
-.card-top { display: flex; gap: 12px; }
-.hospital-icon-box {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: #E6FAF5;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.card-info { flex: 1; }
-.name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.card-name { font-size: 16px; font-weight: 700; color: var(--c-text); }
-.level-badge {
-  padding: 1px 8px; border-radius: 4px;
-  background: #E6FAF5;
-}
-.level-badge text { font-size: 10px; color: #7FDBFF; font-weight: 700; }
-.level-badge.top { background: #FFEBEA; }
-.level-badge.top text { color: #FF3B30; }
-.card-addr { font-size: 13px; color: var(--c-text-2); display: block; }
-.card-dept { font-size: 12px; color: #C7C7CC; margin-top: 4px; display: block; }
 
 /* 医生卡片 */
-.doctor-card {
-  display: flex; gap: 12px; align-items: flex-start;
-}
+.doctor-card { display: flex; gap: 12px; align-items: flex-start; }
 .doc-avatar {
   width: 48px; height: 48px; border-radius: 14px;
   background: #2DD4BF;
   color: #fff; display: flex; align-items: center; justify-content: center;
   font-size: 20px; font-weight: 700; flex-shrink: 0;
 }
-.doc-body { flex: 1; }
+.doc-body { flex: 1; min-width: 0; }
 .doc-name-row { display: flex; align-items: center; gap: 6px; }
 .doc-name { font-size: 16px; font-weight: 700; color: var(--c-text); }
-.doc-title { font-size: 12px; color: #FF9500; background: #E6FAF5; padding: 1px 6px; border-radius: 4px; }
-.doc-dept { font-size: 13px; color: #8E8E93; margin-top: 4px; display: block; }
+.doc-title { font-size: 11px; color: #FF9500; background: #E6FAF5; padding: 1px 6px; border-radius: 4px; }
+.doc-dept { font-size: 13px; color: var(--c-text-2); margin-top: 4px; display: block; }
+.doc-spec {
+  font-size: 12px; color: var(--c-text-3); margin-top: 4px; display: block;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 .doc-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
 .doc-fee { display: flex; align-items: baseline; }
 .fee-symbol { font-size: 12px; color: #FF3B30; font-weight: 600; }
@@ -282,4 +280,22 @@ function goDoctor(id) { uni.navigateTo({ url: '/pages/detail/doctor?id=' + id })
 .doc-status.off text { color: #C7C7CC; }
 
 .doc-skeleton-row { display: flex; gap: 12px; align-items: center; }
+
+/* 空状态 */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 60px 0;
+}
+.empty-icon {
+  width: 76px; height: 76px; border-radius: 50%;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.empty-text { font-size: 14px; color: var(--c-text-3); }
+.empty-btn {
+  margin-top: 16px; padding: 8px 20px;
+  background: #E6FAF5; border-radius: 18px;
+}
+.empty-btn text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
 </style>

@@ -214,7 +214,7 @@ const isLoggedIn = computed(() => !!localStorage.getItem('token'))
 const isVisionSuccess = computed(() => {
   const ocr = result.value?.ocrText || ''
   return ocr && !ocr.includes('图片识别失败') && !ocr.includes('未输入数据')
-    && (ocr.includes('GLM-4V') || ocr.includes('glm-4v') || ocr.includes('识别并分析') || ocr.includes('FLASH'))
+    && ocr.includes('从图片中自动识别')
 })
 const isVisionFallback = computed(() => {
   const ocr = result.value?.ocrText || ''

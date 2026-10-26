@@ -14,6 +14,8 @@ export const verifyIdentity = (data) => request.post('/auth/verify-identity', da
 export const changePassword = (data) => request.put('/auth/change-password', data)
 export const setPassword = (data) => request.put('/auth/set-password', data)
 export const uploadAvatar = (filePath) => request.upload('/auth/upload-avatar', filePath, 'file')
+export const uploadAvatarBase64 = (data) => request.post('/auth/upload-avatar-base64', data)
+export const getAvatarBase64 = () => request.get('/auth/avatar-base64')
 export const logout = () => request.post('/auth/logout')
 
 // ===== 首页 =====
@@ -22,7 +24,6 @@ export const getHome = () => request.get('/home')
 // ===== 医院 =====
 export const getHospitals = (params) => request.get('/hospitals', params)
 export const getHospitalDetail = (id) => request.get(`/hospitals/${id}`)
-export const getHospitalCities = () => request.get('/hospitals/cities')
 
 // ===== 医生 =====
 export const getDoctors = (params) => request.get('/doctors', params)
@@ -38,6 +39,8 @@ export const deleteConsult = (id) => request.delete(`/ai/consultation/${id}`)
 // ===== 预约 =====
 export const createAppointment = (data) => request.post('/appointments', data)
 export const getUserAppointments = (params) => request.get('/appointments/user', params)
+export const cancelAppointment = (id) => request.put(`/appointments/${id}/cancel`)
+export const payAppointment = (id) => request.put(`/appointments/${id}/pay`)
 
 // ===== 疾病 =====
 export const getDiseases = (params) => request.get('/diseases', params)

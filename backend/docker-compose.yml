@@ -67,7 +67,6 @@ services:
       JWT_SECRET: ${JWT_SECRET:-life-equation-jwt-secret}
       # AI API Keys
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
-      ZHIPUAI_API_KEY: ${ZHIPUAI_API_KEY:-}
       # Spring profile
       SPRING_PROFILES_ACTIVE: prod
     depends_on:

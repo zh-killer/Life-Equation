@@ -7,7 +7,7 @@ import com.lifeequation.entity.AiReportInterpretation;
 import com.lifeequation.mapper.AiReportInterpretationMapper;
 import com.lifeequation.service.AiReportInterpretationService;
 import com.lifeequation.service.DeepSeekService;
-import com.lifeequation.service.ZhipuAiVisionService;
+import com.lifeequation.service.DeepSeekVisionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,7 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
     private String uploadPath;
 
     /**
-     * DeepSeek 纯文本解读 prompt（仅当智谱视觉不可用时使用）
+     * DeepSeek 纯文本解读 prompt（仅当视觉识别不可用时使用）
      */
     private static final String TEXT_FALLBACK_PROMPT =
         "你是一位拥有20年临床经验的医学检验科主任医师。请对以下检验数据进行专业解读。\n\n"
@@ -36,17 +36,17 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
         + "⚠️ AI生成仅供参考，请咨询专业医生。";
 
     /**
-     * 视觉识别成功后，要求 DeepSeek 精炼优化智谱原始结果的 prompt（可选增强）
+     * 视觉识别成功后，要求 DeepSeek 精炼优化视觉模型原始结果的 prompt（可选增强）
      */
     private static final String ENRICH_PROMPT =
         "你是一位资深医学检验科主任。以下是一份AI初步生成的体检报告解读，请以专业医生的口吻进行精炼和优化，"
         + "补充遗漏的临床意义、可能的鉴别诊断方向，并确保建议具体可操作。保持四段式输出格式不变。";
 
     private final DeepSeekService deepSeekService;
-    private final ZhipuAiVisionService visionService;
+    private final DeepSeekVisionService visionService;
 
     public AiReportInterpretationServiceImpl(DeepSeekService deepSeekService,
-                                              ZhipuAiVisionService visionService) {
+                                              DeepSeekVisionService visionService) {
         this.deepSeekService = deepSeekService;
         this.visionService = visionService;
     }
@@ -91,7 +91,7 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
             throw new RuntimeException("文件上传失败: " + e.getMessage());
         }
 
-        // 2. 优先：智谱 GLM-4V 使用 base64 模式直接识别图片（无需公网 URL）
+        // 2. 优先：DeepSeek 视觉模型使用 base64 模式直接识别图片（无需公网 URL）
         String aiResult = null;
         boolean usedVision = false;
         String visionError = null;
@@ -112,10 +112,10 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
                 System.err.println("[Report] Vision analysis returned empty, will try DeepSeek fallback");
             }
         } else {
-            System.err.println("[Report] ZhipuAI not configured");
+            System.err.println("[Report] DeepSeek vision model not configured");
         }
 
-        // 3. 降级：智谱不可用时，用 DeepSeek + 用户手动输入的数据
+        // 3. 降级：视觉识别不可用时，用 DeepSeek 纯文本 + 用户手动输入的数据
         if (!usedVision) {
             StringBuilder sb = new StringBuilder();
             if (reportData != null && !reportData.isBlank()) {
@@ -152,7 +152,7 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
         } else {
             report.setAiInterpretation("很抱歉，AI 分析服务当前不可用。\n\n"
                 + "您的" + reportLabel + "报告图片已安全保存。可能的原因：\n"
-                + "1. AI 视觉识别服务（智谱" + visionService.getModelName() + "）API Key 无效或已过期\n"
+                + "1. AI 视觉识别服务（DeepSeek " + visionService.getModelName() + "）API Key 无效或已过期\n"
                 + "2. 文本分析服务（DeepSeek）暂不可用\n"
                 + "3. 网络连接问题\n\n"
                 + "请检查 API Key 配置后重试，或将检验数据手动输入到报告数据区域。");
@@ -182,38 +182,9 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
 
     @Override
     public java.util.Map<String, Object> diagnoseVisionStatus() {
-        java.util.Map<String, Object> status = new java.util.LinkedHashMap<>();
-        status.put("model", visionService.getModelName());
-        status.put("configured", visionService.isConfigured());
-
-        // 用一张公开可访问的测试图 URL 测试 API 连通性
-        // (GLM-4V-Flash 免费版只支持 URL，不支持 base64。图片需足够大，否则 API 报 1210)
-        String testImageUrl = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png";
-        String result = visionService.analyzeReport(testImageUrl, "other");
-        status.put("testResult", result != null ? result.substring(0, Math.min(300, result.length())) : "null");
-
-        if (result == null || result.isBlank()) {
-            status.put("status", "UNREACHABLE");
-            status.put("suggestion", "API 完全无响应，请检查网络或 API Key 是否有效");
-        } else if (result.startsWith("ApiError:")) {
-            status.put("status", "ERROR");
-            status.put("errorDetail", result);
-            if (result.contains("401") || result.contains("unauthorized") || result.contains("invalid")) {
-                status.put("suggestion", "API Key 无效或已过期，请到 https://open.bigmodel.cn 重新获取");
-            } else if (result.contains("429") || result.contains("quota") || result.contains("limit")) {
-                status.put("suggestion", "API 调用额度已用完或频率限制，请检查账户余额");
-            } else if (result.contains("Connection refused") || result.contains("timeout") || result.contains("UnknownHost")) {
-                status.put("suggestion", "无法连接到智谱 API 服务器，请检查网络");
-            } else {
-                status.put("suggestion", "请根据 errorDetail 排查具体原因");
-            }
-        } else {
-            status.put("status", "OK");
-            status.put("suggestion", "视觉服务正常，可以识别图片");
-        }
-
-        // DeepSeek 状态
-        status.put("deepSeekConfigured", deepSeekService.isConfigured());
+        // 视觉和文本现在用同一个 DeepSeek Key，自检结果已覆盖两项
+        java.util.Map<String, Object> status = new java.util.LinkedHashMap<>(visionService.selfTest());
+        status.put("textModelConfigured", deepSeekService.isConfigured());
         return status;
     }
 

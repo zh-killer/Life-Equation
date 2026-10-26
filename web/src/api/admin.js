@@ -87,7 +87,7 @@ export function deleteDrug(id) {
   return request.delete(`/admin/drugs/${id}`)
 }
 
-// ===== 药店管理 =====
+// ===== 药房管理 =====
 export function getPharmacies(params) {
   return request.get('/admin/pharmacies', { params })
 }

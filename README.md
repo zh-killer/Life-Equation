@@ -1,8 +1,8 @@
 # 🏥 生命方程式 (Life Equation)
 
-> 基于 AI 的全栈健康管理与智慧医疗服务平台
+> 湖南省三甲医院 · 患者服务平台
 
-生命方程式是一个集**健康管理**、**智慧医疗**、**AI 辅助诊疗**于一体的全栈应用。提供 Web 管理端 + 微信小程序端，覆盖患者就医全流程：从 AI 智能导诊、预约挂号、在线咨询、药品查询，到医生排班、患者管理、管理后台数据统计。
+生命方程式是一个集**健康管理**、**智慧医疗**、**AI 辅助诊疗**于一体的全栈应用，面向**单家医院（湖南省三甲医院）**提供在线服务。提供 Web 端 + 微信小程序端，覆盖患者就医全流程：从 AI 智能导诊、预约挂号、在线咨询、药品查询，到医生排班、患者管理、管理后台数据统计。
 
 ---
 
@@ -13,18 +13,18 @@
 |------|------|
 | **AI 智能导诊** | 输入症状，AI 辅助判断可能的疾病方向并推荐就诊科室 |
 | **AI 健康建议** | 根据个人健康情况生成个性化养生、饮食、运动建议 |
-| **AI 报告解读** | 上传体检报告/化验单图片，AI 视觉识别 + 解读指标含义 |
+| **AI 报告解读** | 上传体检报告/化验单图片，DeepSeek 多模态模型直接识别图中数据并解读指标含义（识别失败可降级为手动输入数据） |
 
 ### 👤 患者端（Web + 小程序）
 | 功能 | 说明 |
 |------|------|
 | 账号系统 | 注册/登录（支持微信小程序授权登录） |
-| 医院浏览 | 查看附近医院详情、科室、地址（高德地图集成） |
+| 本院概况 | 查看本院简介、科室、地址与地图（高德地图集成） |
 | 医生预约 | 按科室/医院筛选医生，查看排班并在线预约 |
 | 在线咨询 | 提交医疗问题，医生在线回复（类似问诊社区） |
 | 疾病百科 | 浏览常见疾病症状、病因、治疗建议 |
 | 药品查询 | 药品详情、用法用量、注意事项 |
-| 药店导航 | 附近药店查询 |
+| 院内药房 | 查看本院门诊药房、急诊药房信息 |
 | 健康档案 | 个人病历、就诊记录管理 |
 | 用药提醒 | 设置药品服用定时提醒 |
 | 家人管理 | 为家人创建健康档案 |
@@ -44,7 +44,7 @@
 | 功能 | 说明 |
 |------|------|
 | 数据仪表盘 | 用户数、预约数、咨询数等核心指标可视化（ECharts） |
-| 医院管理 | 添加/编辑/删除医院信息 |
+| 本院信息 | 维护本院基本资料（单院模式，不提供新建/删除） |
 | 医生管理 | 管理医生信息、所在医院、科室 |
 | 疾病管理 | 维护疾病百科数据 |
 | 药品管理 | 维护药品信息数据 |
@@ -69,8 +69,8 @@
 ┌─────────────────────────────────────────────────┐
 │                 Spring Boot 3.2                  │
 │  ┌──────────┬──────────┬──────────────────────┐ │
-│  │ 安全层    │  业务层   │  AI 集成              │ │
-│  │ JWT+RBAC │  预约/咨询 │  DeepSeek + 智谱GLM-4V│ │
+│  │ 安全层    │  业务层   │  AI 集成               │ │
+│  │ JWT+RBAC │  预约/咨询 │  DeepSeek(文本+视觉)   │ │
 │  └──────────┴──────────┴──────────────────────┘ │
 └───────┬──────────────┬──────────────────────────┘
         ▼              ▼
@@ -86,7 +86,7 @@
 | **安全** | Spring Security + JWT + RBAC 角色权限 |
 | **数据库** | MySQL 8.0 |
 | **缓存** | Redis 7 |
-| **AI 大模型** | DeepSeek (文本对话) + 智谱 GLM-4V (视觉识别) |
+| **AI 大模型** | DeepSeek：`deepseek-chat` 文本对话 + `deepseek-flash` 多模态图片识别 |
 | **地图服务** | 高德地图 API（地理编码） |
 | **Web 前端** | Vue 3 + Vite + Element Plus + ECharts + Axios |
 | **小程序** | Uni-app (Vue 3) → 微信小程序 |
@@ -115,10 +115,15 @@
 │   │       ├── WeChatService         # 微信登录
 │   │       └── BaiduMapService       # 地图服务
 │   ├── src/main/resources/
-│   │   ├── application.yml           # 开发环境配置
+│   │   ├── application.yml           # 开发环境配置（密钥通过 config/application-local.yml 注入）
 │   │   └── application-prod.yml      # 生产环境配置
+│   ├── config/
+│   │   └── application-local.yml.example  # 本地密钥模板（复制为 application-local.yml 后填写）
 │   ├── init.sql                      # 数据库初始化脚本
 │   ├── hospital_coords.sql           # 医院坐标数据
+│   ├── single_hospital_migration.sql # 多医院 → 单院历史数据迁移
+│   ├── doctor_fee_update.sql         # 按职称重定挂号费
+│   ├── schedule_rollout.sql          # 生成未来 30 天排班（幂等）
 │   ├── Dockerfile
 │   ├── docker-compose.yml            # 一键启动 MySQL + Redis + 后端 + 前端
 │   └── pom.xml
@@ -176,7 +181,7 @@ cd -Life-Equation
 
 # 2. 配置环境变量
 cp .env.example .env
-# 编辑 .env 填写你的 API Key：DEEPSEEK_API_KEY、ZHIPUAI_API_KEY 等
+# 编辑 .env 填写你的 API Key：DEEPSEEK_API_KEY 等
 
 # 3. 构建后端 JAR
 cd backend
@@ -207,6 +212,7 @@ cd backend
 
 # 确保 MySQL 和 Redis 已在本地运行
 
+# 填密钥：把 config/application-local.yml.example 复制为 config/application-local.yml
 # 修改 application.yml 中的数据库连接信息，或设置环境变量
 # 然后启动
 mvn spring-boot:run
@@ -246,12 +252,15 @@ npm run dev:mp-weixin
 | `MYSQL_USER` / `MYSQL_PASSWORD` | 数据库连接信息 | ✅ |
 | `REDIS_PASSWORD` | Redis 密码 | ✅ |
 | `JWT_SECRET` | JWT 签名密钥（自定义随机字符串） | ✅ |
-| `DEEPSEEK_API_KEY` | DeepSeek API Key（从 [platform.deepseek.com](https://platform.deepseek.com) 获取） | AI 功能需要 |
-| `ZHIPUAI_API_KEY` | 智谱AI API Key（从 [open.bigmodel.cn](https://open.bigmodel.cn) 获取） | 报告解读需要 |
-| `GAODE_MAP_AK` | 高德地图 API Key（从 [lbs.amap.com](https://lbs.amap.com) 获取） | 地图功能需要 |
+| `DEEPSEEK_API_KEY` | DeepSeek API Key（从 [platform.deepseek.com](https://platform.deepseek.com) 获取） | AI 导诊 / 健康建议 / 报告解读都需要（文本和图片识别共用同一个 Key） |
+| `GAODE_AK` | 高德地图 API Key（从 [lbs.amap.com](https://lbs.amap.com) 获取） | 地图功能需要 |
 | `WECHAT_APPID` / `WECHAT_SECRET` | 微信小程序 AppID 和 Secret | 小程序登录需要 |
 
-> 💡 **开发阶段**：即使不填 AI / 地图 / 微信的 Key，项目核心功能（医院浏览、预约、咨询等）也能正常运行，只是 AI 和地图相关功能会降级。
+> 💡 **本地开发**：密钥不必写进 `application.yml`。把 `backend/config/application-local.yml.example` 复制为同目录下的 `application-local.yml` 并填入即可，该文件已在 `.gitignore` 中，不会被提交。
+>
+> 💡 **开发阶段**：即使不填 AI / 地图 / 微信的 Key，项目核心功能（本院浏览、预约、咨询等）也能正常运行，只是 AI 和地图相关功能会降级。
+>
+> 🔍 **自检**：登录后请求 `GET /api/ai/report/diagnose`，服务端会现场生成一张带检验数值的小图发给模型，能读对才返回 `status: OK`。
 
 ---
 
@@ -275,26 +284,28 @@ npm run dev:mp-weixin
 
 | 模块 | 端点前缀 | 说明 |
 |------|---------|------|
-| 认证 | `/api/auth/**` | 登录、注册、微信授权 |
-| 首页 | `/api/home/**` | 首页聚合数据 |
-| 医院 | `/api/hospital/**` | 医院列表、详情、搜索 |
-| 医生 | `/api/doctor/**` | 医生信息、排班查询 |
-| 预约 | `/api/appointment/**` | 预约挂号 |
-| 咨询 | `/api/consultation/**` | 在线医疗咨询 |
-| 疾病 | `/api/disease/**` | 疾病百科 |
-| 药品 | `/api/drug/**` | 药品信息 |
-| 药店 | `/api/pharmacy/**` | 药店导航 |
-| 文章 | `/api/article/**` | 健康资讯 |
-| 健康档案 | `/api/health-record/**` | 个人病历管理 |
-| 用药提醒 | `/api/medication-reminder/**` | 药品定时提醒 |
-| 家人管理 | `/api/family-member/**` | 家人档案 |
-| 收藏 | `/api/favorite/**` | 收藏功能 |
+| 认证 | `/api/auth/**` | 登录、注册、微信授权、个人信息 |
+| 首页 | `/api/home` | 首页聚合数据 |
+| 本院 | `/api/hospitals/**` | 本院详情与列表 |
+| 医生 | `/api/doctors/**` | 医生信息、排班查询 |
+| 预约 | `/api/appointments/**` | 预约挂号、取消（`/{id}/cancel`）、模拟支付（`/{id}/pay`） |
+| 咨询 | `/api/consultations/**` | 在线医疗咨询 |
+| 疾病 | `/api/diseases/**` | 疾病百科 |
+| 药品 | `/api/drugs/**` | 药品信息 |
+| 药房 | `/api/pharmacies/**` | 院内药房 |
+| 文章 | `/api/articles/**` | 健康资讯 |
+| 健康档案 | `/api/health-records/**` | 个人病历管理 |
+| 用药提醒 | `/api/medication-reminders/**` | 药品定时提醒 |
+| 家人管理 | `/api/family-members/**` | 家人档案 |
+| 收藏 | `/api/favorites/**` | 收藏功能 |
+| 评价 | `/api/reviews/**` | 就诊评价 |
 | AI 导诊 | `/api/ai/consultation/**` | AI 症状分析 |
 | AI 健康建议 | `/api/ai/health-advice/**` | AI 健康指导 |
-| AI 报告解读 | `/api/ai/report/**` | AI 化验单解读 |
-| 医生工作台 | `/api/doctor/workbench/**` | 医生端数据 |
-| 医生排班 | `/api/doctor/schedule/**` | 排班管理 |
+| AI 报告解读 | `/api/ai/report/**` | AI 化验单识别与解读 |
+| 医生工作台 | `/api/doctor/**` | 医生端数据、排班、预约处理 |
 | 管理员 | `/api/admin/**` | 仪表盘与全量管理 API |
+
+> 预约状态流转：`UNPAID`（待支付）→ `PENDING`（待确认）→ `CONFIRMED`（已确认）→ `COMPLETED`（已完成）；未完成状态可取消，取消时会归还该时段号源。支付为**模拟支付**，未对接真实支付网关。
 
 ---
 

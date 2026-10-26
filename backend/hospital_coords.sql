@@ -1,23 +1,6 @@
--- 22家医院经纬度数据（通过高德/百度地图人工查询）
-UPDATE hospital SET latitude = 39.9120, longitude = 116.4122 WHERE name = '北京协和医院';
-UPDATE hospital SET latitude = 31.2119, longitude = 121.4698 WHERE name = '上海交通大学医学院附属瑞金医院';
-UPDATE hospital SET latitude = 23.1268, longitude = 113.2856 WHERE name = '广东省人民医院';
-UPDATE hospital SET latitude = 30.6456, longitude = 104.0654 WHERE name = '四川大学华西医院';
-UPDATE hospital SET latitude = 39.9079, longitude = 116.2760 WHERE name = '中国人民解放军总医院';
-UPDATE hospital SET latitude = 30.5826, longitude = 114.2599 WHERE name = '华中科技大学同济医学院附属同济医院';
-UPDATE hospital SET latitude = 30.2559, longitude = 120.1762 WHERE name = '浙江大学医学院附属第一医院';
-UPDATE hospital SET latitude = 31.1961, longitude = 121.4510 WHERE name = '复旦大学附属中山医院';
-UPDATE hospital SET latitude = 32.0457, longitude = 118.7705 WHERE name = '江苏省人民医院';
-UPDATE hospital SET latitude = 30.5384, longitude = 114.3009 WHERE name = '武汉大学人民医院';
-UPDATE hospital SET latitude = 41.7725, longitude = 123.4277 WHERE name = '中国医科大学附属盛京医院';
-UPDATE hospital SET latitude = 28.2110, longitude = 112.9851 WHERE name = '长沙市第一医院';
-UPDATE hospital SET latitude = 24.4659, longitude = 118.0950 WHERE name = '厦门大学附属中山医院';
-UPDATE hospital SET latitude = 38.0429, longitude = 114.5145 WHERE name = '石家庄市第一医院';
-UPDATE hospital SET latitude = 36.0699, longitude = 120.3399 WHERE name = '青岛市立医院';
-UPDATE hospital SET latitude = 34.7563, longitude = 113.6186 WHERE name = '郑州市中心医院';
-UPDATE hospital SET latitude = 25.0432, longitude = 102.6930 WHERE name = '昆明医科大学第一附属医院';
-UPDATE hospital SET latitude = 39.1167, longitude = 117.1865 WHERE name = '天津医科大学总医院';
-UPDATE hospital SET latitude = 45.7588, longitude = 126.6417 WHERE name = '哈尔滨医科大学附属第一医院';
-UPDATE hospital SET latitude = 28.2136, longitude = 112.9876 WHERE name = '中南大学湘雅医院';
-UPDATE hospital SET latitude = 25.7974, longitude = 113.0236 WHERE name = '郴州市第一人民医院';
-UPDATE hospital SET latitude = 25.7968, longitude = 113.0358 WHERE name = '郴州市中医医院';
+-- 本院坐标（高德地图地理编码：湖南省郴州市北湖区人民西路）
+USE `life_equation`;
+
+UPDATE `hospital`
+SET `latitude` = 25.7938910, `longitude` = 113.0257560
+WHERE `id` = 1;

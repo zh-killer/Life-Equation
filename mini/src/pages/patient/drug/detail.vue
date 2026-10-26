@@ -27,7 +27,6 @@ async function handleFav() {
   } catch {}
 }
 
-function goAdvice() { uni.navigateTo({ url: '/pages/patient/ai/health-advice' }) }
 function goPharmacy() { uni.navigateTo({ url: '/pages/patient/pharmacy/pharmacy' }) }
 function goReminder() {
   uni.navigateTo({ url: '/pages/patient/reminder/edit?drugName=' + encodeURIComponent(drug.value.name) + '&drugId=' + drug.value.id })
@@ -60,7 +59,8 @@ const sections = [
         <ui-icon name="pill" :size="60" color="rgba(255,255,255,0.6)" />
       </view>
       <view class="fav-btn-hero" @click.stop="handleFav">
-        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : 'rgba(255,255,255,0.6)'" />
+        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+        <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
       </view>
     </view>
 
@@ -85,13 +85,9 @@ const sections = [
 
     <!-- 操作按钮 -->
     <view class="actions">
-      <view class="btn-outline" @click="goAdvice">
-        <ui-icon name="heart" :size="64" color="#2DD4BF" />
-        <text>AI 健康建议</text>
-      </view>
       <view class="btn-go" @click="goPharmacy">
         <ui-icon name="store" :size="64" color="#fff" />
-        <text>附近药店</text>
+        <text>院内药房</text>
       </view>
       <view class="btn-go" @click="goReminder">
         <ui-icon name="clock" :size="64" color="#fff" />
@@ -119,7 +115,8 @@ const sections = [
 .h-tag text { font-size: 11px; color: #fff; }
 .h-tag.otc { background: rgba(92,184,92,0.4); }
 .hero-icon { width: 56px; height: 56px; border-radius: 16px; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; }
-.fav-btn-hero { padding: 8px; position: absolute; top: 8px; right: 8px; }
+.fav-btn-hero { display: flex; align-items: center; gap: 4px; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 20px; }
+.fav-text { font-size: 12px; color: #fff; font-weight: 500; }
 
 /* Section */
 .section { padding: 20px 16px 0; }

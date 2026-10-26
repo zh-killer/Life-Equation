@@ -6,7 +6,7 @@
     },
     {
       "path": "pages/detail/hospital",
-      "style": { "navigationBarTitleText": "医院详情" }
+      "style": { "navigationBarTitleText": "本院详情" }
     },
     {
       "path": "pages/detail/doctor",
@@ -14,11 +14,11 @@
     },
     {
       "path": "pages/patient/index/index",
-      "style": { "navigationBarTitleText": "生命方程式", "navigationStyle": "custom" }
+      "style": { "navigationBarTitleText": "湖南省三甲医院", "navigationStyle": "custom" }
     },
     {
       "path": "pages/patient/medical/medical",
-      "style": { "navigationBarTitleText": "医院·医生" }
+      "style": { "navigationBarTitleText": "本院·医生" }
     },
     {
       "path": "pages/patient/ai/ai",
@@ -58,11 +58,11 @@
     },
     {
       "path": "pages/patient/pharmacy/pharmacy",
-      "style": { "navigationBarTitleText": "药店查询" }
+      "style": { "navigationBarTitleText": "院内药房" }
     },
     {
       "path": "pages/patient/pharmacy/detail",
-      "style": { "navigationBarTitleText": "药店详情" }
+      "style": { "navigationBarTitleText": "药房详情" }
     },
     {
       "path": "pages/patient/article/article",
@@ -147,7 +147,7 @@
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "生命方程式",
+    "navigationBarTitleText": "湖南省三甲医院",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F5F7FA"
   },

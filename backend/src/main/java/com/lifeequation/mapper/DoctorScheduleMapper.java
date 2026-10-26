@@ -14,4 +14,9 @@ public interface DoctorScheduleMapper extends BaseMapper<DoctorSchedule> {
             "WHERE id = #{scheduleId} AND booked_count < #{maxSlots} AND status = 1")
     int atomicIncrementBookedCount(@Param("scheduleId") Long scheduleId,
                                    @Param("maxSlots") int maxSlots);
+
+    /** 原子归还号源。返回 1=成功，0=该时段已无可归还号源（防止重复归还扣成负数） */
+    @Update("UPDATE doctor_schedule SET booked_count = booked_count - 1 " +
+            "WHERE id = #{scheduleId} AND booked_count > 0")
+    int atomicDecrementBookedCount(@Param("scheduleId") Long scheduleId);
 }

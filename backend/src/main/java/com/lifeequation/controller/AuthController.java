@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Map;
 import java.util.UUID;
 
@@ -133,6 +134,63 @@ public class AuthController {
             return Result.ok(avatarUrl);
         } catch (IOException e) {
             return Result.fail("上传失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 通过 base64 上传头像（绕过 wx.uploadFile 的域名校验，走 wx.request 代理）
+     */
+    @PostMapping("/upload-avatar-base64")
+    public Result<?> uploadAvatarBase64(@RequestBody Map<String, String> params) {
+        String base64Data = params.get("file");
+        if (base64Data == null || base64Data.isBlank()) return Result.fail("请选择文件");
+        Long userId = SecurityUtils.getCurrentUserId();
+        try {
+            // 去掉 data:image/...;base64, 前缀（如果有）
+            if (base64Data.contains(",")) {
+                base64Data = base64Data.substring(base64Data.indexOf(",") + 1);
+            }
+            byte[] bytes = Base64.getDecoder().decode(base64Data);
+            String ext = params.getOrDefault("ext", "jpg");
+            if (!ext.startsWith(".")) ext = "." + ext;
+            String dir = uploadPath + "/avatars/" + userId;
+            Files.createDirectories(Paths.get(dir));
+            String fileName = UUID.randomUUID() + ext;
+            Path target = Paths.get(dir, fileName);
+            Files.write(target, bytes);
+            String avatarUrl = "/uploads/avatars/" + userId + "/" + fileName;
+            userService.updateProfile(userId, null, null, null, avatarUrl, null);
+            return Result.ok(avatarUrl);
+        } catch (IOException e) {
+            return Result.fail("上传失败: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return Result.fail("图片数据解析失败");
+        }
+    }
+
+    /**
+     * 获取当前用户头像的 base64 数据（绕过 <image> 的 HTTP 限制）
+     */
+    @GetMapping("/avatar-base64")
+    public Result<?> getAvatarBase64() {
+        Long userId = SecurityUtils.getCurrentUserId();
+        User user = userService.getUserById(userId);
+        String avatarUrl = user.getAvatarUrl();
+        if (avatarUrl == null || avatarUrl.isBlank()) {
+            return Result.ok("");
+        }
+        try {
+            Path filePath = Paths.get(uploadPath, avatarUrl.replace("/uploads/", ""));
+            if (!Files.exists(filePath)) {
+                return Result.ok("");
+            }
+            byte[] bytes = Files.readAllBytes(filePath);
+            String base64 = Base64.getEncoder().encodeToString(bytes);
+            String ext = avatarUrl.substring(avatarUrl.lastIndexOf(".") + 1).toLowerCase();
+            String mime = ext.equals("png") ? "image/png" : ext.equals("gif") ? "image/gif" : "image/jpeg";
+            return Result.ok("data:" + mime + ";base64," + base64);
+        } catch (IOException e) {
+            return Result.fail("读取头像失败");
         }
     }
 

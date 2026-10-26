@@ -7,7 +7,6 @@ const tab = ref('')
 const tabs = [
   { key: '', label: '全部' },
   { key: 'doctor', label: '医生' },
-  { key: 'hospital', label: '医院' },
   { key: 'article', label: '资讯' },
   { key: 'disease', label: '疾病' },
   { key: 'drug', label: '药品' },
@@ -51,7 +50,7 @@ function goDetail(item) {
 
 const iconMap = { doctor: 'stethoscope', hospital: 'hospital', article: 'news', disease: 'virus', drug: 'pill' }
 const colorMap = { doctor: '#2DD4BF', hospital: '#7FDBFF', article: '#FF9500', disease: '#FF3B30', drug: '#AF52DE' }
-const labelMap = { doctor: '医生', hospital: '医院', article: '资讯', disease: '疾病', drug: '药品' }
+const labelMap = { doctor: '医生', hospital: '本院', article: '资讯', disease: '疾病', drug: '药品' }
 </script>
 
 <template>

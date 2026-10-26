@@ -53,7 +53,8 @@ const sections = [
       </view>
       <text class="name">{{ disease.name }}</text>
       <view class="fav-btn-hero" @click.stop="handleFav">
-        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : 'rgba(255,255,255,0.6)'" />
+        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+        <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
       </view>
     </view>
 
@@ -104,7 +105,8 @@ const sections = [
 .tag text { font-size: 12px; color: #fff; }
 .tag.common { background: rgba(231,76,60,0.4); }
 .name { font-size: 26px; font-weight: 800; color: #fff; }
-.fav-btn-hero { padding: 8px; position: absolute; top: 8px; right: 8px; }
+.fav-btn-hero { display: flex; align-items: center; gap: 4px; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 20px; }
+.fav-text { font-size: 12px; color: #fff; font-weight: 500; }
 
 /* Section */
 .section { padding: 20px 16px 0; }

@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { getPharmacyDetail } from '@/utils/api'
+import { getPharmacyDetail, checkFavorite, toggleFavorite } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
 const pharmacy = ref(null)
 const id = ref('')
+const isFav = ref(false)
 
 onLoad((options) => {
   id.value = options.id
@@ -14,6 +15,23 @@ onLoad((options) => {
 
 async function fetchData() {
   try { pharmacy.value = (await getPharmacyDetail(id.value)).data } catch {}
+  try {
+    const token = uni.getStorageSync('token')
+    if (token) {
+      const res = await checkFavorite({ targetType: 'pharmacy', targetId: Number(id.value) })
+      isFav.value = res.data?.favorited || false
+    }
+  } catch {}
+}
+
+async function handleFav() {
+  const token = uni.getStorageSync('token')
+  if (!token) { uni.navigateTo({ url: '/pages/login/login' }); return }
+  try {
+    const res = await toggleFavorite({ targetType: 'pharmacy', targetId: Number(id.value) })
+    isFav.value = res.data?.favorited || false
+    uni.showToast({ title: isFav.value ? '已收藏' : '已取消', icon: 'none' })
+  } catch {}
 }
 
 function openLocation() {
@@ -52,6 +70,10 @@ function callPhone() {
           <text class="h-city">{{ pharmacy.city }}</text>
         </view>
       </view>
+      <view class="fav-btn-hero" @click.stop="handleFav">
+        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+        <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
+      </view>
     </view>
 
     <!-- 信息卡片 -->
@@ -72,7 +94,7 @@ function callPhone() {
 
     <!-- 介绍 -->
     <view class="section" v-if="pharmacy.introduction">
-      <text class="section-title">药店介绍</text>
+      <text class="section-title">药房介绍</text>
       <view class="content-card">
         <text class="s-text">{{ pharmacy.introduction }}</text>
       </view>
@@ -120,7 +142,10 @@ function callPhone() {
 .hero {
   background: #2DD4BF;
   padding: 24px 20px;
+  position: relative;
 }
+.fav-btn-hero { display: flex; align-items: center; gap: 4px; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 20px; }
+.fav-text { font-size: 12px; color: #fff; font-weight: 500; }
 .hero-top { display: flex; gap: 14px; align-items: center; }
 .hero-icon {
   width: 48px; height: 48px; border-radius: 14px;

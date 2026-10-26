@@ -1,0 +1,23 @@
+# 本地开发密钥模板
+#
+# 用法：把本文件复制成同目录下的 application-local.yml，填入自己的 Key。
+#       application-local.yml 已被 .gitignore 忽略，不会提交到仓库。
+#       application.yml 里通过 spring.config.import 自动加载它。
+#
+# 这些 Key 也可以改用环境变量（DEEPSEEK_API_KEY / GAODE_AK / WECHAT_SECRET），
+# Docker 部署时由 docker-compose 注入，此时不需要本文件。
+#
+# 注意：报告图片识别（AI 报告解读）也用这个 DeepSeek Key（多模态模型 deepseek-flash），
+#       不再需要智谱的 Key。
+
+deepseek:
+  api:
+    key: sk-your-deepseek-key
+
+gaode:
+  map:
+    ak: your-gaode-ak
+
+wechat:
+  miniapp:
+    secret: your-wechat-miniapp-secret
