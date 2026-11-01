@@ -14,7 +14,8 @@ const loading = ref(false)
 const familyMembers = ref([])
 const selectedMemberId = ref('')
 
-const timeSlots = ['上午', '下午']
+// 与 doctor_schedule.time_slot 一致（上午/下午/晚上）
+const timeSlots = ['上午', '下午', '晚上']
 const statusMap = { UNPAID: '待支付', PENDING: '待确认', CONFIRMED: '已确认', COMPLETED: '已完成', CANCELLED: '已取消' }
 const statusColor = { UNPAID: '#FF3B30', PENDING: '#FF9500', CONFIRMED: '#34C759', COMPLETED: '#C7C7CC', CANCELLED: '#C7C7CC' }
 const statusBg = { UNPAID: '#FFF1F0', PENDING: '#E6FAF5', CONFIRMED: '#E8F5E9', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }

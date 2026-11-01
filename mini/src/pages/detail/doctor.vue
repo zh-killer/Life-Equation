@@ -4,7 +4,8 @@ import { onLoad } from '@dcloudio/uni-app'
 import { getDoctorDetail, createAppointment, payAppointment, verifyIdentity, checkFavorite, toggleFavorite, getFamilyMembers, getTargetReviews, getDoctorSchedulesPublic } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
-const TIME_SLOTS = ['上午', '下午']
+// 必须与 doctor_schedule.time_slot 保持一致（上午/下午/晚上），否则晚上的号源在患者端约不到
+const TIME_SLOTS = ['上午', '下午', '晚上']
 
 const doctor = ref(null)
 const id = ref('')
