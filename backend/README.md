@@ -9,7 +9,7 @@
 | 框架 | Spring Boot 3.2.5 / Java 18 |
 | 持久层 | MyBatis-Plus 3.5.6 + MySQL 8.0 |
 | 缓存 | Redis（Token 黑名单） |
-| 安全 | Spring Security 6 + JWT（无状态）+ BCrypt + 方法级 RBAC |
+| 安全 | Spring Security 6 + JWT（无状态）+ BCrypt + 方法级 RBAC（JWT 密钥强制 ≥32 字节） |
 | 文档 | Knife4j（启动后访问 `/doc.html`） |
 | AI | DeepSeek（文本对话 + 报告图片识别） |
 
@@ -49,6 +49,9 @@ mysql -uroot -p life_equation < init.sql
 密钥不写在仓库里。把 `config/application-local.yml.example` 复制为 `config/application-local.yml`，填入自己的 Key：
 
 ```yaml
+jwt:
+  secret: 换成至少32字节的随机串   # 必填：缺失或过短，后端启动直接失败
+
 deepseek:
   api:
     key: sk-你的deepseek-key   # 文本 + 图片识别共用
@@ -62,7 +65,9 @@ wechat:
     secret: 你的小程序secret
 ```
 
-`application.yml` 通过 `spring.config.import` 自动加载该文件，也支持改用环境变量（`DEEPSEEK_API_KEY` / `GAODE_AK` / `WECHAT_SECRET`）。
+`application.yml` 通过 `spring.config.import` 自动加载该文件，也支持改用环境变量（`JWT_SECRET` / `DEEPSEEK_API_KEY` / `GAODE_AK` / `WECHAT_SECRET`）。
+
+> ⚠️ `jwt.secret` 没有默认值：必须在上面两种方式之一里提供，且**不少于 32 字节**，否则后端启动即抛 `IllegalStateException`。
 
 ### 3. 启动
 
@@ -102,6 +107,13 @@ src/main/java/com/lifeequation/
 ├── security/      JWT 过滤器、SecurityUtils
 └── service/       业务逻辑（impl 为实现）
 ```
+
+## 安全说明
+
+- **JWT 无默认密钥**：`jwt.secret` 只从环境变量或 `application-local.yml` 读取，缺失或不足 32 字节时启动即失败，避免用公开默认值离线伪造管理员令牌。
+- **调试后门已移除**：`POST /api/auth/set-role` 已删除，角色变更只能走管理员接口。
+- **越权防护**：AI 咨询 / 健康建议 / 报告解读的详情接口校验记录归属，非本人返回 403。
+- **上传白名单**：报告图片只接受 `jpg/jpeg/png/gif/webp` 后缀。
 
 ## 说明
 
