@@ -51,14 +51,14 @@ async function delHistory(h) {
 }
 
 function riskColor(level) {
-  if (level === 'HIGH') return '#FF3B30'
-  if (level === 'MEDIUM') return '#FF9500'
-  return '#34C759'
+  if (level === 'HIGH') return '#EF4444'
+  if (level === 'MEDIUM') return '#F59E0B'
+  return '#10B981'
 }
 function riskBg(level) {
-  if (level === 'HIGH') return '#FFEBEA'
+  if (level === 'HIGH') return '#FEF2F2'
   if (level === 'MEDIUM') return '#EFF4FF'
-  return '#E8F5E9'
+  return '#ECFDF5'
 }
 function riskText(level) {
   if (level === 'HIGH') return '高风险'
@@ -98,7 +98,7 @@ function riskText(level) {
         <view class="history-toggle" @click="loadHistory">
           <ui-icon name="clock" :size="60" color="#60A5FA" />
           <text>{{ showHistory ? '收起历史记录' : '查看历史记录' }}</text>
-          <ui-icon name="chevronRight" :size="54" :color="showHistory ? '#60A5FA' : '#C7C7CC'" />
+          <ui-icon name="chevronRight" :size="54" :color="showHistory ? '#60A5FA' : '#94A3B8'" />
         </view>
         <view v-if="showHistory" class="history-list">
           <view v-for="h in history" :key="h.id" class="history-item" @click="result = h; showHistory = false">
@@ -110,7 +110,7 @@ function riskText(level) {
               </view>
             </view>
             <view class="hi-del" @click.stop="delHistory(h)">
-              <ui-icon name="close" :size="54" color="#C7C7CC" />
+              <ui-icon name="close" :size="54" color="#94A3B8" />
             </view>
           </view>
           <view v-if="!history.length" class="empty-state">
@@ -144,14 +144,14 @@ function riskText(level) {
         </view>
         <view class="rb-card">
           <view class="rb-header">
-            <view class="rb-icon" style="background: #E8F5E9"><ui-icon name="heart" :size="60" color="#34C759" /></view>
+            <view class="rb-icon" style="background: #ECFDF5"><ui-icon name="heart" :size="60" color="#10B981" /></view>
             <text class="rb-label">健康建议</text>
           </view>
           <text class="rb-text">{{ result.healthAdvice }}</text>
         </view>
         <view class="rb-card" v-if="result.relatedDiseases">
           <view class="rb-header">
-            <view class="rb-icon" style="background: #F3E5F5"><ui-icon name="virus" :size="60" color="#AF52DE" /></view>
+            <view class="rb-icon" style="background: #F5F3FF"><ui-icon name="virus" :size="60" color="#8B5CF6" /></view>
             <text class="rb-label">可能关联疾病</text>
           </view>
           <text class="rb-text">{{ result.relatedDiseases }}</text>
@@ -197,12 +197,12 @@ function riskText(level) {
 .textarea {
   width: 100%; min-height: 120px;
   background: #fff; border-radius: 14px; padding: 14px;
-  font-size: 14px; border: 1px solid #F2F2F7;
+  font-size: 14px; border: 1px solid #F5F7FA;
   box-sizing: border-box;
 }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 .char-bar { text-align: right; margin: 6px 0 12px; }
-.char-count { font-size: 12px; color: #C7C7CC; }
+.char-count { font-size: 12px; color: #94A3B8; }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
   background: #2563EB;
@@ -224,11 +224,11 @@ function riskText(level) {
   box-shadow: none;
 }
 .hi-main { flex: 1; min-width: 0; }
-.hi-symptoms { font-size: 13px; color: #1C1C1E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.hi-symptoms { font-size: 13px; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
 .hi-meta { display: flex; gap: 8px; margin-top: 4px; align-items: center; }
 .hi-dept { background: #EFF4FF; padding: 2px 8px; border-radius: 4px; }
 .hi-dept text { font-size: 11px; color: #60A5FA; }
-.hi-time { font-size: 11px; color: #C7C7CC; }
+.hi-time { font-size: 11px; color: #94A3B8; }
 .hi-del { padding: 4px; }
 
 /* 结果区 */
@@ -240,8 +240,8 @@ function riskText(level) {
 .risk-badge { padding: 4px 16px; border-radius: 16px; }
 .risk-badge text { font-size: 14px; color: #fff; font-weight: 700; }
 .dept-suggestion { text-align: center; }
-.dept-label { font-size: 12px; color: #8E8E93; display: block; }
-.dept-name { font-size: 20px; font-weight: 800; color: #1C1C1E; }
+.dept-label { font-size: 12px; color: #64748B; display: block; }
+.dept-name { font-size: 20px; font-weight: 800; color: #0F172A; }
 
 .result-body { padding: 16px; }
 .rb-card {
@@ -250,8 +250,8 @@ function riskText(level) {
 }
 .rb-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .rb-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-.rb-label { font-size: 15px; font-weight: 700; color: #1C1C1E; }
-.rb-text { font-size: 14px; color: #8E8E93; line-height: 1.8; }
+.rb-label { font-size: 15px; font-weight: 700; color: #0F172A; }
+.rb-text { font-size: 14px; color: #64748B; line-height: 1.8; }
 
 .result-actions { display: flex; gap: 12px; padding: 0 16px 20px; }
 .btn-outline {

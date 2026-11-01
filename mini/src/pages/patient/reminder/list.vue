@@ -52,7 +52,7 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
         <view class="card-top">
           <view class="drug-info">
             <view class="drug-icon">
-              <ui-icon name="pill" :size="54" :color="r.isActive === 1 ? '#2563EB' : '#C7C7CC'" />
+              <ui-icon name="pill" :size="54" :color="r.isActive === 1 ? '#2563EB' : '#94A3B8'" />
             </view>
             <view class="drug-text">
               <text class="drug-name">{{ r.drugName }}</text>
@@ -62,7 +62,7 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
           <switch :checked="r.isActive === 1" @change.stop="handleToggle(r)" color="#2563EB" />
         </view>
         <view class="card-bottom" v-if="r.reminderTimes">
-          <ui-icon name="clock" :size="48" :color="r.isActive === 1 ? '#FF9500' : '#C7C7CC'" />
+          <ui-icon name="clock" :size="48" :color="r.isActive === 1 ? '#F59E0B' : '#94A3B8'" />
           <text class="times">{{ r.reminderTimes }}</text>
         </view>
         <view class="card-actions">
@@ -73,7 +73,7 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
       </view>
 
       <view v-if="!loading && !reminders.length" class="empty-state">
-        <view class="empty-icon"><ui-icon name="clock" :size="50" color="#C7C7CC" /></view>
+        <view class="empty-icon"><ui-icon name="clock" :size="50" color="#94A3B8" /></view>
         <text class="empty-text">暂无用药提醒</text>
         <text class="empty-desc">设置提醒，按时吃药不忘记</text>
         <view class="empty-btn" @click="goAdd"><text>添加提醒</text></view>
@@ -85,28 +85,28 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
 <style scoped>
 .page { background: #FFFFFF; min-height: 100vh; padding: 16px; }
 .header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.title { font-size: 18px; font-weight: 700; color: #1C1C1E; }
+.title { font-size: 18px; font-weight: 700; color: #0F172A; }
 .add-btn { display: flex; align-items: center; gap: 2px; background: #2563EB; padding: 6px 14px; border-radius: 16px; }
 .add-btn text { font-size: 13px; color: #fff; }
 
 .list { display: flex; flex-direction: column; gap: 10px; }
-.card { background: #fff; border-radius: 14px; padding: 14px 16px; border: 1px solid #F2F2F7; }
+.card { background: #fff; border-radius: 14px; padding: 14px 16px; border: 1px solid #F5F7FA; }
 .card.inactive { opacity: 0.5; }
 .card-top { display: flex; align-items: center; justify-content: space-between; }
 .drug-info { display: flex; align-items: center; gap: 12px; flex: 1; }
 .drug-icon { width: 40px; height: 40px; border-radius: 12px; background: #EFF4FF; display: flex; align-items: center; justify-content: center; }
-.drug-name { font-size: 16px; font-weight: 600; color: #1C1C1E; display: block; }
-.drug-dosage { font-size: 13px; color: #8E8E93; margin-top: 2px; display: block; }
+.drug-name { font-size: 16px; font-weight: 600; color: #0F172A; display: block; }
+.drug-dosage { font-size: 13px; color: #64748B; margin-top: 2px; display: block; }
 .card-bottom { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
-.times { font-size: 13px; color: #8E8E93; }
-.card-actions { display: flex; justify-content: flex-end; margin-top: 8px; padding-top: 8px; border-top: 1px solid #F2F2F7; }
+.times { font-size: 13px; color: #64748B; }
+.card-actions { display: flex; justify-content: flex-end; margin-top: 8px; padding-top: 8px; border-top: 1px solid #F5F7FA; }
 .action-btn.del { padding: 2px 8px; }
-.action-btn.del text { font-size: 12px; color: #FF3B30; }
+.action-btn.del text { font-size: 12px; color: #EF4444; }
 
 .empty-state { display: flex; flex-direction: column; align-items: center; padding: 80px 20px; }
-.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F2F2F7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-.empty-text { font-size: 15px; color: #8E8E93; font-weight: 500; }
-.empty-desc { font-size: 13px; color: #C7C7CC; margin-top: 6px; margin-bottom: 20px; }
+.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F5F7FA; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.empty-text { font-size: 15px; color: #64748B; font-weight: 500; }
+.empty-desc { font-size: 13px; color: #94A3B8; margin-top: 6px; margin-bottom: 20px; }
 .empty-btn { background: #2563EB; padding: 10px 28px; border-radius: 22px; }
 .empty-btn text { font-size: 14px; color: #fff; font-weight: 600; }
 </style>

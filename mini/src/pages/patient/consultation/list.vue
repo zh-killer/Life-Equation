@@ -15,8 +15,8 @@ const doctors = ref([])
 const submitting = ref(false)
 
 const statusMap = { PENDING: '待回复', ANSWERED: '已回复', CLOSED: '已关闭' }
-const statusColor = { PENDING: '#FF9500', ANSWERED: '#34C759', CLOSED: '#C7C7CC' }
-const statusBg = { PENDING: '#FFF4E5', ANSWERED: '#E9F7EF', CLOSED: '#F5F5F5' }
+const statusColor = { PENDING: '#F59E0B', ANSWERED: '#10B981', CLOSED: '#94A3B8' }
+const statusBg = { PENDING: '#FFFBEB', ANSWERED: '#ECFDF5', CLOSED: '#F5F7FA' }
 
 onMounted(fetchData)
 
@@ -114,7 +114,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 搜索 -->
     <view class="search-bar">
       <view class="search-icon-box">
-        <UiIcon name="search" :size="60" color="#C7C7CC" />
+        <UiIcon name="search" :size="60" color="#94A3B8" />
       </view>
       <input v-model="keyword" class="search-input" placeholder="搜索问题…" @confirm="search" />
       <button class="search-btn" @click="search">搜索</button>
@@ -145,7 +145,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <text class="c-question">{{ c.question }}</text>
         <view class="card-foot">
           <view class="meta-item">
-            <UiIcon name="clock" :size="13" color="#C7C7CC" />
+            <UiIcon name="clock" :size="13" color="#94A3B8" />
             <text>{{ c.createTime?.substring(0, 10) }}</text>
           </view>
           <view class="meta-item" v-if="c.doctorName">
@@ -159,7 +159,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 空状态 -->
     <view v-else class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon :name="tab === 'public' ? 'message' : 'lock'" :size="40" color="#C7C7CC" />
+        <UiIcon :name="tab === 'public' ? 'message' : 'lock'" :size="40" color="#94A3B8" />
       </view>
       <text class="empty-title">{{ tab === 'public' ? '暂无问答' : '暂无咨询记录' }}</text>
       <text class="empty-desc">{{ tab === 'public' ? '成为第一个提问的人' : '去问答社区提问吧' }}</text>
@@ -176,7 +176,7 @@ n    <!-- 悬浮提问按钮 -->
         <view class="modal-header">
           <text class="modal-title">向医生提问</text>
           <view class="modal-close" @click="showAsk = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
 
@@ -184,7 +184,7 @@ n    <!-- 悬浮提问按钮 -->
         <picker mode="selector" :range="doctors.map(d => d.name + ' · ' + d.department)" @change="onDoctorChange">
           <view class="picker-item">
             <text>{{ askForm.doctorId ? doctors.find(d => d.id === askForm.doctorId)?.name + ' · ' + doctors.find(d => d.id === askForm.doctorId)?.department : '请选择咨询医生' }}</text>
-            <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+            <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
           </view>
         </picker>
 
@@ -239,7 +239,7 @@ n    <!-- 悬浮提问按钮 -->
 
 /* 骨架屏 */
 .skeleton-card { padding: 16px; }
-.skeleton { background: #F2F2F7; border-radius: 6px; }
+.skeleton { background: #F5F7FA; border-radius: 6px; }
 @keyframes skeleton-pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .skeleton-bar { border-radius: 8px; }
 

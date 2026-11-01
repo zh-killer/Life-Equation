@@ -140,7 +140,7 @@ page {
   100% { opacity: 0.3; }
 }
 .skeleton {
-  background: #F2F2F7;
+  background: #F5F7FA;
   border-radius: 6px;
   animation: skeleton-pulse 1.5s ease-in-out infinite;
 }

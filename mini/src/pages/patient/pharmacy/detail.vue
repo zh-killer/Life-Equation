@@ -71,7 +71,7 @@ function callPhone() {
         </view>
       </view>
       <view class="fav-btn-hero" @click.stop="handleFav">
-        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+        <ui-icon name="heart" :size="56" :color="isFav ? '#EF4444' : '#fff'" />
         <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
       </view>
     </view>
@@ -83,11 +83,11 @@ function callPhone() {
         <text class="info-text">{{ pharmacy.address }}</text>
       </view>
       <view class="info-row" v-if="pharmacy.phone" @click="callPhone">
-        <view class="info-icon-wrap"><ui-icon name="phone" :size="60" color="#34C759" /></view>
+        <view class="info-icon-wrap"><ui-icon name="phone" :size="60" color="#10B981" /></view>
         <text class="info-text link">{{ pharmacy.phone }}</text>
       </view>
       <view class="info-row" v-if="pharmacy.businessHours">
-        <view class="info-icon-wrap"><ui-icon name="clock" :size="60" color="#FF9500" /></view>
+        <view class="info-icon-wrap"><ui-icon name="clock" :size="60" color="#F59E0B" /></view>
         <text class="info-text">{{ pharmacy.businessHours }}</text>
       </view>
     </view>
@@ -115,7 +115,7 @@ function callPhone() {
         </view>
       </view>
       <view v-else class="addr-card" @click="openLocation">
-        <ui-icon name="map" :size="60" color="#C7C7CC" />
+        <ui-icon name="map" :size="60" color="#94A3B8" />
         <text class="addr-text">{{ pharmacy.address }}</text>
         <view class="addr-btn"><text>查看地图导航</text></view>
       </view>
@@ -167,17 +167,17 @@ function callPhone() {
   margin: -12px 16px 0; position: relative; z-index: 1;
   box-shadow: none;
 }
-.info-row { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid #F2F2F7; }
+.info-row { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid #F5F7FA; }
 .info-row:last-child { border-bottom: none; }
 .info-icon-wrap { width: 28px; height: 28px; border-radius: 8px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.info-text { font-size: 14px; color: #8E8E93; flex: 1; }
+.info-text { font-size: 14px; color: #64748B; flex: 1; }
 .info-text.link { color: #60A5FA; }
 
 /* Section */
 .section { padding: 20px 16px 0; }
-.section-title { font-size: 17px; font-weight: 700; color: #1C1C1E; margin-bottom: 14px; display: block; }
+.section-title { font-size: 17px; font-weight: 700; color: #0F172A; margin-bottom: 14px; display: block; }
 .content-card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: none; }
-.s-text { font-size: 14px; color: #8E8E93; line-height: 1.8; }
+.s-text { font-size: 14px; color: #64748B; line-height: 1.8; }
 
 /* 地图 */
 .map-box { border-radius: 14px; overflow: hidden; background: #fff; box-shadow: none; }
@@ -185,7 +185,7 @@ function callPhone() {
 .map-tip { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 10px; }
 .map-tip text { font-size: 13px; color: #60A5FA; }
 .addr-card { background: #fff; border-radius: 14px; padding: 28px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.addr-text { font-size: 14px; color: #8E8E93; text-align: center; line-height: 1.6; }
+.addr-text { font-size: 14px; color: #64748B; text-align: center; line-height: 1.6; }
 .addr-btn { background: #EFF4FF; padding: 8px 20px; border-radius: 20px; }
 .addr-btn text { font-size: 14px; color: #60A5FA; font-weight: 600; }
 

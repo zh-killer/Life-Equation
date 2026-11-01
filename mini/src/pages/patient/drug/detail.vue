@@ -34,10 +34,10 @@ function goReminder() {
 
 const sections = [
   { key: 'indications', icon: 'pill', title: '适应症', color: '#2563EB', bg: '#EFF4FF' },
-  { key: 'usageDosage', icon: 'file', title: '用法用量', color: '#34C759', bg: '#E8F5E9' },
-  { key: 'contraindications', icon: 'shield', title: '禁忌事项', color: '#FF3B30', bg: '#FFEBEA' },
-  { key: 'adverseReactions', icon: 'activity', title: '不良反应', color: '#FF9500', bg: '#EFF4FF' },
-  { key: 'precautions', icon: 'clipboard', title: '注意事项', color: '#AF52DE', bg: '#F3E5F5' },
+  { key: 'usageDosage', icon: 'file', title: '用法用量', color: '#10B981', bg: '#ECFDF5' },
+  { key: 'contraindications', icon: 'shield', title: '禁忌事项', color: '#EF4444', bg: '#FEF2F2' },
+  { key: 'adverseReactions', icon: 'activity', title: '不良反应', color: '#F59E0B', bg: '#EFF4FF' },
+  { key: 'precautions', icon: 'clipboard', title: '注意事项', color: '#8B5CF6', bg: '#F5F3FF' },
 ]
 </script>
 
@@ -59,7 +59,7 @@ const sections = [
         <ui-icon name="pill" :size="60" color="rgba(255,255,255,0.6)" />
       </view>
       <view class="fav-btn-hero" @click.stop="handleFav">
-        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+        <ui-icon name="heart" :size="56" :color="isFav ? '#EF4444' : '#fff'" />
         <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
       </view>
     </view>
@@ -79,7 +79,7 @@ const sections = [
 
     <!-- 免责声明 -->
     <view class="disclaimer">
-      <ui-icon name="shield" :size="60" color="#FF9500" />
+      <ui-icon name="shield" :size="60" color="#F59E0B" />
       <text>以上信息仅供参考，请在医生或药师指导下用药。</text>
     </view>
 
@@ -122,18 +122,18 @@ const sections = [
 .section { padding: 20px 16px 0; }
 .section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .section-icon { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-.section-title { font-size: 16px; font-weight: 700; color: #1C1C1E; }
+.section-title { font-size: 16px; font-weight: 700; color: #0F172A; }
 .content-card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: none; }
-.s-text { font-size: 14px; color: #8E8E93; line-height: 1.8; }
+.s-text { font-size: 14px; color: #64748B; line-height: 1.8; }
 
 /* 免责声明 */
 .disclaimer {
   display: flex; gap: 8px;
   margin: 16px; padding: 14px;
-  background: #FFF8E1; border-radius: 12px;
-  border: 1px solid #FFECB3;
+  background: #FFFBEB; border-radius: 12px;
+  border: 1px solid #FFFBEB;
 }
-.disclaimer text { font-size: 12px; color: #8B6914; line-height: 1.6; flex: 1; }
+.disclaimer text { font-size: 12px; color: #B45309; line-height: 1.6; flex: 1; }
 
 /* 操作按钮 */
 .actions { display: flex; gap: 8px; padding: 0 16px; }

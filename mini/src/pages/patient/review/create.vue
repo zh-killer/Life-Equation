@@ -62,7 +62,7 @@ async function submit() {
       <text class="area-title">评分</text>
       <view class="stars">
         <text v-for="i in 5" :key="i" class="star-char"
-          :style="{ color: i <= rating ? '#FF9500' : '#E5E5EA' }"
+          :style="{ color: i <= rating ? '#F59E0B' : '#E6EBF2' }"
           @click="rating = i">★</text>
       </view>
       <text class="rating-hint">{{ rating === 0 ? '点击星星评分' : rating + ' 分' }}</text>
@@ -98,28 +98,28 @@ async function submit() {
 .page { background: #FFFFFF; min-height: 100vh; padding: 16px; }
 
 .target-info { padding: 20px 0; text-align: center; }
-.target-label { font-size: 13px; color: #C7C7CC; display: block; }
-.target-name { font-size: 22px; font-weight: 700; color: #1C1C1E; margin-top: 4px; display: block; }
+.target-label { font-size: 13px; color: #94A3B8; display: block; }
+.target-name { font-size: 22px; font-weight: 700; color: #0F172A; margin-top: 4px; display: block; }
 
 .rating-area { padding: 20px 0; text-align: center; }
-.area-title { font-size: 15px; color: #1C1C1E; font-weight: 600; display: block; margin-bottom: 12px; }
+.area-title { font-size: 15px; color: #0F172A; font-weight: 600; display: block; margin-bottom: 12px; }
 .stars { display: flex; gap: 8px; justify-content: center; }
 .star-char { font-size: 40px; line-height: 1; transition: color 0.15s; }
-.rating-hint { font-size: 13px; color: #8E8E93; margin-top: 8px; display: block; }
+.rating-hint { font-size: 13px; color: #64748B; margin-top: 8px; display: block; }
 
 .tag-area { padding: 12px 0; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 10px; }
-.tag-item { padding: 8px 16px; border-radius: 20px; background: #F2F2F7; }
-.tag-item text { font-size: 13px; color: #8E8E93; }
+.tag-item { padding: 8px 16px; border-radius: 20px; background: #F5F7FA; }
+.tag-item text { font-size: 13px; color: #64748B; }
 .tag-item.active { background: #EFF4FF; }
 .tag-item.active text { color: #2563EB; font-weight: 600; }
 
 .content-area { padding: 16px 0; }
-.textarea { width: 100%; height: 120px; background: #F9F9FB; border-radius: 12px; padding: 14px; font-size: 14px; color: #1C1C1E; box-sizing: border-box; }
-.ph { color: #C7C7CC; }
+.textarea { width: 100%; height: 120px; background: #F9F9FB; border-radius: 12px; padding: 14px; font-size: 14px; color: #0F172A; box-sizing: border-box; }
+.ph { color: #94A3B8; }
 
-.anon-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-top: 1px solid #F2F2F7; border-bottom: 1px solid #F2F2F7; }
-.anon-row text { font-size: 15px; color: #1C1C1E; }
+.anon-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-top: 1px solid #F5F7FA; border-bottom: 1px solid #F5F7FA; }
+.anon-row text { font-size: 15px; color: #0F172A; }
 
 .btn-submit {
   width: 100%; height: 48px; line-height: 48px;

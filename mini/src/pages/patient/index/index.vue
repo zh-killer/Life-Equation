@@ -220,12 +220,12 @@ async function loadAvatarForIndex() {
       <view v-for="(r, i) in reminders" :key="'a'+i" class="reminder-item" @click="goPage(r.url)">
         <view class="reminder-dot" :class="r.type" />
         <text class="reminder-text">{{ r.text }}</text>
-        <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+        <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
       </view>
       <view v-for="(m, i) in medReminders" :key="'m'+i" class="reminder-item med" @click="goPage('/pages/patient/reminder/list')">
         <view class="reminder-dot pill" />
         <text class="reminder-text">💊 {{ m.drugName }} — 该吃药了（{{ m.dosage || '' }}）</text>
-        <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+        <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
       </view>
     </view>
 

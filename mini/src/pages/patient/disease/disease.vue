@@ -27,7 +27,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
   <view class="page">
     <!-- 搜索 -->
     <view class="search-bar">
-      <ui-icon name="search" :size="64" color="#C7C7CC" />
+      <ui-icon name="search" :size="64" color="#94A3B8" />
       <input v-model="keyword" placeholder="搜索疾病名称或症状" placeholder-class="ph" class="search-input" @confirm="search" />
       <view class="search-btn" @click="search"><text>搜索</text></view>
     </view>
@@ -55,7 +55,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
       <template v-else-if="list.length">
         <view v-for="d in list" :key="d.id" class="card" @click="goDetail(d.id)">
           <view class="card-icon-wrap">
-            <ui-icon name="virus" :size="40" color="#FF9500" />
+            <ui-icon name="virus" :size="40" color="#F59E0B" />
           </view>
           <view class="card-name-row">
             <text class="card-name">{{ d.name }}</text>
@@ -66,7 +66,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
         </view>
       </template>
       <view v-else class="empty-state">
-        <view class="empty-icon"><ui-icon name="virus" :size="54" color="#C7C7CC" /></view>
+        <view class="empty-icon"><ui-icon name="virus" :size="54" color="#94A3B8" /></view>
         <text class="empty-text">未找到疾病信息</text>
       </view>
     </view>
@@ -80,10 +80,10 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
   display: flex; align-items: center; gap: 8px;
   background: #fff; border-radius: 24px; padding: 0 16px;
   height: 42px; margin-bottom: 12px;
-  border: 1px solid #F2F2F7;
+  border: 1px solid #F5F7FA;
 }
 .search-input { flex: 1; font-size: 14px; }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 .search-btn {
   height: 30px; padding: 0 14px;
   background: #2563EB; border-radius: 15px;
@@ -95,12 +95,12 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
 .cat-chips { display: inline-flex; gap: 8px; padding: 0 2px; }
 .chip {
   display: inline-flex; padding: 6px 14px; border-radius: 16px;
-  background: #fff; border: 1px solid #F2F2F7;
+  background: #fff; border: 1px solid #F5F7FA;
 }
-.chip text { font-size: 13px; color: #8E8E93; }
+.chip text { font-size: 13px; color: #64748B; }
 .chip.active { background: #2563EB; border-color: #2563EB; }
 .chip.active text { color: #fff; }
-.chip.clear text { color: #FF3B30; }
+.chip.clear text { color: #EF4444; }
 
 .list {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
@@ -118,8 +118,8 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
 .card-name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
 .card-name { font-size: 15px; font-weight: 700; color: var(--c-text); }
 .badge { padding: 1px 6px; border-radius: 4px; }
-.badge.common { background: #FFEBEA; }
-.badge.common text { font-size: 10px; color: #FF3B30; font-weight: 700; }
+.badge.common { background: #FEF2F2; }
+.badge.common text { font-size: 10px; color: #EF4444; font-weight: 700; }
 .card-meta { font-size: 12px; color: var(--c-text-2); display: block; }
-.card-symptoms { font-size: 11px; color: #C7C7CC; margin-top: 6px; line-height: 1.4; display: block; }
+.card-symptoms { font-size: 11px; color: #94A3B8; margin-top: 6px; line-height: 1.4; display: block; }
 </style>

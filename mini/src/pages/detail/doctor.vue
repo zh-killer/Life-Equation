@@ -219,7 +219,7 @@ function askPay(apptId, amount) {
       </view>
       <text class="hero-dept">{{ doctor.department }} · {{ doctor.hospitalName }}</text>
       <view class="fav-btn-hero" @click.stop="handleFav">
-        <ui-icon name="heart" :size="56" :color="isFav ? '#FF3B30' : '#fff'" />
+        <ui-icon name="heart" :size="56" :color="isFav ? '#EF4444' : '#fff'" />
         <text class="fav-text">{{ isFav ? '已收藏' : '收藏' }}</text>
       </view>
     </view>
@@ -250,7 +250,7 @@ function askPay(apptId, amount) {
       <text class="section-title">专业擅长</text>
       <view class="specialty-card">
         <view class="specialty-icon">
-          <ui-icon name="star" :size="64" color="#FF9500" />
+          <ui-icon name="star" :size="64" color="#F59E0B" />
         </view>
         <text class="specialty-text">{{ doctor.specialty }}</text>
       </view>
@@ -269,7 +269,7 @@ function askPay(apptId, amount) {
       <view class="section-header">
         <text class="section-title">患者评价</text>
         <view class="rating-summary">
-          <ui-icon name="star" :size="48" color="#FF9500" />
+          <ui-icon name="star" :size="48" color="#F59E0B" />
           <text class="rating-avg">{{ ratingSummary.avgRating }}</text>
           <text class="rating-count">({{ ratingSummary.count }}条)</text>
         </view>
@@ -281,7 +281,7 @@ function askPay(apptId, amount) {
             <text class="review-name">{{ r.isAnonymous ? '匿名用户' : '用户' + r.userId }}</text>
           </view>
           <view class="review-stars">
-            <text v-for="i in 5" :key="i" :style="{ color: i <= r.rating ? '#FF9500' : '#F2F2F7', fontSize: '12px' }">★</text>
+            <text v-for="i in 5" :key="i" :style="{ color: i <= r.rating ? '#F59E0B' : '#F5F7FA', fontSize: '12px' }">★</text>
           </view>
         </view>
         <view class="review-tags" v-if="r.tags">
@@ -305,11 +305,11 @@ function askPay(apptId, amount) {
         <view class="modal-header">
           <text class="modal-title">实名认证</text>
           <view class="modal-close" @click="showIdentityVerify = false">
-            <ui-icon name="close" :size="64" color="#C7C7CC" />
+            <ui-icon name="close" :size="64" color="#94A3B8" />
           </view>
         </view>
         <view class="verify-tip">
-          <ui-icon name="info" :size="56" color="#FF9500" />
+          <ui-icon name="info" :size="56" color="#F59E0B" />
           <text>请先完成实名认证方可挂号</text>
         </view>
         <view class="input-row">
@@ -334,7 +334,7 @@ function askPay(apptId, amount) {
         <view class="modal-header">
           <text class="modal-title">预约 {{ doctor.name }} 医生</text>
           <view class="modal-close" @click="showBook = false">
-            <ui-icon name="close" :size="64" color="#C7C7CC" />
+            <ui-icon name="close" :size="64" color="#94A3B8" />
           </view>
         </view>
 
@@ -344,7 +344,7 @@ function askPay(apptId, amount) {
           <picker mode="date" :value="selectedDate" @change="onDateChange">
             <view class="picker-item">
               <text :class="{ ph: !selectedDate }">{{ selectedDate || '请选择日期' }}</text>
-              <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+              <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -380,7 +380,7 @@ function askPay(apptId, amount) {
           <picker mode="selector" :range="familyMembers" range-key="name" @change="e => { selectedMemberId = familyMembers[e.detail.value].id }">
             <view class="picker-item">
               <text>{{ familyMembers.find(m => m.id === selectedMemberId)?.name || '请选择' }}</text>
-              <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+              <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -415,8 +415,8 @@ function askPay(apptId, amount) {
 .htag { display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 12px; }
 .htag text { font-size: 12px; color: #fff; }
 .htag.off { background: rgba(255,255,255,0.1); }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #34C759; }
-.status-dot.off { background: #C7C7CC; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #10B981; }
+.status-dot.off { background: #94A3B8; }
 .hero-dept { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 8px; }
 
 /* 信息卡片 */
@@ -427,26 +427,26 @@ function askPay(apptId, amount) {
   position: relative; z-index: 1;
 }
 .info-item { flex: 1; text-align: center; }
-.info-divider { width: 1px; background: #F2F2F7; }
-.ii-label { font-size: 12px; color: #C7C7CC; display: block; }
+.info-divider { width: 1px; background: #F5F7FA; }
+.ii-label { font-size: 12px; color: #94A3B8; display: block; }
 .ii-val { display: flex; align-items: baseline; justify-content: center; margin-top: 4px; }
-.ii-symbol { font-size: 12px; color: #FF3B30; font-weight: 600; }
-.ii-num { font-size: 20px; color: #FF3B30; font-weight: 800; }
-.ii-val-text { font-size: 14px; font-weight: 600; color: #1C1C1E; margin-top: 4px; display: block; }
+.ii-symbol { font-size: 12px; color: #EF4444; font-weight: 600; }
+.ii-num { font-size: 20px; color: #EF4444; font-weight: 800; }
+.ii-val-text { font-size: 14px; font-weight: 600; color: #0F172A; margin-top: 4px; display: block; }
 
 /* Section */
 .section { padding: 20px 16px 0; }
-.section-title { font-size: 17px; font-weight: 700; color: #1C1C1E; margin-bottom: 14px; display: block; }
+.section-title { font-size: 17px; font-weight: 700; color: #0F172A; margin-bottom: 14px; display: block; }
 
 .specialty-card {
   display: flex; gap: 12px;
-  background: #FFF8E1; border-radius: 14px; padding: 16px;
+  background: #FFFBEB; border-radius: 14px; padding: 16px;
 }
 .specialty-icon { width: 36px; height: 36px; border-radius: 10px; background: #EFF4FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.specialty-text { font-size: 14px; color: #8E8E93; line-height: 1.7; flex: 1; }
+.specialty-text { font-size: 14px; color: #64748B; line-height: 1.7; flex: 1; }
 
 .content-card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: none; }
-.s-text { font-size: 14px; color: #8E8E93; line-height: 1.8; }
+.s-text { font-size: 14px; color: #64748B; line-height: 1.8; }
 
 /* 底部按钮 */
 .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 12px 16px; box-shadow: none; z-index: 50; }
@@ -463,26 +463,26 @@ function askPay(apptId, amount) {
 .modal { background: #fff; width: 100%; border-radius: 20px 20px 0 0; padding: 20px 20px 24px; animation: slide-up 0.3s ease-out; }
 @keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.modal-title { font-size: 18px; font-weight: 700; color: #1C1C1E; }
+.modal-title { font-size: 18px; font-weight: 700; color: #0F172A; }
 .modal-close { padding: 4px; }
 .input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.label { font-size: 14px; color: #8E8E93; width: 50px; flex-shrink: 0; }
+.label { font-size: 14px; color: #64748B; width: 50px; flex-shrink: 0; }
 .input { flex: 1; height: 46px; background: #FFFFFF; border-radius: 12px; padding: 0 14px; font-size: 14px; }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 .picker-item { display: flex; align-items: center; justify-content: space-between; height: 46px; background: #FFFFFF; border-radius: 12px; padding: 0 14px; }
-.picker-item text { font-size: 14px; color: #1C1C1E; }
-.picker-item text.ph { color: #C7C7CC; }
+.picker-item text { font-size: 14px; color: #0F172A; }
+.picker-item text.ph { color: #94A3B8; }
 
 /* 实名认证弹窗 */
 .verify-tip {
   display: flex; align-items: center; gap: 8px;
-  background: #FEF8E8; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;
-  border: 1px solid #FAECD8;
+  background: #FFFBEB; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;
+  border: 1px solid #FEF3C7;
 }
-.verify-tip text { font-size: 14px; color: #B88230; font-weight: 500; flex: 1; }
+.verify-tip text { font-size: 14px; color: #B45309; font-weight: 500; flex: 1; }
 .verify-error { padding: 6px 0 0 60px; }
-.verify-error text { font-size: 12px; color: #FF3B30; }
-.verify-disclaimer { font-size: 11px; color: #C7C7CC; text-align: center; display: block; margin-top: 12px; }
+.verify-error text { font-size: 12px; color: #EF4444; }
+.verify-disclaimer { font-size: 11px; color: #94A3B8; text-align: center; display: block; margin-top: 12px; }
 
 /* 时段选择 */
 .slot-section { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
@@ -492,17 +492,17 @@ function askPay(apptId, amount) {
   flex: 1; min-width: 80px;
   display: flex; flex-direction: column; align-items: center;
   padding: 10px 8px;
-  background: #F2F2F7; border-radius: 12px;
+  background: #F5F7FA; border-radius: 12px;
   border: 2px solid transparent;
 }
 .slot-item.active { border-color: #2563EB; background: #EFF4FF; }
-.slot-name { font-size: 14px; font-weight: 600; color: #1C1C1E; }
-.slot-remain { font-size: 11px; color: #34C759; margin-top: 2px; }
+.slot-name { font-size: 14px; font-weight: 600; color: #0F172A; }
+.slot-remain { font-size: 11px; color: #10B981; margin-top: 2px; }
 .no-slot-hint {
   flex: 1; display: flex; align-items: center;
   padding: 10px 0;
 }
-.no-slot-hint text { font-size: 13px; color: #C7C7CC; }
+.no-slot-hint text { font-size: 13px; color: #94A3B8; }
 
 /* Favorite button */
 .fav-btn-hero { display: flex; align-items: center; gap: 4px; padding: 6px 12px; background: rgba(0,0,0,0.15); border-radius: 20px; }
@@ -511,15 +511,15 @@ function askPay(apptId, amount) {
 /* Reviews section */
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .rating-summary { display: flex; align-items: center; gap: 4px; }
-.rating-avg { font-size: 18px; font-weight: 700; color: #FF9500; }
-.rating-count { font-size: 12px; color: #C7C7CC; }
-.review-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 8px; border: 1px solid #F2F2F7; }
+.rating-avg { font-size: 18px; font-weight: 700; color: #F59E0B; }
+.rating-count { font-size: 12px; color: #94A3B8; }
+.review-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 8px; border: 1px solid #F5F7FA; }
 .review-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .review-user { display: flex; align-items: center; gap: 8px; }
 .review-avatar { width: 28px; height: 28px; border-radius: 50%; background: #EFF4FF; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #2563EB; font-weight: 600; }
-.review-name { font-size: 13px; color: #8E8E93; }
+.review-name { font-size: 13px; color: #64748B; }
 .review-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 .review-tag { font-size: 11px; color: #2563EB; background: #EFF4FF; padding: 2px 8px; border-radius: 6px; }
-.review-content { font-size: 14px; color: #1C1C1E; line-height: 1.6; display: block; }
-.review-date { font-size: 11px; color: #C7C7CC; margin-top: 8px; display: block; }
+.review-content { font-size: 14px; color: #0F172A; line-height: 1.6; display: block; }
+.review-date { font-size: 11px; color: #94A3B8; margin-top: 8px; display: block; }
 </style>

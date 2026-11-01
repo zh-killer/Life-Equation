@@ -10,7 +10,7 @@
       <ui-icon
         :name="tab.icon"
         :size="44"
-        :color="current === tab.key ? '#2563EB' : '#C7C7CC'"
+        :color="current === tab.key ? '#2563EB' : '#94A3B8'"
       />
       <view v-if="current === tab.key" class="tab-dot" />
       <text class="tab-label" :class="{ active: current === tab.key }">{{ tab.label }}</text>
@@ -46,7 +46,7 @@ function switchTab(tab) {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   display: flex;
-  border-top: 0.5px solid #F2F2F7;
+  border-top: 0.5px solid #F5F7FA;
   z-index: 999;
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -66,7 +66,7 @@ function switchTab(tab) {
 }
 .tab-label {
   font-size: 10px;
-  color: #C7C7CC;
+  color: #94A3B8;
   font-weight: 400;
 }
 .tab-label.active {

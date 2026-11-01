@@ -98,7 +98,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <text class="nav-title">医生工作台</text>
         <view class="status-toggle">
           <text class="status-label">接诊状态</text>
-          <switch :checked="workbench?.isAvailable === 1" @change="toggleAvail" color="#34C759" :disabled="loading" />
+          <switch :checked="workbench?.isAvailable === 1" @change="toggleAvail" color="#10B981" :disabled="loading" />
         </view>
       </view>
       <view class="header-body">
@@ -138,14 +138,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
       <view class="stat-card green">
         <view class="stat-icon-box" style="background: rgba(92,184,92,0.12)">
-          <UiIcon name="checkCircle" :size="40" color="#34C759" />
+          <UiIcon name="checkCircle" :size="40" color="#10B981" />
         </view>
         <text class="stat-num">{{ workbench?.completedConsultCount || 0 }}</text>
         <text class="stat-label">已完成</text>
       </view>
       <view class="stat-card orange">
         <view class="stat-icon-box" style="background: rgba(240,173,78,0.12)">
-          <UiIcon name="message" :size="40" color="#FF9500" />
+          <UiIcon name="message" :size="40" color="#F59E0B" />
         </view>
         <text class="stat-num">{{ workbench?.pendingConsultCount || 0 }}</text>
         <text class="stat-label">待处理咨询</text>
@@ -173,7 +173,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             <view class="p-info">
               <text class="p-name">{{ p.patientName }}</text>
               <view class="p-time-row">
-                <UiIcon name="clock" :size="50" color="#C7C7CC" />
+                <UiIcon name="clock" :size="50" color="#94A3B8" />
                 <text class="p-time">{{ p.timeSlot }}</text>
               </view>
             </view>
@@ -193,8 +193,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 已完成就诊 -->
     <view v-if="completedPatients.length" class="section">
       <view class="section-title-row" style="margin-bottom: 10px; padding: 0 4px;">
-        <view class="section-icon" style="background: #E9F7EF">
-          <UiIcon name="checkCircle" :size="60" color="#34C759" />
+        <view class="section-icon" style="background: #ECFDF5">
+          <UiIcon name="checkCircle" :size="60" color="#10B981" />
         </view>
         <text class="section-title">已完成就诊</text>
       </view>
@@ -204,12 +204,12 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <view class="p-info">
             <text class="p-name">{{ p.patientName }}</text>
             <view class="p-time-row">
-              <UiIcon name="clock" :size="50" color="#C7C7CC" />
+              <UiIcon name="clock" :size="50" color="#94A3B8" />
               <text class="p-time">{{ p.timeSlot }}</text>
             </view>
           </view>
           <view class="p-status-badge done-badge">
-            <UiIcon name="check" :size="11" color="#34C759" />
+            <UiIcon name="check" :size="11" color="#10B981" />
             <text>已完成</text>
           </view>
         </view>
@@ -220,8 +220,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view class="section">
       <view class="section-head">
         <view class="section-title-row">
-          <view class="section-icon" style="background: #FFF4E5">
-            <UiIcon name="message" :size="60" color="#FF9500" />
+          <view class="section-icon" style="background: #FFFBEB">
+            <UiIcon name="message" :size="60" color="#F59E0B" />
           </view>
           <text class="section-title">待处理咨询</text>
         </view>
@@ -257,7 +257,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">回复咨询</text>
           <view class="modal-close" @click="showReply = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view v-if="currentConsult" class="reply-question">
@@ -292,7 +292,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .status-badge.on { background: rgba(92,184,92,0.25); }
 .status-badge.off { background: rgba(255,255,255,0.15); }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; }
-.status-badge.on .status-dot { background: #34C759; }
+.status-badge.on .status-dot { background: #10B981; }
 .status-badge.off .status-dot { background: rgba(255,255,255,0.6); }
 .status-badge text { font-size: 13px; font-weight: 600; color: #fff; }
 
@@ -320,15 +320,15 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .patient-card.done { opacity: 0.7; }
 .p-head { display: flex; align-items: center; gap: 10px; }
 .p-avatar { width: 40px; height: 40px; border-radius: 50%; background: #34D399; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
-.done-avatar { background: #34C759; }
+.done-avatar { background: #10B981; }
 .p-info { flex: 1; }
 .p-name { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; }
 .p-time-row { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .p-time { font-size: 12px; color: var(--c-text-3); }
 .p-status-badge { display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--r-pill); font-size: 11px; font-weight: 600; }
 .p-status-badge.confirmed { background: #ECFDF5; color: #34D399; }
-.p-status-badge.pending { background: #FFF4E5; color: #FF9500; }
-.p-status-badge.done-badge { background: #E9F7EF; color: #34C759; }
+.p-status-badge.pending { background: #FFFBEB; color: #F59E0B; }
+.p-status-badge.done-badge { background: #ECFDF5; color: #10B981; }
 .p-phone-row { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
 .p-phone { font-size: 12px; color: #34D399; }
 
@@ -353,8 +353,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .modal-title { font-size: 17px; font-weight: 700; color: var(--c-text); }
 .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
-.reply-question { background: #FFF4E5; border-radius: var(--r-md); padding: 12px; margin-bottom: 14px; }
-.rq-user { font-size: 12px; color: #FF9500; font-weight: 600; display: block; margin-bottom: 4px; }
+.reply-question { background: #FFFBEB; border-radius: var(--r-md); padding: 12px; margin-bottom: 14px; }
+.rq-user { font-size: 12px; color: #F59E0B; font-weight: 600; display: block; margin-bottom: 4px; }
 .rq-text { font-size: 13px; color: var(--c-text-2); line-height: 1.5; }
 .textarea { width: 100%; min-height: 120px; background: var(--c-bg); border-radius: var(--r-md); padding: 12px; font-size: 14px; box-sizing: border-box; color: var(--c-text); }
 .char-count { font-size: 11px; color: var(--c-text-3); text-align: right; display: block; margin-top: 4px; }

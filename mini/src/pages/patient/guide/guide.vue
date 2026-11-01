@@ -6,11 +6,11 @@ const keyword = ref('')
 
 const steps = [
   { icon: 'calendar', title: '在线预约', desc: '选择科室→医生→时段，一键预约挂号', color: '#2563EB' },
-  { icon: 'file', title: '携带证件', desc: '身份证、医保卡、既往病历资料、检查报告单', color: '#FF9500' },
+  { icon: 'file', title: '携带证件', desc: '身份证、医保卡、既往病历资料、检查报告单', color: '#F59E0B' },
   { icon: 'hospital', title: '到院取号', desc: '提前15分钟到达，自助机或窗口取号，候诊区等候', color: '#2563EB' },
   { icon: 'stethoscope', title: '医生问诊', desc: '详细描述症状、发病时间，告知用药史和过敏史', color: '#60A5FA' },
-  { icon: 'activity', title: '检查检验', desc: '按医嘱完成检查，拿到报告后回诊室复诊', color: '#AF52DE' },
-  { icon: 'pill', title: '缴费取药', desc: '窗口或自助缴费，药房取药，遵医嘱用药', color: '#34C759' },
+  { icon: 'activity', title: '检查检验', desc: '按医嘱完成检查，拿到报告后回诊室复诊', color: '#8B5CF6' },
+  { icon: 'pill', title: '缴费取药', desc: '窗口或自助缴费，药房取药，遵医嘱用药', color: '#10B981' },
 ]
 const deptGuide = [
   { symptom: '头痛、头晕、失眠', dept: '神经内科' },
@@ -50,7 +50,7 @@ const filteredDept = computed(() => {
 
     <!-- 搜索 -->
     <view class="search-wrap">
-      <ui-icon name="search" :size="64" color="#C7C7CC" />
+      <ui-icon name="search" :size="64" color="#94A3B8" />
       <input v-model="keyword" placeholder="搜索症状或科室，如 头痛、骨科" placeholder-class="ph" class="search-input" />
     </view>
 
@@ -87,7 +87,7 @@ const filteredDept = computed(() => {
       <view class="dept-card">
         <view v-for="(d, i) in filteredDept" :key="i" class="dept-item" :class="{ 'no-border': i === filteredDept.length - 1 }">
           <text class="dept-symptom">{{ d.symptom }}</text>
-          <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+          <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
           <view class="dept-name"><text>{{ d.dept }}</text></view>
         </view>
         <view v-if="!filteredDept.length" class="empty-state">
@@ -120,10 +120,10 @@ const filteredDept = computed(() => {
   display: flex; align-items: center; gap: 8px;
   background: #fff; border-radius: 24px; padding: 0 16px;
   height: 42px; margin: 16px 16px 0;
-  border: 1px solid #F2F2F7;
+  border: 1px solid #F5F7FA;
 }
 .search-input { flex: 1; font-size: 14px; }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 
 .section { padding: 20px 16px 0; }
 .section-title { font-size: 17px; font-weight: 700; color: var(--c-text); margin-bottom: 14px; display: block; }
@@ -138,7 +138,7 @@ const filteredDept = computed(() => {
   flex-shrink: 0;
 }
 .step-num text { color: #fff; font-size: 13px; font-weight: 700; }
-.step-line { flex: 1; width: 2px; background: #F2F2F7; margin: 4px 0; }
+.step-line { flex: 1; width: 2px; background: #F5F7FA; margin: 4px 0; }
 .step-card {
   flex: 1; display: flex; gap: 12px; align-items: flex-start;
   background: #fff; border-radius: 14px; padding: 14px;
@@ -151,8 +151,8 @@ const filteredDept = computed(() => {
   flex-shrink: 0;
 }
 .step-content { flex: 1; }
-.step-title { font-size: 15px; font-weight: 700; color: #1C1C1E; display: block; margin-bottom: 4px; }
-.step-desc { font-size: 13px; color: #8E8E93; line-height: 1.5; }
+.step-title { font-size: 15px; font-weight: 700; color: #0F172A; display: block; margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: #64748B; line-height: 1.5; }
 
 /* 症状速查 */
 .dept-card {
@@ -162,10 +162,10 @@ const filteredDept = computed(() => {
 .dept-item {
   display: flex; align-items: center; gap: 8px;
   padding: 14px 16px;
-  border-bottom: 1px solid #F2F2F7;
+  border-bottom: 1px solid #F5F7FA;
 }
 .dept-item.no-border { border-bottom: none; }
-.dept-symptom { flex: 1; font-size: 14px; color: #1C1C1E; }
+.dept-symptom { flex: 1; font-size: 14px; color: #0F172A; }
 .dept-name { background: #EFF4FF; padding: 4px 12px; border-radius: 12px; }
 .dept-name text { font-size: 13px; color: #60A5FA; font-weight: 600; }
 </style>

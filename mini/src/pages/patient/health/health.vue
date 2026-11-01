@@ -17,8 +17,8 @@ function goDetail(id) { uni.navigateTo({ url: `/pages/patient/consultation/detai
 function goCommunity() { uni.redirectTo({ url: '/pages/patient/consultation/list' }) }
 
 const statusMap = { PENDING: '待回复', ANSWERED: '已回复', CLOSED: '已关闭' }
-const statusColor = { PENDING: '#FF9500', ANSWERED: '#34C759', CLOSED: '#C7C7CC' }
-const statusBg = { PENDING: '#FFF4E5', ANSWERED: '#E9F7EF', CLOSED: '#F5F5F5' }
+const statusColor = { PENDING: '#F59E0B', ANSWERED: '#10B981', CLOSED: '#94A3B8' }
+const statusBg = { PENDING: '#FFFBEB', ANSWERED: '#ECFDF5', CLOSED: '#F5F7FA' }
 
 const statusBarHeight = ref(0)
 uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight || 0 } })
@@ -53,7 +53,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       <view v-for="r in records" :key="r.id" class="card consult-card" @click="goDetail(r.id)">
         <view class="card-top">
           <view class="date-row">
-            <UiIcon name="calendar" :size="13" color="#C7C7CC" />
+            <UiIcon name="calendar" :size="13" color="#94A3B8" />
             <text class="card-date">{{ r.createTime?.substring(0, 10) }}</text>
           </view>
           <view class="status-badge" :style="{ background: statusBg[r.status], color: statusColor[r.status] }">
@@ -66,7 +66,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <text class="card-q">{{ r.question }}</text>
         </view>
         <view class="answer-row" v-if="r.answer">
-          <UiIcon name="stethoscope" :size="54" color="#34C759" />
+          <UiIcon name="stethoscope" :size="54" color="#10B981" />
           <text class="card-a">{{ r.answer?.substring(0, 60) }}{{ r.answer?.length > 60 ? '…' : '' }}</text>
         </view>
         <view class="doctor-row" v-if="r.doctorName">
@@ -81,7 +81,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 空状态 -->
     <view v-else class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon name="message" :size="40" color="#C7C7CC" />
+        <UiIcon name="message" :size="40" color="#94A3B8" />
       </view>
       <text class="empty-title">暂无咨询记录</text>
       <text class="empty-desc">去问答社区向医生提问吧</text>
@@ -108,7 +108,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 /* 骨架屏 */
 .skeleton-card { padding: 16px; }
-.skeleton { background: #F2F2F7; border-radius: 6px; }
+.skeleton { background: #F5F7FA; border-radius: 6px; }
 @keyframes skeleton-pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .skeleton-bar { border-radius: 8px; }
 

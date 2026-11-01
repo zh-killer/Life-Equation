@@ -89,14 +89,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
       <view class="stat-card done">
         <view class="stat-icon" style="background: rgba(92,184,92,0.12)">
-          <UiIcon name="checkCircle" :size="60" color="#34C759" />
+          <UiIcon name="checkCircle" :size="60" color="#10B981" />
         </view>
         <text class="num">{{ stat.completed }}</text>
         <text class="lbl">已完成</text>
       </view>
       <view class="stat-card warn">
         <view class="stat-icon" style="background: rgba(240,173,78,0.12)">
-          <UiIcon name="clock" :size="60" color="#FF9500" />
+          <UiIcon name="clock" :size="60" color="#F59E0B" />
         </view>
         <text class="num">{{ stat.pending }}</text>
         <text class="lbl">待就诊</text>
@@ -115,7 +115,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 空状态 -->
     <view v-else-if="!todayPatients.length" class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon name="user" :size="40" color="#C7C7CC" />
+        <UiIcon name="user" :size="40" color="#94A3B8" />
       </view>
       <text class="empty-title">今日暂无患者预约</text>
     </view>
@@ -128,12 +128,12 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <view class="head-info">
             <text class="p-name">{{ p.patientName }}</text>
             <view class="p-meta-row">
-              <UiIcon name="calendar" :size="50" color="#C7C7CC" />
+              <UiIcon name="calendar" :size="50" color="#94A3B8" />
               <text class="p-meta">{{ p.appointmentDate }} · {{ p.timeSlot }}</text>
             </view>
           </view>
           <view class="status-badge" :class="{ done: p.status === 'COMPLETED' }">
-            <view class="status-dot" :style="{ background: p.status === 'COMPLETED' ? '#34C759' : p.status === 'CONFIRMED' ? '#34D399' : '#FF9500' }"></view>
+            <view class="status-dot" :style="{ background: p.status === 'COMPLETED' ? '#10B981' : p.status === 'CONFIRMED' ? '#34D399' : '#F59E0B' }"></view>
             <text>{{ p.status === 'COMPLETED' ? '已完成' : p.status === 'CONFIRMED' ? '已确认' : '待确认' }}</text>
           </view>
         </view>
@@ -146,7 +146,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         </view>
         <view v-if="p.symptomDesc" class="card-row">
           <view class="row-icon-box">
-            <UiIcon name="activity" :size="54" color="#FF9500" />
+            <UiIcon name="activity" :size="54" color="#F59E0B" />
           </view>
           <text class="row-label">症状</text>
           <text class="row-val">{{ p.symptomDesc }}</text>
@@ -170,7 +170,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">{{ currentPatient?.patientName }} 的病历档案</text>
           <view class="modal-close" @click="showRecords = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view v-if="recordsLoading" class="loading-text">加载病历中…</view>
@@ -185,11 +185,11 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             <text v-if="r.recordContent" class="rec-content">{{ r.recordContent }}</text>
             <view class="rec-foot">
               <view class="rec-meta" v-if="r.hospitalName">
-                <UiIcon name="hospital" :size="11" color="#C7C7CC" />
+                <UiIcon name="hospital" :size="11" color="#94A3B8" />
                 <text>{{ r.hospitalName }}</text>
               </view>
               <view class="rec-meta" v-if="r.doctorName">
-                <UiIcon name="user" :size="11" color="#C7C7CC" />
+                <UiIcon name="user" :size="11" color="#94A3B8" />
                 <text>{{ r.doctorName }} 医生</text>
               </view>
             </view>
@@ -215,8 +215,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .stats { display: flex; gap: 10px; padding: 16px; }
 .stat-card { flex: 1; background: #fff; border-radius: var(--r-lg); padding: 16px 8px; text-align: center; box-shadow: none; position: relative; overflow: hidden; }
 .stat-card.done::before, .stat-card.warn::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 3px 3px 0 0; }
-.stat-card.done::before { background: #34C759; }
-.stat-card.warn::before { background: #FF9500; }
+.stat-card.done::before { background: #10B981; }
+.stat-card.warn::before { background: #F59E0B; }
 .stat-icon { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
 .num { font-size: 26px; font-weight: 800; color: var(--c-text); display: block; }
 .lbl { font-size: 11px; color: var(--c-text-3); display: block; margin-top: 4px; }
@@ -227,7 +227,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 /* 骨架屏 */
 .skeleton-card { padding: 16px; }
-.skeleton { background: #F2F2F7; border-radius: 6px; }
+.skeleton { background: #F5F7FA; border-radius: 6px; }
 @keyframes skeleton-pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .skeleton-bar { border-radius: 8px; }
 
@@ -246,10 +246,10 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .p-meta { font-size: 12px; color: var(--c-text-3); }
 .status-badge { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: var(--r-pill); }
 .status-badge text { font-size: 11px; font-weight: 600; }
-.status-badge:not(.done) { background: #FFF4E5; }
-.status-badge:not(.done) text { color: #FF9500; }
-.status-badge.done { background: #E9F7EF; }
-.status-badge.done text { color: #34C759; }
+.status-badge:not(.done) { background: #FFFBEB; }
+.status-badge:not(.done) text { color: #F59E0B; }
+.status-badge.done { background: #ECFDF5; }
+.status-badge.done text { color: #10B981; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; }
 
 .card-row { display: flex; gap: 8px; padding: 8px 0; border-top: 1px dashed #eee; align-items: center; }
@@ -258,10 +258,10 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .row-val { font-size: 13px; color: var(--c-text-2); flex: 1; line-height: 1.5; }
 .row-val.phone { color: #34D399; text-decoration: underline; }
 
-.card-actions { display: flex; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0f0f0; }
+.card-actions { display: flex; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #F5F7FA; }
 .act-btn { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; height: 36px; border-radius: var(--r-pill); font-size: 13px; background: var(--c-bg); color: var(--c-text-2); }
 .act-btn text { font-size: 13px; }
-.act-btn.primary { background: #34C759; color: #fff; font-weight: 600; }
+.act-btn.primary { background: #10B981; color: #fff; font-weight: 600; }
 .act-btn.primary text { color: #fff; }
 
 /* 弹窗 */

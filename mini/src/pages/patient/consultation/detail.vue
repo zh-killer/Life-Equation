@@ -39,9 +39,9 @@ function doDelete() {
 }
 
 const statusInfo = (s) => {
-  if (s === 'PENDING') return { text: '等待医生回复', desc: '您的咨询已提交，医生将尽快为您解答', color: '#FF9500', bg: '#FFF4E5', icon: 'clock' }
-  if (s === 'ANSWERED') return { text: '已回复', desc: '医生已回复您的咨询', color: '#34C759', bg: '#E9F7EF', icon: 'checkCircle' }
-  return { text: '已关闭', desc: '该咨询已关闭', color: '#C7C7CC', bg: '#F5F5F5', icon: 'lock' }
+  if (s === 'PENDING') return { text: '等待医生回复', desc: '您的咨询已提交，医生将尽快为您解答', color: '#F59E0B', bg: '#FFFBEB', icon: 'clock' }
+  if (s === 'ANSWERED') return { text: '已回复', desc: '医生已回复您的咨询', color: '#10B981', bg: '#ECFDF5', icon: 'checkCircle' }
+  return { text: '已关闭', desc: '该咨询已关闭', color: '#94A3B8', bg: '#F5F7FA', icon: 'lock' }
 }
 
 const statusBarHeight = ref(0)
@@ -76,13 +76,13 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <view class="q-meta">
             <text class="q-user">{{ consultation.userName || '匿名用户' }}</text>
             <view class="q-time-row">
-              <UiIcon name="clock" :size="50" color="#C7C7CC" />
+              <UiIcon name="clock" :size="50" color="#94A3B8" />
               <text class="q-time">{{ consultation.createTime?.substring(0, 16) }}</text>
             </view>
           </view>
           <view class="q-tag" :class="consultation.isPublic === 1 ? 'tag-public' : 'tag-private'">
-            <UiIcon :name="consultation.isPublic === 1 ? 'eye' : 'lock'" :size="11" :color="consultation.isPublic === 1 ? '#60A5FA' : '#C7C7CC'" />
-            <text :style="{ color: consultation.isPublic === 1 ? '#60A5FA' : '#C7C7CC' }">{{ consultation.isPublic === 1 ? '公开' : '私密' }}</text>
+            <UiIcon :name="consultation.isPublic === 1 ? 'eye' : 'lock'" :size="11" :color="consultation.isPublic === 1 ? '#60A5FA' : '#94A3B8'" />
+            <text :style="{ color: consultation.isPublic === 1 ? '#60A5FA' : '#94A3B8' }">{{ consultation.isPublic === 1 ? '公开' : '私密' }}</text>
           </view>
         </view>
         <text class="q-text">{{ consultation.question }}</text>
@@ -106,7 +106,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           </view>
         </view>
         <view class="a-time-row">
-          <UiIcon name="clock" :size="50" color="#C7C7CC" />
+          <UiIcon name="clock" :size="50" color="#94A3B8" />
           <text class="a-time">回复于 {{ consultation.replyTime?.substring(0, 16) }}</text>
         </view>
         <text class="a-text">{{ consultation.answer }}</text>
@@ -115,7 +115,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       <!-- 等待卡片 -->
       <view v-else class="card waiting-card">
         <view class="wait-icon-box">
-          <UiIcon name="clock" :size="60" color="#FF9500" />
+          <UiIcon name="clock" :size="60" color="#F59E0B" />
         </view>
         <text class="wait-text">医生正在赶来，请耐心等待回复…</text>
       </view>
@@ -128,7 +128,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <text>返回列表</text>
       </button>
       <button v-if="currentUserId && consultation.userId === currentUserId" class="btn danger" @click="doDelete">
-        <UiIcon name="close" :size="60" color="#FF3B30" />
+        <UiIcon name="close" :size="60" color="#EF4444" />
         <text>删除</text>
       </button>
     </view>
@@ -162,17 +162,17 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .q-time { font-size: 11px; color: var(--c-text-3); }
 .q-tag { display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--r-pill); font-size: 10px; }
 .tag-public { background: #EFF4FF; }
-.tag-private { background: #F5F5F5; }
+.tag-private { background: #F5F7FA; }
 .q-tag text { font-size: 10px; font-weight: 600; }
 .q-text { font-size: 15px; color: var(--c-text); line-height: 1.8; display: block; }
-.q-doctor { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
+.q-doctor { margin-top: 12px; padding-top: 12px; border-top: 1px solid #F5F7FA; }
 .doctor-tag { display: flex; align-items: center; gap: 6px; }
 .doctor-tag text { font-size: 12px; color: #60A5FA; }
 
 /* 回答卡片 */
-.answer-card { border-left: 4px solid #34C759; }
+.answer-card { border-left: 4px solid #10B981; }
 .a-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.a-avatar { width: 40px; height: 40px; border-radius: 50%; background: #34C759; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.a-avatar { width: 40px; height: 40px; border-radius: 50%; background: #10B981; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .a-meta { flex: 1; }
 .a-name { font-size: 14px; font-weight: 700; color: var(--c-text); display: block; }
 .a-title { font-size: 11px; color: var(--c-text-3); }
@@ -182,13 +182,13 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 /* 等待卡片 */
 .waiting-card { padding: 40px 20px; text-align: center; }
-.wait-icon-box { width: 64px; height: 64px; background: #FFF4E5; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; animation: pulse 2s ease-in-out infinite; }
+.wait-icon-box { width: 64px; height: 64px; background: #FFFBEB; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.92); } }
 .wait-text { font-size: 14px; color: var(--c-text-3); display: block; }
 
 /* 底部操作 */
-.actions { display: flex; gap: 12px; padding: 16px; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #F2F2F7; }
+.actions { display: flex; gap: 12px; padding: 16px; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #F5F7FA; }
 .btn { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; height: 44px; border-radius: var(--r-pill); font-size: 14px; border: none; }
 .btn.outline { background: #fff; color: #2563EB; border: 2px solid #2563EB; }
-.btn.danger { background: #fff; color: #FF3B30; border: 2px solid #FF3B30; }
+.btn.danger { background: #fff; color: #EF4444; border: 2px solid #EF4444; }
 </style>

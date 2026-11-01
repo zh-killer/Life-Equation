@@ -49,7 +49,7 @@ function goDetail(item) {
 }
 
 const iconMap = { doctor: 'stethoscope', hospital: 'hospital', article: 'news', disease: 'virus', drug: 'pill' }
-const colorMap = { doctor: '#2563EB', hospital: '#60A5FA', article: '#FF9500', disease: '#FF3B30', drug: '#AF52DE' }
+const colorMap = { doctor: '#2563EB', hospital: '#60A5FA', article: '#F59E0B', disease: '#EF4444', drug: '#8B5CF6' }
 const labelMap = { doctor: '医生', hospital: '本院', article: '资讯', disease: '疾病', drug: '药品' }
 </script>
 
@@ -74,12 +74,12 @@ const labelMap = { doctor: '医生', hospital: '本院', article: '资讯', dise
           </view>
         </view>
         <view class="fav-btn" @click.stop="handleToggle(item)">
-          <ui-icon name="heart" :size="54" color="#FF3B30" />
+          <ui-icon name="heart" :size="54" color="#EF4444" />
         </view>
       </view>
 
       <view v-if="!loading && !list.length" class="empty-state">
-        <view class="empty-icon"><ui-icon name="star" :size="50" color="#C7C7CC" /></view>
+        <view class="empty-icon"><ui-icon name="star" :size="50" color="#94A3B8" /></view>
         <text class="empty-text">暂无收藏</text>
       </view>
     </view>
@@ -88,22 +88,22 @@ const labelMap = { doctor: '医生', hospital: '本院', article: '资讯', dise
 
 <style scoped>
 .page { background: #FFFFFF; min-height: 100vh; }
-.tabs { display: flex; padding: 12px 16px; white-space: nowrap; background: #fff; border-bottom: 1px solid #F2F2F7; }
-.tab-item { display: inline-flex; padding: 6px 16px; margin-right: 8px; border-radius: 18px; background: #F2F2F7; }
-.tab-item text { font-size: 13px; color: #8E8E93; }
+.tabs { display: flex; padding: 12px 16px; white-space: nowrap; background: #fff; border-bottom: 1px solid #F5F7FA; }
+.tab-item { display: inline-flex; padding: 6px 16px; margin-right: 8px; border-radius: 18px; background: #F5F7FA; }
+.tab-item text { font-size: 13px; color: #64748B; }
 .tab-item.active { background: #2563EB; }
 .tab-item.active text { color: #fff; font-weight: 600; }
 
 .list { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
-.card { display: flex; align-items: center; justify-content: space-between; background: #fff; border-radius: 14px; padding: 14px 16px; border: 1px solid #F2F2F7; }
+.card { display: flex; align-items: center; justify-content: space-between; background: #fff; border-radius: 14px; padding: 14px 16px; border: 1px solid #F5F7FA; }
 .card-left { display: flex; align-items: center; gap: 12px; flex: 1; }
 .icon-wrap { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .info { flex: 1; }
-.type-label { font-size: 14px; color: #1C1C1E; font-weight: 500; display: block; }
-.time { font-size: 12px; color: #C7C7CC; margin-top: 2px; display: block; }
+.type-label { font-size: 14px; color: #0F172A; font-weight: 500; display: block; }
+.time { font-size: 12px; color: #94A3B8; margin-top: 2px; display: block; }
 .fav-btn { padding: 6px; }
 
 .empty-state { display: flex; flex-direction: column; align-items: center; padding: 80px 20px; }
-.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F2F2F7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-.empty-text { font-size: 15px; color: #C7C7CC; }
+.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F5F7FA; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.empty-text { font-size: 15px; color: #94A3B8; }
 </style>

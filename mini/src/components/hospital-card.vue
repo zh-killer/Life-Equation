@@ -32,15 +32,15 @@ defineProps({
   background: #EFF4FF; display: flex; align-items: center; justify-content: center;
   font-size: 22px; flex-shrink: 0;
 }
-.avatar.top { background: #FFEBEA; }
+.avatar.top { background: #FEF2F2; }
 .body { flex: 1; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-.name { font-size: 15px; font-weight: 700; color: #1C1C1E; }
+.name { font-size: 15px; font-weight: 700; color: #0F172A; }
 .level {
   padding: 1px 8px; border-radius: 4px; font-size: 10px; color: #60A5FA; background: #EFF4FF; font-weight: 700;
 }
-.level.top { color: #FF3B30; background: #FFEBEA; }
-.addr { font-size: 12px; color: #C7C7CC; display: block; }
-.dept { font-size: 11px; color: #C7C7CC; display: block; margin-top: 2px; }
-.arrow { font-size: 18px; color: #C7C7CC; flex-shrink: 0; }
+.level.top { color: #EF4444; background: #FEF2F2; }
+.addr { font-size: 12px; color: #94A3B8; display: block; }
+.dept { font-size: 11px; color: #94A3B8; display: block; margin-top: 2px; }
+.arrow { font-size: 18px; color: #94A3B8; flex-shrink: 0; }
 </style>

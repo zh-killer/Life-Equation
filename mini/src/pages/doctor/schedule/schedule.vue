@@ -161,7 +161,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 空状态 -->
     <view v-else-if="!schedules.length" class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon name="calendar" :size="40" color="#C7C7CC" />
+        <UiIcon name="calendar" :size="40" color="#94A3B8" />
       </view>
       <text class="empty-title">本月暂无排班</text>
       <text class="empty-desc">点击上方按钮添加排班</text>
@@ -174,7 +174,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <view class="date-block">
             <text class="s-date">{{ s.scheduleDate }}</text>
             <view class="s-slot-row">
-              <UiIcon name="clock" :size="50" color="#8E8E93" />
+              <UiIcon name="clock" :size="50" color="#64748B" />
               <text class="s-slot">{{ s.timeSlot }}</text>
             </view>
           </view>
@@ -197,7 +197,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         </view>
         <view class="card-actions">
           <view class="action-btn danger" @click="doDelete(s)">
-            <UiIcon name="close" :size="54" color="#FF3B30" />
+            <UiIcon name="close" :size="54" color="#EF4444" />
             <text>删除</text>
           </view>
         </view>
@@ -210,7 +210,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">添加排班</text>
           <view class="modal-close" @click="showAdd = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view class="form-row">
@@ -218,7 +218,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <picker mode="date" :value="addForm.scheduleDate" @change="e => addForm.scheduleDate = e.detail.value">
             <view class="picker-item">
               <text>{{ addForm.scheduleDate || '请选择日期' }}</text>
-              <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+              <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -227,7 +227,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <picker mode="selector" :range="timeSlots" :value="timeSlots.indexOf(addForm.timeSlot)" @change="e => addForm.timeSlot = timeSlots[e.detail.value]">
             <view class="picker-item">
               <text>{{ addForm.timeSlot }}</text>
-              <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+              <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -236,7 +236,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <picker mode="selector" :range="clinicTypes" :value="clinicTypes.indexOf(addForm.type)" @change="e => addForm.type = clinicTypes[e.detail.value]">
             <view class="picker-item">
               <text>{{ addForm.type }}</text>
-              <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+              <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -261,7 +261,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">申请停诊</text>
           <view class="modal-close" @click="showStop = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view class="form-row">
@@ -269,7 +269,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <picker mode="date" :value="stopForm.scheduleDate" @change="e => stopForm.scheduleDate = e.detail.value">
             <view class="picker-item">
               <text>{{ stopForm.scheduleDate || '请选择日期' }}</text>
-              <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+              <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -310,7 +310,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 /* 骨架屏 */
 .skeleton-card { padding: 16px; }
-.skeleton { background: #F2F2F7; border-radius: 6px; }
+.skeleton { background: #F5F7FA; border-radius: 6px; }
 @keyframes skeleton-pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .skeleton-bar { border-radius: 8px; }
 
@@ -331,24 +331,24 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .tag-area { display: flex; gap: 6px; }
 .type-tag { font-size: 10px; padding: 3px 8px; border-radius: var(--r-pill); font-weight: 600; }
 .type-tag.normal { background: #ECFDF5; color: #10B981; }
-.type-tag.expert { background: #ECFDF5; color: #F57C00; }
-.type-tag.special { background: #F3E5F5; color: #7B1FA2; }
-.status-tag { font-size: 10px; padding: 3px 8px; border-radius: var(--r-pill); background: #E9F7EF; color: #388E3C; font-weight: 600; }
-.status-tag.off { background: #FFEBEE; color: #C62828; }
+.type-tag.expert { background: #ECFDF5; color: #B45309; }
+.type-tag.special { background: #F5F3FF; color: #6D28D9; }
+.status-tag { font-size: 10px; padding: 3px 8px; border-radius: var(--r-pill); background: #ECFDF5; color: #047857; font-weight: 600; }
+.status-tag.off { background: #FEF2F2; color: #B91C1C; }
 
-.slot-bar { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #f5f5f5; }
+.slot-bar { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #F5F7FA; }
 .slot-info { display: flex; flex-direction: column; }
 .slot-label { font-size: 11px; color: var(--c-text-3); }
 .slot-num { font-size: 15px; font-weight: 700; color: var(--c-text); }
 .slot-progress { flex: 1; display: flex; align-items: center; gap: 8px; }
-.progress-bar { flex: 1; height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
-.progress-fill { height: 100%; background: #34C759; border-radius: 3px; transition: width 0.3s; }
-.slot-remain { font-size: 11px; color: #34C759; font-weight: 600; min-width: 30px; }
+.progress-bar { flex: 1; height: 6px; background: #F5F7FA; border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: #10B981; border-radius: 3px; transition: width 0.3s; }
+.slot-remain { font-size: 11px; color: #10B981; font-weight: 600; min-width: 30px; }
 
-.card-actions { display: flex; justify-content: flex-end; padding-top: 10px; border-top: 1px solid #f5f5f5; }
+.card-actions { display: flex; justify-content: flex-end; padding-top: 10px; border-top: 1px solid #F5F7FA; }
 .action-btn { display: flex; align-items: center; gap: 4px; padding: 6px 14px; border-radius: var(--r-pill); }
 .action-btn text { font-size: 12px; }
-.action-btn.danger { background: #FFEBEE; }
+.action-btn.danger { background: #FEF2F2; }
 
 /* 弹窗 */
 .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: flex-end; }

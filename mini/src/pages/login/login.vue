@@ -133,11 +133,11 @@ async function handleRegister() {
         <!-- 登录表单 -->
         <view v-if="tab === 'login'" class="form">
           <view class="input-group">
-            <ui-icon name="user" :size="64" color="#C7C7CC" />
+            <ui-icon name="user" :size="64" color="#94A3B8" />
             <input v-model="loginForm.username" placeholder="请输入用户名" placeholder-class="ph" class="input" />
           </view>
           <view class="input-group">
-            <ui-icon name="lock" :size="64" color="#C7C7CC" />
+            <ui-icon name="lock" :size="64" color="#94A3B8" />
             <input v-model="loginForm.password" :type="showLoginPwd ? 'text' : 'password'" placeholder="请输入密码" placeholder-class="ph" class="input" />
             <view class="eye-btn" @click="showLoginPwd = !showLoginPwd">
               <text class="eye-char">{{ showLoginPwd ? '🙈' : '👁️' }}</text>
@@ -150,33 +150,33 @@ async function handleRegister() {
         <!-- 注册表单 -->
         <view v-if="tab === 'register'" class="form">
           <view class="input-group">
-            <ui-icon name="user" :size="64" color="#C7C7CC" />
+            <ui-icon name="user" :size="64" color="#94A3B8" />
             <input v-model="regForm.realName" placeholder="真实姓名（必填）" placeholder-class="ph" class="input" />
           </view>
           <view class="input-group">
-            <ui-icon name="user" :size="64" color="#C7C7CC" />
+            <ui-icon name="user" :size="64" color="#94A3B8" />
             <input v-model="regForm.username" placeholder="用户名（3-50字符）" placeholder-class="ph" class="input" />
           </view>
           <view class="input-group">
-            <ui-icon name="lock" :size="64" color="#C7C7CC" />
+            <ui-icon name="lock" :size="64" color="#94A3B8" />
             <input v-model="regForm.password" :type="showRegPwd ? 'text' : 'password'" placeholder="密码（6-20位）" placeholder-class="ph" class="input" />
             <view class="eye-btn" @click="showRegPwd = !showRegPwd">
               <text class="eye-char">{{ showRegPwd ? '🙈' : '👁️' }}</text>
             </view>
           </view>
           <view class="input-group">
-            <ui-icon name="lock" :size="64" color="#C7C7CC" />
+            <ui-icon name="lock" :size="64" color="#94A3B8" />
             <input v-model="regForm.confirmPassword" :type="showRegConfirmPwd ? 'text' : 'password'" placeholder="确认密码" placeholder-class="ph" class="input" />
             <view class="eye-btn" @click="showRegConfirmPwd = !showRegConfirmPwd">
               <text class="eye-char">{{ showRegConfirmPwd ? '🙈' : '👁️' }}</text>
             </view>
           </view>
           <view class="input-group">
-            <ui-icon name="phone" :size="64" color="#C7C7CC" />
+            <ui-icon name="phone" :size="64" color="#94A3B8" />
             <input v-model="regForm.phone" placeholder="手机号（选填）" placeholder-class="ph" class="input" />
           </view>
           <view class="input-group">
-            <ui-icon name="message" :size="64" color="#C7C7CC" />
+            <ui-icon name="message" :size="64" color="#94A3B8" />
             <input v-model="regForm.email" placeholder="邮箱（选填）" placeholder-class="ph" class="input" />
           </view>
           <button class="btn-primary" :loading="loading" @click="handleRegister">注 册</button>
@@ -224,8 +224,8 @@ async function handleRegister() {
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 16px;
 }
-.hero-title { font-size: 28px; font-weight: 600; color: #1C1C1E; letter-spacing: 1px; display: block; }
-.hero-desc { font-size: 15px; color: #8E8E93; margin-top: 8px; display: block; }
+.hero-title { font-size: 28px; font-weight: 600; color: #0F172A; letter-spacing: 1px; display: block; }
+.hero-desc { font-size: 15px; color: #64748B; margin-top: 8px; display: block; }
 
 /* ===== 微信登录 ===== */
 .wechat-section {
@@ -269,7 +269,7 @@ async function handleRegister() {
   background: #fff;
   border-radius: 24px;
   padding: 28px 24px 24px;
-  border: 1px solid #F2F2F7;
+  border: 1px solid #F5F7FA;
   box-sizing: border-box;
 }
 
@@ -277,7 +277,7 @@ async function handleRegister() {
 .tabs { display: flex; margin-bottom: 24px; }
 .tab-item {
   flex: 1; text-align: center; padding: 10px 0;
-  font-size: 16px; color: #C7C7CC;
+  font-size: 16px; color: #94A3B8;
   position: relative;
   transition: color 0.2s;
 }
@@ -299,12 +299,12 @@ async function handleRegister() {
   border-radius: 14px;
   padding: 0 16px;
   height: 50px;
-  border: 1px solid #F2F2F7;
+  border: 1px solid #F5F7FA;
   transition: border-color 0.2s;
 }
 .input-group:focus-within { border-color: #60A5FA; }
-.input { flex: 1; font-size: 15px; color: #1C1C1E; }
-.ph { color: #C7C7CC; }
+.input { flex: 1; font-size: 15px; color: #0F172A; }
+.ph { color: #94A3B8; }
 
 .btn-primary {
   width: 100%; height: 50px; line-height: 50px;
@@ -313,7 +313,7 @@ async function handleRegister() {
   font-size: 16px; font-weight: 700; letter-spacing: 4px;
   margin-top: 8px;
 }
-.hint { font-size: 12px; color: #C7C7CC; text-align: center; margin-top: 4px; }
+.hint { font-size: 12px; color: #94A3B8; text-align: center; margin-top: 4px; }
 
 /* 密码眼睛 */
 .eye-btn {
@@ -338,11 +338,11 @@ async function handleRegister() {
 .switch-line {
   width: 40px;
   height: 1px;
-  background: #E5E5EA;
+  background: #E6EBF2;
 }
 .switch-text {
   font-size: 13px;
-  color: #8E8E93;
+  color: #64748B;
   padding: 0 12px;
 }
 .switch-row-inner {

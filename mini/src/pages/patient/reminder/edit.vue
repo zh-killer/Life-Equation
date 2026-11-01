@@ -89,7 +89,7 @@ function handleSave() {
         <picker mode="selector" :range="frequencies" range-key="label" @change="onFreqChange">
           <view class="picker-item">
             <text>{{ frequencies.find(f => f.key === form.frequency)?.label || '请选择' }}</text>
-            <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+            <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
           </view>
         </picker>
       </view>
@@ -102,7 +102,7 @@ function handleSave() {
         <picker mode="date" :value="form.startDate" @change="e => form.startDate = e.detail.value">
           <view class="picker-item">
             <text :class="{ ph: !form.startDate }">{{ form.startDate || '请选择' }}</text>
-            <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+            <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
           </view>
         </picker>
       </view>
@@ -111,7 +111,7 @@ function handleSave() {
         <picker mode="date" :value="form.endDate" @change="e => form.endDate = e.detail.value">
           <view class="picker-item">
             <text :class="{ ph: !form.endDate }">{{ form.endDate || '请选择' }}</text>
-            <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+            <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
           </view>
         </picker>
       </view>
@@ -129,16 +129,16 @@ function handleSave() {
 
 <style scoped>
 .page { background: #FFFFFF; min-height: 100vh; padding: 16px; }
-.form-card { background: #fff; border-radius: 14px; padding: 4px 16px; border: 1px solid #F2F2F7; }
-.input-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #F2F2F7; }
+.form-card { background: #fff; border-radius: 14px; padding: 4px 16px; border: 1px solid #F5F7FA; }
+.input-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #F5F7FA; }
 .input-row:last-child { border-bottom: none; }
-.label { font-size: 15px; color: #1C1C1E; width: 70px; flex-shrink: 0; }
-.required { color: #FF3B30; }
-.input { flex: 1; font-size: 14px; color: #1C1C1E; text-align: right; }
-.ph { color: #C7C7CC; }
+.label { font-size: 15px; color: #0F172A; width: 70px; flex-shrink: 0; }
+.required { color: #EF4444; }
+.input { flex: 1; font-size: 14px; color: #0F172A; text-align: right; }
+.ph { color: #94A3B8; }
 .picker-item { display: flex; align-items: center; justify-content: flex-end; flex: 1; }
-.picker-item text { font-size: 14px; color: #1C1C1E; }
-.picker-item text.ph { color: #C7C7CC; }
+.picker-item text { font-size: 14px; color: #0F172A; }
+.picker-item text.ph { color: #94A3B8; }
 
 .btn-save {
   width: 100%; height: 48px; line-height: 48px;

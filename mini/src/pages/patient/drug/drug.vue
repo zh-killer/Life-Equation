@@ -29,7 +29,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
   <view class="page">
     <!-- 搜索 -->
     <view class="search-bar">
-      <ui-icon name="search" :size="64" color="#C7C7CC" />
+      <ui-icon name="search" :size="64" color="#94A3B8" />
       <input v-model="keyword" placeholder="搜索药品名称或适应症" placeholder-class="ph" class="search-input" @confirm="search" />
       <view class="search-btn" @click="search"><text>搜索</text></view>
     </view>
@@ -62,7 +62,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
       <template v-else-if="list.length">
         <view v-for="d in list" :key="d.id" class="card" @click="goDetail(d.id)">
           <view class="card-icon-wrap">
-            <ui-icon name="pill" :size="44" color="#AF52DE" />
+            <ui-icon name="pill" :size="44" color="#8B5CF6" />
           </view>
           <view class="card-body">
             <view class="card-top">
@@ -78,7 +78,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
         </view>
       </template>
       <view v-else class="empty-state">
-        <view class="empty-icon"><ui-icon name="pill" :size="54" color="#C7C7CC" /></view>
+        <view class="empty-icon"><ui-icon name="pill" :size="54" color="#94A3B8" /></view>
         <text class="empty-text">未找到药品</text>
       </view>
     </view>
@@ -92,10 +92,10 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
   display: flex; align-items: center; gap: 8px;
   background: #fff; border-radius: 24px; padding: 0 16px;
   height: 42px; margin-bottom: 12px;
-  border: 1px solid #F2F2F7;
+  border: 1px solid #F5F7FA;
 }
 .search-input { flex: 1; font-size: 14px; }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 .search-btn {
   height: 30px; padding: 0 14px;
   background: #2563EB; border-radius: 15px;
@@ -107,13 +107,13 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
 .cat-chips { display: inline-flex; gap: 8px; padding: 0 2px; }
 .chip {
   display: inline-flex; padding: 6px 14px; border-radius: 16px;
-  background: #fff; border: 1px solid #F2F2F7;
+  background: #fff; border: 1px solid #F5F7FA;
 }
-.chip text { font-size: 13px; color: #8E8E93; }
+.chip text { font-size: 13px; color: #64748B; }
 .chip.active { background: #2563EB; border-color: #2563EB; }
 .chip.active text { color: #fff; }
-.chip.otc-chip.active { background: #34C759; border-color: #34C759; }
-.chip.clear text { color: #FF3B30; }
+.chip.otc-chip.active { background: #10B981; border-color: #10B981; }
+.chip.clear text { color: #EF4444; }
 
 .list { display: flex; flex-direction: column; gap: 10px; }
 .card {
@@ -123,7 +123,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
 }
 .card-icon-wrap {
   width: 48px; height: 48px; border-radius: 12px;
-  background: #F3E5F5;
+  background: #F5F3FF;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
@@ -131,10 +131,10 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
 .card-top { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
 .card-name { font-size: 15px; font-weight: 700; color: var(--c-text); }
 .badge { padding: 1px 6px; border-radius: 4px; background: #EFF4FF; }
-.badge text { font-size: 10px; color: #E65100; font-weight: 800; }
-.badge.otc { background: #E8F5E9; }
-.badge.otc text { color: #2E7D32; }
-.card-trade { font-size: 12px; color: #C7C7CC; display: block; }
+.badge text { font-size: 10px; color: #B45309; font-weight: 800; }
+.badge.otc { background: #ECFDF5; }
+.badge.otc text { color: #047857; }
+.card-trade { font-size: 12px; color: #94A3B8; display: block; }
 .card-cat { font-size: 12px; color: #60A5FA; display: block; margin-top: 2px; }
-.card-ind { font-size: 11px; color: #C7C7CC; margin-top: 4px; line-height: 1.4; display: block; }
+.card-ind { font-size: 11px; color: #94A3B8; margin-top: 4px; line-height: 1.4; display: block; }
 </style>

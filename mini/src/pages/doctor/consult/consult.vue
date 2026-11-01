@@ -125,7 +125,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 空状态 -->
     <view v-else-if="!consultations.length" class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon name="message" :size="40" color="#C7C7CC" />
+        <UiIcon name="message" :size="40" color="#94A3B8" />
       </view>
       <text class="empty-title">暂无咨询</text>
     </view>
@@ -139,13 +139,13 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             <view>
               <text class="c-user">{{ c.userName || '匿名用户' }}</text>
               <view class="c-time-row">
-                <UiIcon name="clock" :size="11" color="#C7C7CC" />
+                <UiIcon name="clock" :size="11" color="#94A3B8" />
                 <text class="c-time">{{ formatTime(c.createTime) }}</text>
               </view>
             </view>
           </view>
           <view class="status-badge" :class="{ done: c.status === 'ANSWERED' }">
-            <view class="status-dot" :style="{ background: c.status === 'ANSWERED' ? '#34C759' : '#FF9500' }"></view>
+            <view class="status-dot" :style="{ background: c.status === 'ANSWERED' ? '#10B981' : '#F59E0B' }"></view>
             <text>{{ c.status === 'ANSWERED' ? '已回复' : '待回复' }}</text>
           </view>
         </view>
@@ -177,7 +177,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">回复咨询</text>
           <view class="modal-close" @click="showReply = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view v-if="currentConsult" class="reply-question">
@@ -199,7 +199,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">患者病历档案</text>
           <view class="modal-close" @click="showRecords = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view v-if="recordsLoading" class="loading-text">加载病历中…</view>
@@ -214,11 +214,11 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             <text v-if="r.recordContent" class="rec-content">{{ r.recordContent }}</text>
             <view class="rec-foot">
               <view class="rec-meta" v-if="r.hospitalName">
-                <UiIcon name="hospital" :size="11" color="#C7C7CC" />
+                <UiIcon name="hospital" :size="11" color="#94A3B8" />
                 <text>{{ r.hospitalName }}</text>
               </view>
               <view class="rec-meta" v-if="r.doctorName">
-                <UiIcon name="user" :size="11" color="#C7C7CC" />
+                <UiIcon name="user" :size="11" color="#94A3B8" />
                 <text>{{ r.doctorName }} 医生</text>
               </view>
             </view>
@@ -248,7 +248,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 /* 骨架屏 */
 .skeleton-card { padding: 16px; }
-.skeleton { background: #F2F2F7; border-radius: 6px; }
+.skeleton { background: #F5F7FA; border-radius: 6px; }
 @keyframes skeleton-pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .skeleton-bar { border-radius: 8px; }
 
@@ -265,23 +265,23 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .c-user { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; }
 .c-time-row { display: flex; align-items: center; gap: 3px; }
 .c-time { font-size: 11px; color: var(--c-text-3); }
-.status-badge { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: var(--r-pill); background: #FFF4E5; }
-.status-badge.done { background: #E9F7EF; }
+.status-badge { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: var(--r-pill); background: #FFFBEB; }
+.status-badge.done { background: #ECFDF5; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; }
 .status-badge text { font-size: 11px; font-weight: 600; }
-.status-badge:not(.done) text { color: #FF9500; }
-.status-badge.done text { color: #34C759; }
+.status-badge:not(.done) text { color: #F59E0B; }
+.status-badge.done text { color: #10B981; }
 
 .question-box { background: var(--c-bg); border-radius: var(--r-md); padding: 10px 12px; margin-bottom: 8px; }
-.q-label { font-size: 11px; color: #FF9500; font-weight: 600; display: block; margin-bottom: 4px; }
+.q-label { font-size: 11px; color: #F59E0B; font-weight: 600; display: block; margin-bottom: 4px; }
 .q-text { font-size: 13px; color: var(--c-text-2); line-height: 1.5; }
 
-.answer-box { background: #E9F7EF; border-radius: var(--r-md); padding: 10px 12px; margin-bottom: 8px; }
-.a-label { font-size: 11px; color: #34C759; font-weight: 600; display: block; margin-bottom: 4px; }
+.answer-box { background: #ECFDF5; border-radius: var(--r-md); padding: 10px 12px; margin-bottom: 8px; }
+.a-label { font-size: 11px; color: #10B981; font-weight: 600; display: block; margin-bottom: 4px; }
 .a-text { font-size: 13px; color: var(--c-text-2); line-height: 1.5; }
 .a-time { font-size: 11px; color: var(--c-text-3); display: block; margin-top: 4px; }
 
-.card-actions { display: flex; gap: 10px; padding-top: 10px; border-top: 1px solid #f5f5f5; }
+.card-actions { display: flex; gap: 10px; padding-top: 10px; border-top: 1px solid #F5F7FA; }
 .action-btn { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; font-size: 13px; color: var(--c-text-2); padding: 8px 0; border-radius: var(--r-md); background: var(--c-bg); }
 .action-btn text { font-size: 13px; }
 .action-btn.primary { background: #10B981; color: #fff; font-weight: 600; }
@@ -294,8 +294,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .modal-title { font-size: 17px; font-weight: 700; color: var(--c-text); }
 .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
-.reply-question { background: #FFF4E5; border-radius: var(--r-md); padding: 12px; margin-bottom: 14px; }
-.rq-user { font-size: 12px; color: #FF9500; font-weight: 600; display: block; margin-bottom: 4px; }
+.reply-question { background: #FFFBEB; border-radius: var(--r-md); padding: 12px; margin-bottom: 14px; }
+.rq-user { font-size: 12px; color: #F59E0B; font-weight: 600; display: block; margin-bottom: 4px; }
 .rq-text { font-size: 13px; color: var(--c-text-2); line-height: 1.5; }
 .textarea { width: 100%; min-height: 120px; background: var(--c-bg); border-radius: var(--r-md); padding: 12px; font-size: 14px; box-sizing: border-box; color: var(--c-text); }
 .char-count { font-size: 11px; color: var(--c-text-3); text-align: right; display: block; margin-top: 4px; }

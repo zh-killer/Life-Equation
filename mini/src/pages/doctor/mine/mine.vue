@@ -139,7 +139,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         </view>
         <text class="mi-label">我的患者</text>
         <view class="mi-arrow">
-          <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+          <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
       <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/schedule/schedule' })">
@@ -148,25 +148,25 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         </view>
         <text class="mi-label">排班管理</text>
         <view class="mi-arrow">
-          <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+          <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
       <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/reviews/reviews' })">
-        <view class="mi-icon-box" style="background: #FFF4E5">
-          <UiIcon name="star" :size="64" color="#FF9500" />
+        <view class="mi-icon-box" style="background: #FFFBEB">
+          <UiIcon name="star" :size="64" color="#F59E0B" />
         </view>
         <text class="mi-label">患者评价</text>
         <view class="mi-arrow">
-          <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+          <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
       <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/consult/consult' })">
-        <view class="mi-icon-box" style="background: #FFF4E5">
-          <UiIcon name="message" :size="64" color="#FF9500" />
+        <view class="mi-icon-box" style="background: #FFFBEB">
+          <UiIcon name="message" :size="64" color="#F59E0B" />
         </view>
         <text class="mi-label">咨询管理</text>
         <view class="mi-arrow">
-          <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+          <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
     </view>
@@ -174,21 +174,21 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view class="section">
       <text class="section-title">账号设置</text>
       <view class="menu-item" @click="openEdit">
-        <view class="mi-icon-box" style="background: #FFF4E5">
-          <UiIcon name="edit" :size="64" color="#FF9500" />
+        <view class="mi-icon-box" style="background: #FFFBEB">
+          <UiIcon name="edit" :size="64" color="#F59E0B" />
         </view>
         <text class="mi-label">编辑资料</text>
         <view class="mi-arrow">
-          <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+          <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
       <view class="menu-item" @click="openPwd">
-        <view class="mi-icon-box" style="background: #FFEBEE">
-          <UiIcon name="lock" :size="64" color="#FF3B30" />
+        <view class="mi-icon-box" style="background: #FEF2F2">
+          <UiIcon name="lock" :size="64" color="#EF4444" />
         </view>
         <text class="mi-label">修改密码</text>
         <view class="mi-arrow">
-          <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+          <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
     </view>
@@ -198,8 +198,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       <text class="section-title">账号安全</text>
       <view class="info-item">
         <view class="ii-label-row">
-          <view class="ii-icon-box" style="background: #E9F7EF">
-            <UiIcon name="phone" :size="54" color="#34C759" />
+          <view class="ii-icon-box" style="background: #ECFDF5">
+            <UiIcon name="phone" :size="54" color="#10B981" />
           </view>
           <text class="ii-label">绑定手机</text>
         </view>
@@ -216,8 +216,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
       <view class="info-item">
         <view class="ii-label-row">
-          <view class="ii-icon-box" style="background: #F5F5F5">
-            <UiIcon name="user" :size="54" color="#C7C7CC" />
+          <view class="ii-icon-box" style="background: #F5F7FA">
+            <UiIcon name="user" :size="54" color="#94A3B8" />
           </view>
           <text class="ii-label">登录账号</text>
         </view>
@@ -228,10 +228,10 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 退出 -->
     <view class="section">
       <view class="menu-item logout" @click="doLogout">
-        <view class="mi-icon-box" style="background: #FFEBEE">
-          <UiIcon name="logout" :size="64" color="#FF3B30" />
+        <view class="mi-icon-box" style="background: #FEF2F2">
+          <UiIcon name="logout" :size="64" color="#EF4444" />
         </view>
-        <text class="mi-label" style="color: #FF3B30">退出登录</text>
+        <text class="mi-label" style="color: #EF4444">退出登录</text>
       </view>
     </view>
 
@@ -241,7 +241,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">编辑资料</text>
           <view class="modal-close" @click="showEdit = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view class="input-row">
@@ -269,7 +269,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">修改密码</text>
           <view class="modal-close" @click="showPwd = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
         <view class="input-row">

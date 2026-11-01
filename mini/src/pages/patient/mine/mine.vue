@@ -90,31 +90,31 @@ const groups = [
     title: '医疗服务',
     items: [
       { icon: 'calendar', label: '我的预约', url: '/pages/patient/appointment/appointment', color: '#2563EB' },
-      { icon: 'folder', label: '我的病历', url: '/pages/patient/records/records', color: '#FF9500' },
+      { icon: 'folder', label: '我的病历', url: '/pages/patient/records/records', color: '#F59E0B' },
       { icon: 'user', label: '就诊人管理', url: '/pages/patient/family/list', color: '#60A5FA' },
-      { icon: 'clock', label: '用药提醒', url: '/pages/patient/reminder/list', color: '#FF9500' },
-      { icon: 'heart', label: '我的收藏', url: '/pages/patient/favorite/list', color: '#FF3B30' },
-      { icon: 'message', label: '消息中心', url: '/pages/patient/notifications/notifications', color: '#FF3B30' },
+      { icon: 'clock', label: '用药提醒', url: '/pages/patient/reminder/list', color: '#F59E0B' },
+      { icon: 'heart', label: '我的收藏', url: '/pages/patient/favorite/list', color: '#EF4444' },
+      { icon: 'message', label: '消息中心', url: '/pages/patient/notifications/notifications', color: '#EF4444' },
       { icon: 'message', label: '问答社区', url: '/pages/patient/consultation/list', color: '#2563EB' },
-      { icon: 'file', label: '我的咨询', url: '/pages/patient/health/health', color: '#AF52DE' },
+      { icon: 'file', label: '我的咨询', url: '/pages/patient/health/health', color: '#8B5CF6' },
     ],
   },
   {
     title: 'AI 智能助手',
     items: [
       { icon: 'robot', label: 'AI 智能导诊', url: '/pages/patient/ai/ai', color: '#60A5FA' },
-      { icon: 'heart', label: 'AI 健康建议', url: '/pages/patient/ai/health-advice', color: '#FF3B30' },
-      { icon: 'file', label: 'AI 报告解读', url: '/pages/patient/ai/report', color: '#AF52DE' },
+      { icon: 'heart', label: 'AI 健康建议', url: '/pages/patient/ai/health-advice', color: '#EF4444' },
+      { icon: 'file', label: 'AI 报告解读', url: '/pages/patient/ai/report', color: '#8B5CF6' },
     ],
   },
   {
     title: '健康知识',
     items: [
-      { icon: 'virus', label: '疾病百科', url: '/pages/patient/disease/disease', color: '#FF9500' },
-      { icon: 'pill', label: '药品查询', url: '/pages/patient/drug/drug', color: '#AF52DE' },
+      { icon: 'virus', label: '疾病百科', url: '/pages/patient/disease/disease', color: '#F59E0B' },
+      { icon: 'pill', label: '药品查询', url: '/pages/patient/drug/drug', color: '#8B5CF6' },
       { icon: 'store', label: '院内药房', url: '/pages/patient/pharmacy/pharmacy', color: '#2563EB' },
       { icon: 'news', label: '健康资讯', url: '/pages/patient/article/article', color: '#2563EB' },
-      { icon: 'clipboard', label: '就诊指南', url: '/pages/patient/guide/guide', color: '#34C759' },
+      { icon: 'clipboard', label: '就诊指南', url: '/pages/patient/guide/guide', color: '#10B981' },
     ],
   },
 ]
@@ -210,7 +210,7 @@ function logout() {
             <ui-icon :name="m.icon" :size="64" :color="m.color" />
           </view>
           <text class="menu-label">{{ m.label }}</text>
-          <ui-icon name="chevronRight" :size="60" color="#C7C7CC" />
+          <ui-icon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
     </view>
@@ -220,25 +220,25 @@ function logout() {
       <text class="group-title">账号</text>
       <view class="menu-card">
         <view v-if="isWxUser" class="menu-item" @click="showSetPwd = true; setPwdForm = { newPassword: '', confirmPassword: '' }">
-          <view class="menu-icon-wrap" style="background: #007AFF15">
-            <ui-icon name="lock" :size="64" color="#007AFF" />
+          <view class="menu-icon-wrap" style="background: #2563EB15">
+            <ui-icon name="lock" :size="64" color="#2563EB" />
           </view>
-          <text class="menu-label" style="color: #007AFF">设置登录密码</text>
-          <ui-icon name="chevronRight" :size="60" color="#C7C7CC" />
+          <text class="menu-label" style="color: #2563EB">设置登录密码</text>
+          <ui-icon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
         <view class="menu-item" @click="openPwd">
-          <view class="menu-icon-wrap" style="background: #FF950015">
-            <ui-icon name="lock" :size="64" color="#FF9500" />
+          <view class="menu-icon-wrap" style="background: #F59E0B15">
+            <ui-icon name="lock" :size="64" color="#F59E0B" />
           </view>
           <text class="menu-label">修改密码</text>
-          <ui-icon name="chevronRight" :size="60" color="#C7C7CC" />
+          <ui-icon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
         <view class="menu-item no-border" @click="logout">
-          <view class="menu-icon-wrap" style="background: #FF3B3015">
-            <ui-icon name="logout" :size="64" color="#FF3B30" />
+          <view class="menu-icon-wrap" style="background: #EF444415">
+            <ui-icon name="logout" :size="64" color="#EF4444" />
           </view>
-          <text class="menu-label" style="color: #FF3B30">退出登录</text>
-          <ui-icon name="chevronRight" :size="60" color="#C7C7CC" />
+          <text class="menu-label" style="color: #EF4444">退出登录</text>
+          <ui-icon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
     </view>
@@ -249,7 +249,7 @@ function logout() {
         <view class="modal-header">
           <text class="modal-title">编辑资料</text>
           <view class="modal-close" @click="showEdit = false">
-            <ui-icon name="close" :size="64" color="#C7C7CC" />
+            <ui-icon name="close" :size="64" color="#94A3B8" />
           </view>
         </view>
         <view class="input-row">
@@ -274,7 +274,7 @@ function logout() {
         <view class="modal-header">
           <text class="modal-title">修改密码</text>
           <view class="modal-close" @click="showPwd = false">
-            <ui-icon name="close" :size="64" color="#C7C7CC" />
+            <ui-icon name="close" :size="64" color="#94A3B8" />
           </view>
         </view>
         <view class="input-row">
@@ -299,7 +299,7 @@ function logout() {
         <view class="modal-header">
           <text class="modal-title">设置登录密码</text>
           <view class="modal-close" @click="showSetPwd = false">
-            <ui-icon name="close" :size="64" color="#C7C7CC" />
+            <ui-icon name="close" :size="64" color="#94A3B8" />
           </view>
         </view>
         <text class="pwd-hint">微信登录用户设置密码后，可使用账号密码登录</text>
@@ -352,7 +352,7 @@ function logout() {
 
 /* ===== 菜单组 ===== */
 .group { margin-top: 16px; padding: 0 16px; }
-.group-title { font-size: 13px; color: #C7C7CC; padding: 0 4px 8px; display: block; }
+.group-title { font-size: 13px; color: #94A3B8; padding: 0 4px 8px; display: block; }
 .menu-card {
   background: #fff;
   border-radius: 14px;
@@ -362,7 +362,7 @@ function logout() {
 .menu-item {
   display: flex; align-items: center; gap: 12px;
   padding: 14px 16px;
-  border-bottom: 1px solid #F2F2F7;
+  border-bottom: 1px solid #F5F7FA;
 }
 .menu-item.no-border { border-bottom: none; }
 .menu-icon-wrap {
@@ -370,7 +370,7 @@ function logout() {
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.menu-label { flex: 1; font-size: 15px; color: #1C1C1E; }
+.menu-label { flex: 1; font-size: 15px; color: #0F172A; }
 
 /* ===== 弹窗 ===== */
 .modal-mask {
@@ -392,7 +392,7 @@ function logout() {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 20px;
 }
-.modal-title { font-size: 18px; font-weight: 700; color: #1C1C1E; }
+.modal-title { font-size: 18px; font-weight: 700; color: #0F172A; }
 .modal-close { padding: 4px; }
 .input-row {
   display: flex; align-items: center; gap: 10px;
@@ -400,10 +400,10 @@ function logout() {
   background: #FFFFFF; border-radius: 12px; padding: 0 14px;
   height: 46px;
 }
-.label { font-size: 14px; color: #8E8E93; width: 50px; flex-shrink: 0; }
-.input { flex: 1; font-size: 14px; color: #1C1C1E; }
-.ph { color: #C7C7CC; }
-.pwd-hint { font-size: 13px; color: #8E8E93; margin-bottom: 14px; display: block; line-height: 1.5; }
+.label { font-size: 14px; color: #64748B; width: 50px; flex-shrink: 0; }
+.input { flex: 1; font-size: 14px; color: #0F172A; }
+.ph { color: #94A3B8; }
+.pwd-hint { font-size: 13px; color: #64748B; margin-bottom: 14px; display: block; line-height: 1.5; }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
   background: #2563EB;

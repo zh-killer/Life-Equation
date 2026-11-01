@@ -39,7 +39,7 @@ async function handleSetDefault(m) {
   } catch {}
 }
 
-const relMap = { '本人': '#2563EB', '配偶': '#FF9500', '子女': '#AF52DE', '父母': '#FF3B30', '其他': '#60A5FA' }
+const relMap = { '本人': '#2563EB', '配偶': '#F59E0B', '子女': '#8B5CF6', '父母': '#EF4444', '其他': '#60A5FA' }
 </script>
 
 <template>
@@ -91,14 +91,14 @@ const relMap = { '本人': '#2563EB', '配偶': '#FF9500', '子女': '#AF52DE', 
             <text>设为默认</text>
           </view>
           <view class="action-btn del" @click="handleDelete(m)">
-            <ui-icon name="close" :size="48" color="#FF3B30" />
+            <ui-icon name="close" :size="48" color="#EF4444" />
             <text>删除</text>
           </view>
         </view>
       </view>
 
       <view v-if="!members.length" class="empty-state">
-        <view class="empty-icon"><ui-icon name="user" :size="54" color="#C7C7CC" /></view>
+        <view class="empty-icon"><ui-icon name="user" :size="54" color="#94A3B8" /></view>
         <text class="empty-text">暂无就诊人</text>
         <text class="empty-desc">添加就诊人，帮家人挂号更方便</text>
         <view class="empty-btn" @click="goAdd"><text>添加就诊人</text></view>
@@ -110,25 +110,25 @@ const relMap = { '本人': '#2563EB', '配偶': '#FF9500', '子女': '#AF52DE', 
 <style scoped>
 .page { background: #FFFFFF; min-height: 100vh; padding: 16px; }
 .header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.title { font-size: 18px; font-weight: 700; color: #1C1C1E; }
+.title { font-size: 18px; font-weight: 700; color: #0F172A; }
 .add-btn { display: flex; align-items: center; gap: 2px; background: #2563EB; padding: 6px 14px; border-radius: 16px; }
 .add-btn text { font-size: 13px; color: #fff; }
 
 .list { display: flex; flex-direction: column; gap: 10px; }
-.card { background: #fff; border-radius: 14px; padding: 14px 16px; box-shadow: none; border: 1px solid #F2F2F7; }
+.card { background: #fff; border-radius: 14px; padding: 14px 16px; box-shadow: none; border: 1px solid #F5F7FA; }
 .card-left { display: flex; align-items: center; gap: 12px; }
 .avatar { width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .info { flex: 1; }
 .name-row { display: flex; align-items: center; gap: 8px; }
-.name { font-size: 16px; font-weight: 600; color: #1C1C1E; }
+.name { font-size: 16px; font-weight: 600; color: #0F172A; }
 .rel-tag { padding: 2px 8px; border-radius: 6px; }
 .rel-tag text { font-size: 11px; }
 .default-tag { padding: 2px 8px; border-radius: 6px; background: #EFF4FF; }
 .default-tag text { font-size: 11px; color: #2563EB; font-weight: 600; }
-.sub { font-size: 12px; color: #8E8E93; display: block; margin-top: 2px; }
-.card-actions { display: flex; gap: 16px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #F2F2F7; }
+.sub { font-size: 12px; color: #64748B; display: block; margin-top: 2px; }
+.card-actions { display: flex; gap: 16px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #F5F7FA; }
 .action-btn { display: flex; align-items: center; gap: 4px; }
-.action-btn text { font-size: 12px; color: #8E8E93; }
+.action-btn text { font-size: 12px; color: #64748B; }
 
 .skeleton-card { display: flex; gap: 12px; padding: 16px; background: #fff; border-radius: 14px; }
 .skeleton-avatar { width: 46px; height: 46px; border-radius: 14px; }
@@ -136,9 +136,9 @@ const relMap = { '本人': '#2563EB', '配偶': '#FF9500', '子女': '#AF52DE', 
 .skeleton-bar { height: 14px; border-radius: 6px; }
 
 .empty-state { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
-.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F2F2F7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-.empty-text { font-size: 15px; color: #8E8E93; font-weight: 500; }
-.empty-desc { font-size: 13px; color: #C7C7CC; margin-top: 6px; margin-bottom: 20px; }
+.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F5F7FA; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.empty-text { font-size: 15px; color: #64748B; font-weight: 500; }
+.empty-desc { font-size: 13px; color: #94A3B8; margin-top: 6px; margin-bottom: 20px; }
 .empty-btn { background: #2563EB; padding: 10px 28px; border-radius: 22px; }
 .empty-btn text { font-size: 14px; color: #fff; font-weight: 600; }
 </style>

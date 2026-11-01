@@ -16,14 +16,14 @@ const history = ref([])
 const showHistory = ref(false)
 
 const riskColor = (level) => {
-  if (level === 'HIGH') return '#FF3B30'
-  if (level === 'MEDIUM') return '#FF9500'
-  return '#34C759'
+  if (level === 'HIGH') return '#EF4444'
+  if (level === 'MEDIUM') return '#F59E0B'
+  return '#10B981'
 }
 const riskBg = (level) => {
-  if (level === 'HIGH') return '#FDEDEC'
-  if (level === 'MEDIUM') return '#FFF4E5'
-  return '#E9F7EF'
+  if (level === 'HIGH') return '#FEF2F2'
+  if (level === 'MEDIUM') return '#FFFBEB'
+  return '#ECFDF5'
 }
 const riskText = (level) => {
   if (level === 'HIGH') return '存在异常指标'
@@ -137,7 +137,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <picker mode="selector" :range="reportTypes" @change="onTypeChange">
           <view class="picker-item">
             <text>{{ reportTypes[reportTypeIndex] }}</text>
-            <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+            <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
           </view>
         </picker>
       </view>
@@ -148,7 +148,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             <UiIcon name="edit" :size="60" color="#60A5FA" />
             <text>手动补充数据（可选）</text>
           </view>
-          <UiIcon :name="showExtra ? 'arrowUp' : 'arrowDown'" :size="60" color="#C7C7CC" />
+          <UiIcon :name="showExtra ? 'arrowUp' : 'arrowDown'" :size="60" color="#94A3B8" />
         </view>
         <textarea v-if="showExtra" v-model="reportData" class="textarea"
           placeholder="补充异常指标或症状，帮助 AI 更精准解读…" :maxlength="500" />
@@ -228,8 +228,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
       <view class="card result-section" v-if="result.advice">
         <view class="section-header">
-          <view class="section-icon" style="background: #E9F7EF">
-            <UiIcon name="heart" :size="64" color="#34C759" />
+          <view class="section-icon" style="background: #ECFDF5">
+            <UiIcon name="heart" :size="64" color="#10B981" />
           </view>
           <text class="section-title">健康建议</text>
         </view>
@@ -243,7 +243,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     </view>
 
     <view class="disclaimer">
-      <UiIcon name="shield" :size="54" color="#8B6914" />
+      <UiIcon name="shield" :size="54" color="#B45309" />
       <text>AI 解读仅供参考，不能替代医生诊断。如有异常请及时就医。</text>
     </view>
   </view>
@@ -270,7 +270,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 /* 上传区 */
 .field-label { font-size: 13px; color: var(--c-text-2); display: block; margin-bottom: 10px; }
-.upload-zone { border: 2px dashed #D0D7DE; border-radius: var(--r-md); min-height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.upload-zone { border: 2px dashed #E6EBF2; border-radius: var(--r-md); min-height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .preview { width: 100%; height: 160px; }
 .upload-placeholder { text-align: center; }
 .upload-icon-box { width: 64px; height: 64px; background: #EFF4FF; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
@@ -326,6 +326,6 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .section-text { font-size: 13px; color: var(--c-text-2); line-height: 1.8; }
 
 /* 免责声明 */
-.disclaimer { margin: 12px 16px 24px; padding: 12px 14px; background: #FFFBF0; border-radius: var(--r-md); display: flex; align-items: flex-start; gap: 8px; }
-.disclaimer text { font-size: 12px; color: #8B6914; line-height: 1.6; flex: 1; }
+.disclaimer { margin: 12px 16px 24px; padding: 12px 14px; background: #FFFBEB; border-radius: var(--r-md); display: flex; align-items: flex-start; gap: 8px; }
+.disclaimer text { font-size: 12px; color: #B45309; line-height: 1.6; flex: 1; }
 </style>

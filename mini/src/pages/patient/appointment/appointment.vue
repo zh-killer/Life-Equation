@@ -17,8 +17,8 @@ const selectedMemberId = ref('')
 // 与 doctor_schedule.time_slot 一致（上午/下午/晚上）
 const timeSlots = ['上午', '下午', '晚上']
 const statusMap = { UNPAID: '待支付', PENDING: '待确认', CONFIRMED: '已确认', COMPLETED: '已完成', CANCELLED: '已取消' }
-const statusColor = { UNPAID: '#FF3B30', PENDING: '#FF9500', CONFIRMED: '#34C759', COMPLETED: '#C7C7CC', CANCELLED: '#C7C7CC' }
-const statusBg = { UNPAID: '#FFF1F0', PENDING: '#EFF4FF', CONFIRMED: '#E8F5E9', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }
+const statusColor = { UNPAID: '#EF4444', PENDING: '#F59E0B', CONFIRMED: '#10B981', COMPLETED: '#94A3B8', CANCELLED: '#94A3B8' }
+const statusBg = { UNPAID: '#FEF2F2', PENDING: '#EFF4FF', CONFIRMED: '#ECFDF5', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }
 
 const ID_CARD_REGEX = /^[1-9]\d{5}(18|19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]$/
 
@@ -149,7 +149,7 @@ async function cancelAppt(a) {
       title: '取消预约',
       content: `确定取消 ${a.doctorName}（${a.appointmentDate} ${a.timeSlot}）的预约吗？取消后号源将退回。`,
       confirmText: '确定取消',
-      confirmColor: '#FF3B30',
+      confirmColor: '#EF4444',
       success: r => resolve(r.confirm),
       fail: () => resolve(false),
     })
@@ -198,11 +198,11 @@ function goReview(a) {
         </view>
         <view class="card-info-row">
           <view class="info-item">
-            <ui-icon name="hospital" :size="54" color="#C7C7CC" />
+            <ui-icon name="hospital" :size="54" color="#94A3B8" />
             <text>{{ a.hospitalName }}</text>
           </view>
           <view class="info-item">
-            <ui-icon name="calendar" :size="54" color="#C7C7CC" />
+            <ui-icon name="calendar" :size="54" color="#94A3B8" />
             <text>{{ a.appointmentDate }} {{ a.timeSlot }}</text>
           </view>
         </view>
@@ -213,7 +213,7 @@ function goReview(a) {
             <text>支付挂号费 ¥{{ a.amount }}</text>
           </view>
           <view v-if="a.status === 'UNPAID' || a.status === 'PENDING' || a.status === 'CONFIRMED'" class="cancel-action" @click="cancelAppt(a)">
-            <ui-icon name="close" :size="44" color="#FF3B30" />
+            <ui-icon name="close" :size="44" color="#EF4444" />
             <text>取消预约</text>
           </view>
           <view v-if="a.status === 'COMPLETED'" class="review-action" @click="goReview(a)">
@@ -223,7 +223,7 @@ function goReview(a) {
         </view>
       </view>
       <view v-if="!appointments.length" class="empty-state">
-        <view class="empty-icon"><ui-icon name="calendar" :size="54" color="#C7C7CC" /></view>
+        <view class="empty-icon"><ui-icon name="calendar" :size="54" color="#94A3B8" /></view>
         <text class="empty-text">暂无预约记录</text>
         <view class="empty-btn" @click="openCreate"><text>新建预约</text></view>
       </view>
@@ -235,11 +235,11 @@ function goReview(a) {
         <view class="modal-header">
           <text class="modal-title">实名认证</text>
           <view class="modal-close" @click="showIdentityVerify = false">
-            <ui-icon name="close" :size="64" color="#C7C7CC" />
+            <ui-icon name="close" :size="64" color="#94A3B8" />
           </view>
         </view>
         <view class="verify-tip">
-          <ui-icon name="info" :size="56" color="#FF9500" />
+          <ui-icon name="info" :size="56" color="#F59E0B" />
           <text>请先完成实名认证方可挂号</text>
         </view>
         <view class="input-row">
@@ -264,7 +264,7 @@ function goReview(a) {
         <view class="modal-header">
           <text class="modal-title">新建预约</text>
           <view class="modal-close" @click="showCreate = false">
-            <ui-icon name="close" :size="64" color="#C7C7CC" />
+            <ui-icon name="close" :size="64" color="#94A3B8" />
           </view>
         </view>
         <view class="input-row">
@@ -273,7 +273,7 @@ function goReview(a) {
             @change="e => { const d = doctors[e.detail.value]; bookForm.doctorId = d.id; bookForm.hospitalId = d.hospitalId }">
             <view class="picker-item">
               <text :class="{ ph: !bookForm.doctorId }">{{ bookForm.doctorId ? doctors.find(d => d.id === bookForm.doctorId)?.name : '请选择医生' }}</text>
-              <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+              <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -282,7 +282,7 @@ function goReview(a) {
           <picker mode="date" :value="bookForm.appointmentDate" @change="e => bookForm.appointmentDate = e.detail.value">
             <view class="picker-item">
               <text :class="{ ph: !bookForm.appointmentDate }">{{ bookForm.appointmentDate || '请选择日期' }}</text>
-              <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+              <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -291,7 +291,7 @@ function goReview(a) {
           <picker mode="selector" :range="timeSlots" @change="e => { bookForm.timeSlot = timeSlots[e.detail.value] }">
             <view class="picker-item">
               <text>{{ bookForm.timeSlot }}</text>
-              <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+              <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -304,7 +304,7 @@ function goReview(a) {
           <picker mode="selector" :range="familyMembers" range-key="name" @change="e => { selectedMemberId = familyMembers[e.detail.value].id }">
             <view class="picker-item">
               <text>{{ familyMembers.find(m => m.id === selectedMemberId)?.name || '请选择' }}</text>
-              <ui-icon name="chevronRight" :size="54" color="#C7C7CC" />
+              <ui-icon name="chevronRight" :size="54" color="#94A3B8" />
             </view>
           </picker>
         </view>
@@ -338,17 +338,17 @@ function goReview(a) {
   font-size: 16px; font-weight: 700;
 }
 .card-doctor { font-size: 15px; font-weight: 700; color: var(--c-text); display: block; }
-.card-dept { font-size: 12px; color: #8E8E93; }
+.card-dept { font-size: 12px; color: #64748B; }
 .status-badge { padding: 3px 10px; border-radius: 12px; }
 .status-badge text { font-size: 12px; font-weight: 600; }
 .card-info-row { display: flex; flex-direction: column; gap: 4px; }
 .info-item { display: flex; align-items: center; gap: 6px; }
-.info-item text { font-size: 13px; color: #8E8E93; }
-.card-symptom { font-size: 12px; color: #C7C7CC; margin-top: 8px; display: block; padding: 8px; background: #FFFFFF; border-radius: 8px; }
+.info-item text { font-size: 13px; color: #64748B; }
+.card-symptom { font-size: 12px; color: #94A3B8; margin-top: 8px; display: block; padding: 8px; background: #FFFFFF; border-radius: 8px; }
 
 .empty-state { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
-.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F2F2F7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-.empty-text { font-size: 14px; color: #C7C7CC; margin-bottom: 16px; }
+.empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F5F7FA; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.empty-text { font-size: 14px; color: #94A3B8; margin-bottom: 16px; }
 .empty-btn { background: #2563EB; padding: 8px 24px; border-radius: 20px; }
 .empty-btn text { font-size: 14px; color: #fff; }
 
@@ -360,12 +360,12 @@ function goReview(a) {
 .modal-title { font-size: 18px; font-weight: 700; color: var(--c-text); }
 .modal-close { padding: 4px; }
 .input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.label { font-size: 14px; color: #8E8E93; width: 50px; flex-shrink: 0; }
+.label { font-size: 14px; color: #64748B; width: 50px; flex-shrink: 0; }
 .input { flex: 1; height: 46px; background: #FFFFFF; border-radius: 12px; padding: 0 14px; font-size: 14px; }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 .picker-item { display: flex; align-items: center; justify-content: space-between; flex: 1; height: 46px; background: #FFFFFF; border-radius: 12px; padding: 0 14px; }
-.picker-item text { font-size: 14px; color: #1C1C1E; }
-.picker-item text.ph { color: #C7C7CC; }
+.picker-item text { font-size: 14px; color: #0F172A; }
+.picker-item text.ph { color: #94A3B8; }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
   background: #2563EB;
@@ -376,13 +376,13 @@ function goReview(a) {
 /* 实名认证弹窗 */
 .verify-tip {
   display: flex; align-items: center; gap: 8px;
-  background: #FEF8E8; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;
-  border: 1px solid #FAECD8;
+  background: #FFFBEB; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;
+  border: 1px solid #FEF3C7;
 }
-.verify-tip text { font-size: 14px; color: #B88230; font-weight: 500; flex: 1; }
+.verify-tip text { font-size: 14px; color: #B45309; font-weight: 500; flex: 1; }
 .verify-error { padding: 6px 0 0 60px; }
-.verify-error text { font-size: 12px; color: #FF3B30; }
-.verify-disclaimer { font-size: 11px; color: #C7C7CC; text-align: center; display: block; margin-top: 12px; }
+.verify-error text { font-size: 12px; color: #EF4444; }
+.verify-disclaimer { font-size: 11px; color: #94A3B8; text-align: center; display: block; margin-top: 12px; }
 
 .card-actions { display: flex; gap: 8px; margin-top: 10px; }
 .review-action {
@@ -394,9 +394,9 @@ function goReview(a) {
 .cancel-action {
   display: flex; align-items: center; gap: 4px;
   padding: 8px 12px;
-  background: #FFF1F0; border-radius: 10px;
+  background: #FEF2F2; border-radius: 10px;
 }
-.cancel-action text { font-size: 13px; color: #FF3B30; font-weight: 600; }
+.cancel-action text { font-size: 13px; color: #EF4444; font-weight: 600; }
 .pay-action {
   display: flex; align-items: center; gap: 4px;
   padding: 8px 12px;

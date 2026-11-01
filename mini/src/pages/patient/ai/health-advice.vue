@@ -20,10 +20,10 @@ const bmi = computed(() => {
 })
 
 function bmiCategory(v) {
-  if (v < 18.5) return { text: '偏瘦', color: '#FF9500', bg: '#FFF8E1' }
-  if (v < 24) return { text: '正常', color: '#34C759', bg: '#E9F7EF' }
-  if (v < 28) return { text: '超重', color: '#FF9500', bg: '#FFF4E5' }
-  return { text: '肥胖', color: '#FF3B30', bg: '#FDEDEC' }
+  if (v < 18.5) return { text: '偏瘦', color: '#F59E0B', bg: '#FFFBEB' }
+  if (v < 24) return { text: '正常', color: '#10B981', bg: '#ECFDF5' }
+  if (v < 28) return { text: '超重', color: '#F59E0B', bg: '#FFFBEB' }
+  return { text: '肥胖', color: '#EF4444', bg: '#FEF2F2' }
 }
 
 async function submit() {
@@ -168,8 +168,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
       <view class="card result-section">
         <view class="section-header">
-          <view class="section-icon" style="background: #E9F7EF">
-            <UiIcon name="brain" :size="64" color="#34C759" />
+          <view class="section-icon" style="background: #ECFDF5">
+            <UiIcon name="brain" :size="64" color="#10B981" />
           </view>
           <text class="section-title">AI 健康建议</text>
         </view>
@@ -183,7 +183,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     </view>
 
     <view class="disclaimer">
-      <UiIcon name="shield" :size="54" color="#8B6914" />
+      <UiIcon name="shield" :size="54" color="#B45309" />
       <text>本建议仅供参考，不能替代专业医疗诊断。如有不适请及时就医。</text>
     </view>
   </view>
@@ -193,7 +193,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; }
 
 /* 渐变头部 */
-.gradient-header { background: #34C759; padding-bottom: 28px; }
+.gradient-header { background: #10B981; padding-bottom: 28px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
@@ -238,7 +238,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .empty-text { text-align: center; color: var(--c-text-3); padding: 20px; font-size: 13px; }
 
 /* 结果区 */
-.result-header-card { background: #34C759; border-radius: var(--r-lg); padding: 24px 20px; text-align: center; margin-bottom: 12px; }
+.result-header-card { background: #10B981; border-radius: var(--r-lg); padding: 24px 20px; text-align: center; margin-bottom: 12px; }
 .rh-icon { width: 56px; height: 56px; background: rgba(255,255,255,0.25); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
 .rh-title { font-size: 18px; font-weight: 700; color: #fff; display: block; }
 .rh-bmi { margin-top: 12px; display: flex; justify-content: center; align-items: baseline; gap: 10px; }
@@ -253,6 +253,6 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .section-text { font-size: 13px; color: var(--c-text-2); line-height: 1.8; }
 
 /* 免责声明 */
-.disclaimer { margin: 12px 16px 24px; padding: 12px 14px; background: #FFFBF0; border-radius: var(--r-md); display: flex; align-items: flex-start; gap: 8px; }
-.disclaimer text { font-size: 12px; color: #8B6914; line-height: 1.6; flex: 1; }
+.disclaimer { margin: 12px 16px 24px; padding: 12px 14px; background: #FFFBEB; border-radius: var(--r-md); display: flex; align-items: flex-start; gap: 8px; }
+.disclaimer text { font-size: 12px; color: #B45309; line-height: 1.6; flex: 1; }
 </style>

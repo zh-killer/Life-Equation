@@ -38,16 +38,16 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
       <view class="meta">
         <view v-if="article.category" class="meta-cat"><text>{{ article.category }}</text></view>
         <view class="meta-item">
-          <ui-icon name="clock" :size="50" color="#C7C7CC" />
+          <ui-icon name="clock" :size="50" color="#94A3B8" />
           <text>{{ article.publishTime?.substring(0, 10) }}</text>
         </view>
         <view class="meta-item">
-          <ui-icon name="eye" :size="50" color="#C7C7CC" />
+          <ui-icon name="eye" :size="50" color="#94A3B8" />
           <text>{{ article.viewCount || 0 }}</text>
         </view>
         <view class="fav-btn-inline" @click.stop="handleFav">
-          <ui-icon name="heart" :size="52" :color="isFav ? '#FF3B30' : '#C7C7CC'" />
-          <text :style="{ color: isFav ? '#FF3B30' : '#C7C7CC' }">{{ isFav ? '已收藏' : '收藏' }}</text>
+          <ui-icon name="heart" :size="52" :color="isFav ? '#EF4444' : '#94A3B8'" />
+          <text :style="{ color: isFav ? '#EF4444' : '#94A3B8' }">{{ isFav ? '已收藏' : '收藏' }}</text>
         </view>
       </view>
     </view>
@@ -79,12 +79,12 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
 
 /* 头部 */
 .header { background: #fff; padding: 20px 16px; }
-.title { font-size: 20px; font-weight: 800; color: #1C1C1E; line-height: 1.5; display: block; }
+.title { font-size: 20px; font-weight: 800; color: #0F172A; line-height: 1.5; display: block; }
 .meta { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
 .meta-cat { background: #EFF4FF; padding: 2px 8px; border-radius: 4px; }
 .meta-cat text { font-size: 11px; color: #60A5FA; }
 .meta-item { display: flex; align-items: center; gap: 3px; }
-.meta-item text { font-size: 11px; color: #C7C7CC; }
+.meta-item text { font-size: 11px; color: #94A3B8; }
 .fav-btn-inline { display: flex; align-items: center; gap: 2px; margin-left: auto; }
 .fav-btn-inline text { font-size: 11px; }
 

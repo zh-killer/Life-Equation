@@ -68,7 +68,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
             </view>
             <text class="hc-addr">{{ hospital?.address || '湖南省郴州市北湖区人民西路' }}</text>
           </view>
-          <ui-icon name="chevronRight" :size="48" color="#C7C7CC" />
+          <ui-icon name="chevronRight" :size="48" color="#94A3B8" />
         </view>
         <view class="hc-foot">
           <view class="hc-stat">
@@ -89,11 +89,11 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 
       <!-- 搜索医生 -->
       <view class="search-bar">
-        <ui-icon name="search" :size="64" color="#C7C7CC" />
+        <ui-icon name="search" :size="64" color="#94A3B8" />
         <input v-model="keyword" class="search-input" placeholder-class="ph"
           placeholder="搜索医生姓名、职称或专长" />
         <view v-if="keyword" class="search-clear" @click="keyword = ''">
-          <ui-icon name="close" :size="40" color="#C7C7CC" />
+          <ui-icon name="close" :size="40" color="#94A3B8" />
         </view>
       </view>
 
@@ -154,7 +154,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
         </template>
         <view v-else class="empty-state">
           <view class="empty-icon">
-            <ui-icon name="stethoscope" :size="54" color="#C7C7CC" />
+            <ui-icon name="stethoscope" :size="54" color="#94A3B8" />
           </view>
           <text class="empty-text">没有匹配的医生</text>
           <view class="empty-btn" @click="resetFilter"><text>查看全部医生</text></view>
@@ -186,8 +186,8 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 .hc-info { flex: 1; min-width: 0; }
 .hc-name-row { display: flex; align-items: center; gap: 8px; }
 .hc-name { font-size: 17px; font-weight: 700; color: var(--c-text); }
-.hc-badge { padding: 1px 8px; border-radius: 4px; background: #FFEBEA; flex-shrink: 0; }
-.hc-badge text { font-size: 10px; color: #FF3B30; font-weight: 700; }
+.hc-badge { padding: 1px 8px; border-radius: 4px; background: #FEF2F2; flex-shrink: 0; }
+.hc-badge text { font-size: 10px; color: #EF4444; font-weight: 700; }
 .hc-addr {
   font-size: 12px; color: var(--c-text-3); display: block; margin-top: 5px;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
@@ -216,11 +216,11 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
   margin-bottom: 10px;
 }
 .search-input { flex: 1; height: 100%; font-size: 14px; }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 .search-clear {
   width: 20px; height: 20px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  background: #F2F2F7;
+  background: #F5F7FA;
 }
 
 /* 科室筛选 */
@@ -263,7 +263,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 .doc-body { flex: 1; min-width: 0; }
 .doc-name-row { display: flex; align-items: center; gap: 6px; }
 .doc-name { font-size: 16px; font-weight: 700; color: var(--c-text); }
-.doc-title { font-size: 11px; color: #FF9500; background: #EFF4FF; padding: 1px 6px; border-radius: 4px; }
+.doc-title { font-size: 11px; color: #F59E0B; background: #EFF4FF; padding: 1px 6px; border-radius: 4px; }
 .doc-dept { font-size: 13px; color: var(--c-text-2); margin-top: 4px; display: block; }
 .doc-spec {
   font-size: 12px; color: var(--c-text-3); margin-top: 4px; display: block;
@@ -271,13 +271,13 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 }
 .doc-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
 .doc-fee { display: flex; align-items: baseline; }
-.fee-symbol { font-size: 12px; color: #FF3B30; font-weight: 600; }
-.fee-num { font-size: 18px; font-weight: 800; color: #FF3B30; }
+.fee-symbol { font-size: 12px; color: #EF4444; font-weight: 600; }
+.fee-num { font-size: 18px; font-weight: 800; color: #EF4444; }
 .doc-status { display: flex; align-items: center; gap: 4px; }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #34C759; }
-.status-dot.off { background: #C7C7CC; }
-.doc-status text { font-size: 12px; color: #34C759; }
-.doc-status.off text { color: #C7C7CC; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #10B981; }
+.status-dot.off { background: #94A3B8; }
+.doc-status text { font-size: 12px; color: #10B981; }
+.doc-status.off text { color: #94A3B8; }
 
 .doc-skeleton-row { display: flex; gap: 12px; align-items: center; }
 

@@ -35,7 +35,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
   <view class="page">
     <!-- 搜索 -->
     <view class="search-bar">
-      <ui-icon name="search" :size="64" color="#C7C7CC" />
+      <ui-icon name="search" :size="64" color="#94A3B8" />
       <input v-model="keyword" placeholder="搜索健康资讯" placeholder-class="ph" class="search-input" @confirm="search" />
       <view class="search-btn" @click="search"><text>搜索</text></view>
     </view>
@@ -62,7 +62,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
         <view v-for="a in list" :key="a.id" class="card" @click="goDetail(a.id)">
           <image v-if="a.coverImage" :src="a.coverImage" class="card-img" mode="aspectFill" />
           <view v-else class="card-img-placeholder">
-            <ui-icon name="news" :size="60" color="#C7C7CC" />
+            <ui-icon name="news" :size="60" color="#94A3B8" />
           </view>
           <view class="card-body">
             <text class="card-title">{{ a.title }}</text>
@@ -75,7 +75,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
         </view>
       </template>
       <view v-else class="empty-state">
-        <view class="empty-icon"><ui-icon name="news" :size="54" color="#C7C7CC" /></view>
+        <view class="empty-icon"><ui-icon name="news" :size="54" color="#94A3B8" /></view>
         <text class="empty-text">暂无资讯</text>
       </view>
     </view>
@@ -89,10 +89,10 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
   display: flex; align-items: center; gap: 8px;
   background: #fff; border-radius: 24px; padding: 0 16px;
   height: 42px; margin: 12px 16px 8px;
-  border: 1px solid #F2F2F7;
+  border: 1px solid #F5F7FA;
 }
 .search-input { flex: 1; font-size: 14px; }
-.ph { color: #C7C7CC; }
+.ph { color: #94A3B8; }
 .search-btn {
   height: 30px; padding: 0 14px;
   background: #2563EB; border-radius: 15px;
@@ -102,8 +102,8 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
 
 .cat-bar { white-space: nowrap; padding: 4px 12px 12px; }
 .cat-inner { display: inline-flex; gap: 8px; }
-.cat-item { display: inline-flex; padding: 6px 16px; border-radius: 16px; background: #fff; border: 1px solid #F2F2F7; }
-.cat-item text { font-size: 13px; color: #8E8E93; }
+.cat-item { display: inline-flex; padding: 6px 16px; border-radius: 16px; background: #fff; border: 1px solid #F5F7FA; }
+.cat-item text { font-size: 13px; color: #64748B; }
 .cat-item.active { background: #2563EB; border-color: #2563EB; }
 .cat-item.active text { color: #fff; font-weight: 600; }
 
@@ -117,9 +117,9 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
 }
 .card-body { padding: 14px 16px; }
 .card-title { font-size: 16px; font-weight: 700; color: var(--c-text); display: block; margin-bottom: 6px; }
-.card-summary { font-size: 13px; color: #8E8E93; line-height: 1.5; display: block; }
+.card-summary { font-size: 13px; color: #64748B; line-height: 1.5; display: block; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
 .card-cat { background: #EFF4FF; padding: 2px 8px; border-radius: 4px; }
 .card-cat text { font-size: 11px; color: #60A5FA; }
-.card-time { font-size: 11px; color: #C7C7CC; }
+.card-time { font-size: 11px; color: #94A3B8; }
 </style>

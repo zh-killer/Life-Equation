@@ -51,7 +51,7 @@ function formatTime(t) {
       <text class="summary-score">{{ ratingSummary.avgRating }}</text>
       <view class="summary-stars">
         <text v-for="i in 5" :key="i" class="s-star"
-          :style="{ color: i <= Math.round(ratingSummary.avgRating) ? '#FF9500' : '#E5E5EA' }">★</text>
+          :style="{ color: i <= Math.round(ratingSummary.avgRating) ? '#F59E0B' : '#E6EBF2' }">★</text>
       </view>
       <text class="summary-count">{{ ratingSummary.count }} 条评价</text>
     </view>
@@ -68,7 +68,7 @@ function formatTime(t) {
     <!-- 空状态 -->
     <view v-else-if="!reviews.length" class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon name="message" :size="44" color="#C7C7CC" />
+        <UiIcon name="message" :size="44" color="#94A3B8" />
       </view>
       <text class="empty-title">暂无评价</text>
       <text class="empty-desc">患者对您的评价将在这里显示</text>
@@ -86,7 +86,7 @@ function formatTime(t) {
           </view>
           <view class="r-stars">
             <text v-for="i in 5" :key="i" class="r-star"
-              :style="{ color: i <= (r.rating || 0) ? '#FF9500' : '#E5E5EA' }">★</text>
+              :style="{ color: i <= (r.rating || 0) ? '#F59E0B' : '#E6EBF2' }">★</text>
           </view>
         </view>
         <view v-if="r.tags" class="r-tags">
@@ -106,7 +106,7 @@ function formatTime(t) {
 .nav-bar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 8px 12px; height: 48px;
-  background: #fff; border-bottom: 1px solid #F2F2F7;
+  background: #fff; border-bottom: 1px solid #F5F7FA;
 }
 .nav-back { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: var(--c-text); }
@@ -116,10 +116,10 @@ function formatTime(t) {
   background: #fff; margin: 12px 16px; border-radius: 16px;
   padding: 24px; text-align: center;
 }
-.summary-score { font-size: 48px; font-weight: 800; color: #FF9500; display: block; line-height: 1; }
+.summary-score { font-size: 48px; font-weight: 800; color: #F59E0B; display: block; line-height: 1; }
 .summary-stars { margin: 8px 0; display: flex; justify-content: center; gap: 4px; }
 .s-star { font-size: 22px; }
-.summary-count { font-size: 13px; color: #8E8E93; display: block; }
+.summary-count { font-size: 13px; color: #64748B; display: block; }
 
 /* 列表 */
 .list { padding: 0 16px 16px; }
@@ -142,8 +142,8 @@ function formatTime(t) {
   padding: 2px 10px; border-radius: 10px; background: #ECFDF5;
   font-size: 11px; color: #10B981;
 }
-.r-content { font-size: 14px; color: #8E8E93; line-height: 1.5; display: block; }
-.r-time { font-size: 11px; color: #C7C7CC; margin-top: 6px; display: block; }
+.r-content { font-size: 14px; color: #64748B; line-height: 1.5; display: block; }
+.r-time { font-size: 11px; color: #94A3B8; margin-top: 6px; display: block; }
 
 /* 空状态 */
 .empty-state { text-align: center; padding: 80px 40px; }
@@ -152,7 +152,7 @@ function formatTime(t) {
 .empty-desc { font-size: 13px; color: var(--c-text-3); display: block; margin-top: 6px; }
 
 /* 骨架屏 */
-.skeleton { background: #F2F2F7; border-radius: 6px; height: 12px; animation: pulse 1.5s ease-in-out infinite; }
+.skeleton { background: #F5F7FA; border-radius: 6px; height: 12px; animation: pulse 1.5s ease-in-out infinite; }
 .skeleton-card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 8px; }
 @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 </style>

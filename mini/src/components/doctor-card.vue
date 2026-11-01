@@ -39,12 +39,12 @@ defineProps({
 }
 .body { flex: 1; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-.name { font-size: 15px; font-weight: 700; color: #1C1C1E; }
+.name { font-size: 15px; font-weight: 700; color: #0F172A; }
 .title { font-size: 11px; color: #60A5FA; background: #EFF4FF; padding: 1px 6px; border-radius: 4px; }
-.dept { font-size: 12px; color: #8E8E93; display: block; }
-.spec { font-size: 11px; color: #C7C7CC; display: block; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 180px; }
+.dept { font-size: 12px; color: #64748B; display: block; }
+.spec { font-size: 11px; color: #94A3B8; display: block; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 180px; }
 .right { text-align: center; flex-shrink: 0; }
-.fee { font-size: 16px; font-weight: 800; color: #FF3B30; display: block; }
-.status { font-size: 10px; color: #34C759; display: block; }
-.status.off { color: #C7C7CC; }
+.fee { font-size: 16px; font-weight: 800; color: #EF4444; display: block; }
+.status { font-size: 10px; color: #10B981; display: block; }
+.status.off { color: #94A3B8; }
 </style>

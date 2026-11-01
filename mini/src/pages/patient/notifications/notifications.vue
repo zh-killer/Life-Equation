@@ -30,9 +30,9 @@ const unreadCount = computed(() => {
 // 图标与颜色映射
 const typeConfig = {
   appointment_confirmed: { icon: 'calendar', color: '#2563EB', bg: '#EFF4FF', label: '预约确认' },
-  appointment_unpaid: { icon: 'calendar', color: '#FF3B30', bg: '#FFF1F0', label: '待支付' },
-  appointment_reminder: { icon: 'clock', color: '#FF9500', bg: '#FFF4E5', label: '预约提醒' },
-  consult_replied: { icon: 'message', color: '#34C759', bg: '#E9F7EF', label: '咨询回复' },
+  appointment_unpaid: { icon: 'calendar', color: '#EF4444', bg: '#FEF2F2', label: '待支付' },
+  appointment_reminder: { icon: 'clock', color: '#F59E0B', bg: '#FFFBEB', label: '预约提醒' },
+  consult_replied: { icon: 'message', color: '#10B981', bg: '#ECFDF5', label: '咨询回复' },
   system: { icon: 'shield', color: '#60A5FA', bg: '#EFF4FF', label: '系统通知' },
 }
 
@@ -169,7 +169,7 @@ function formatTime(t) {
     <!-- 空状态 -->
     <view v-else-if="!filteredNotis.length" class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon name="message" :size="44" color="#C7C7CC" />
+        <UiIcon name="message" :size="44" color="#94A3B8" />
       </view>
       <text class="empty-title">{{ activeTab === 'unread' ? '没有未读消息' : '暂无消息' }}</text>
       <text class="empty-desc">预约确认和医生回复将在这里显示</text>
@@ -197,7 +197,7 @@ function formatTime(t) {
           <text class="noti-title">{{ n.title }}</text>
           <text class="noti-content">{{ n.content }}</text>
         </view>
-        <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+        <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
       </view>
     </view>
   </view>
@@ -207,7 +207,7 @@ function formatTime(t) {
 .page { background: var(--c-bg); min-height: 100vh; }
 
 /* 头部 */
-.header { background: #fff; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #F2F2F7; }
+.header { background: #fff; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #F5F7FA; }
 .nav-bar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 8px 12px; height: 48px;
@@ -227,7 +227,7 @@ function formatTime(t) {
 .tab.active { color: var(--c-primary); border-bottom-color: var(--c-primary); font-weight: 600; }
 .tab-badge {
   min-width: 18px; height: 18px; line-height: 18px; text-align: center;
-  background: #FF3B30; color: #fff; font-size: 10px; font-weight: 700;
+  background: #EF4444; color: #fff; font-size: 10px; font-weight: 700;
   border-radius: 9px; padding: 0 5px;
 }
 
@@ -236,7 +236,7 @@ function formatTime(t) {
 .card { display: flex; gap: 12px; padding: 16px; background: #fff; border-radius: var(--r-lg); margin-bottom: 8px; box-shadow: none; }
 
 /* 骨架屏 */
-.skeleton { background: #F2F2F7; background-size: 200% 100%; animation: pulse 1.5s ease-in-out infinite; border-radius: 6px; height: 12px; }
+.skeleton { background: #F5F7FA; background-size: 200% 100%; animation: pulse 1.5s ease-in-out infinite; border-radius: 6px; height: 12px; }
 .skeleton-circle { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
 @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
@@ -256,11 +256,11 @@ function formatTime(t) {
 .noti-item.unread { background: #F8FAFF; border-left: 3px solid #60A5FA; }
 .noti-left { position: relative; flex-shrink: 0; }
 .noti-icon { width: 42px; height: 42px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
-.unread-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; border-radius: 50%; background: #FF3B30; border: 2px solid #fff; }
+.unread-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; border-radius: 50%; background: #EF4444; border: 2px solid #fff; }
 .noti-body { flex: 1; min-width: 0; }
 .noti-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
 .noti-label { font-size: 11px; color: #60A5FA; font-weight: 600; background: var(--c-primary-bg); padding: 2px 8px; border-radius: 8px; }
-.noti-time { font-size: 11px; color: #C7C7CC; }
+.noti-time { font-size: 11px; color: #94A3B8; }
 .noti-title { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; margin-bottom: 3px; }
 .noti-content { font-size: 12px; color: var(--c-text-3); display: block; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 </style>

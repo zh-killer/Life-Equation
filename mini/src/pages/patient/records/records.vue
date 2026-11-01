@@ -12,7 +12,7 @@ const typeOptions = ['基本信息', '既往病史', '体检报告', '处方记�
 const typeMap = { BASIC_INFO: '基本信息', MEDICAL_HISTORY: '既往病史', CHECKUP: '体检报告', PRESCRIPTION: '处方记录', OTHER: '其他' }
 const typeValueMap = ['BASIC_INFO', 'MEDICAL_HISTORY', 'CHECKUP', 'PRESCRIPTION', 'OTHER']
 const typeIconMap = { BASIC_INFO: 'user', MEDICAL_HISTORY: 'clipboard', CHECKUP: 'activity', PRESCRIPTION: 'pill', OTHER: 'file' }
-const typeColorMap = { BASIC_INFO: '#2563EB', MEDICAL_HISTORY: '#FF9500', CHECKUP: '#34C759', PRESCRIPTION: '#60A5FA', OTHER: '#C7C7CC' }
+const typeColorMap = { BASIC_INFO: '#2563EB', MEDICAL_HISTORY: '#F59E0B', CHECKUP: '#10B981', PRESCRIPTION: '#60A5FA', OTHER: '#94A3B8' }
 
 const form = ref({
   recordType: 3,
@@ -108,7 +108,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view v-else-if="records.length" class="list">
       <view v-for="r in records" :key="r.id" class="card record-card">
         <view class="card-top">
-          <view class="type-badge" :style="{ background: typeColorMap[r.recordType] || '#C7C7CC' }">
+          <view class="type-badge" :style="{ background: typeColorMap[r.recordType] || '#94A3B8' }">
             <UiIcon :name="typeIconMap[r.recordType] || 'file'" :size="50" color="#fff" />
             <text>{{ typeMap[r.recordType] || r.recordType }}</text>
           </view>
@@ -118,19 +118,19 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <text class="r-content">{{ r.recordContent }}</text>
         <view class="card-foot">
           <view class="meta-item" v-if="r.hospital">
-            <UiIcon name="hospital" :size="54" color="#C7C7CC" />
+            <UiIcon name="hospital" :size="54" color="#94A3B8" />
             <text>{{ r.hospital }}</text>
           </view>
           <view class="meta-item" v-if="r.doctorName">
-            <UiIcon name="user" :size="54" color="#C7C7CC" />
+            <UiIcon name="user" :size="54" color="#94A3B8" />
             <text>{{ r.doctorName }}</text>
           </view>
           <view class="vis-badge" :class="{ on: r.visibleToDoctor === 1 || r.visibleToDoctor === true }">
-            <UiIcon :name="r.visibleToDoctor === 1 || r.visibleToDoctor === true ? 'eye' : 'lock'" :size="50" :color="r.visibleToDoctor === 1 || r.visibleToDoctor === true ? '#34C759' : '#C7C7CC'" />
-            <text :style="{ color: r.visibleToDoctor === 1 || r.visibleToDoctor === true ? '#34C759' : '#C7C7CC' }">{{ r.visibleToDoctor === 1 || r.visibleToDoctor === true ? '医生可见' : '仅自己' }}</text>
+            <UiIcon :name="r.visibleToDoctor === 1 || r.visibleToDoctor === true ? 'eye' : 'lock'" :size="50" :color="r.visibleToDoctor === 1 || r.visibleToDoctor === true ? '#10B981' : '#94A3B8'" />
+            <text :style="{ color: r.visibleToDoctor === 1 || r.visibleToDoctor === true ? '#10B981' : '#94A3B8' }">{{ r.visibleToDoctor === 1 || r.visibleToDoctor === true ? '医生可见' : '仅自己' }}</text>
           </view>
           <view class="r-del" @click.stop="doDelete(r.id)">
-            <UiIcon name="close" :size="60" color="#FF3B30" />
+            <UiIcon name="close" :size="60" color="#EF4444" />
           </view>
         </view>
       </view>
@@ -139,7 +139,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 空状态 -->
     <view v-else class="empty-state">
       <view class="empty-icon-box">
-        <UiIcon name="clipboard" :size="40" color="#C7C7CC" />
+        <UiIcon name="clipboard" :size="40" color="#94A3B8" />
       </view>
       <text class="empty-title">暂无病历记录</text>
       <text class="empty-desc">添加您的第一条病历记录</text>
@@ -155,7 +155,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <view class="modal-header">
           <text class="modal-title">添加病历</text>
           <view class="modal-close" @click="showAdd = false">
-            <UiIcon name="close" :size="40" color="#C7C7CC" />
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
         </view>
 
@@ -163,7 +163,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <picker mode="selector" :range="typeOptions" :value="form.recordType" @change="onTypeChange">
           <view class="picker-item">
             <text>{{ typeOptions[form.recordType] }}</text>
-            <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+            <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
           </view>
         </picker>
 
@@ -174,7 +174,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         <picker mode="date" :value="form.recordDate" @change="onDateChange">
           <view class="picker-item">
             <text>{{ form.recordDate || '请选择日期' }}</text>
-            <UiIcon name="chevronRight" :size="60" color="#C7C7CC" />
+            <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
           </view>
         </picker>
 
@@ -224,7 +224,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 /* 骨架屏 */
 .skeleton-card { padding: 16px; }
-.skeleton { background: #F2F2F7; border-radius: 6px; }
+.skeleton { background: #F5F7FA; border-radius: 6px; }
 @keyframes skeleton-pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .skeleton-bar { border-radius: 8px; }
 
