@@ -39,47 +39,47 @@ async function checkMedReminders() {
 </script>
 
 <style>
-/* ========== 全局设计变量 — 极简·自然 ========== */
+/* ========== 全局设计变量 ========== */
 page {
-  /* 品牌色 — 低饱和度薄荷绿 */
-  --c-primary: #2DD4BF;
-  --c-primary-light: #7FDBFF;
-  --c-primary-bg: #E6FAF5;
-  --c-primary-gradient: #2DD4BF;  /* 无渐变，纯色 */
+  /* ===== 方案 B · 医疗专业蓝 ===== */
+  --c-primary: #2563EB;
+  --c-primary-light: #60A5FA;
+  --c-primary-bg: #EFF4FF;
+  --c-primary-gradient: #2563EB;
 
   /* 功能色 */
-  --c-teal: #2DD4BF;
-  --c-teal-bg: #E6FAF5;
-  --c-green: #34C759;
-  --c-green-bg: #E8F8ED;
-  --c-orange: #FF9500;
-  --c-orange-bg: #FFF4E5;
-  --c-red: #FF3B30;
-  --c-red-bg: #FFEBEA;
-  --c-purple: #AF52DE;
-  --c-purple-bg: #F5E8FD;
-  --c-blue: #7FDBFF;
-  --c-blue-bg: #EDFAFF;
+  --c-teal: #2563EB;
+  --c-teal-bg: #EFF4FF;
+  --c-green: #10B981;
+  --c-green-bg: #ECFDF5;
+  --c-orange: #F59E0B;
+  --c-orange-bg: #FFFBEB;
+  --c-red: #EF4444;
+  --c-red-bg: #FEF2F2;
+  --c-purple: #8B5CF6;
+  --c-purple-bg: #F5F3FF;
+  --c-blue: #60A5FA;
+  --c-blue-bg: #EFF6FF;
 
-  /* 中性色 — 纯白底 */
-  --c-bg: #FFFFFF;
+  /* 中性色 — 浅灰底 + 纯白卡片 */
+  --c-bg: #F5F7FA;
   --c-card: #FFFFFF;
-  --c-border: #F2F2F7;
-  --c-divider: #F2F2F7;
+  --c-border: #E6EBF2;
+  --c-divider: #EEF1F5;
 
-  /* 文字色 — 苹果风格 */
-  --c-text: #1C1C1E;
-  --c-text-2: #8E8E93;
-  --c-text-3: #C7C7CC;
+  /* 文字色 */
+  --c-text: #0F172A;
+  --c-text-2: #64748B;
+  --c-text-3: #94A3B8;
   --c-text-inv: #FFFFFF;
 
-  /* 无阴影 — 极简 */
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
+  /* 阴影 — 极轻，靠边框分层 */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-md: 0 1px 3px rgba(16, 24, 40, 0.06);
+  --shadow-lg: 0 4px 12px rgba(16, 24, 40, 0.08);
 
-  /* 圆角 — 微圆角 */
-  --r-sm: 8px;
+  /* 圆角 */
+  --r-sm: 6px;
   --r-md: 12px;
   --r-lg: 16px;
   --r-xl: 20px;
@@ -118,8 +118,10 @@ page {
 /* ========== 通用卡片 — 无阴影纯白 ========== */
 .card {
   background: var(--c-card);
+  border: 1px solid var(--c-border);
   border-radius: var(--r-md);
   padding: 16px;
+  box-shadow: var(--shadow-md);
 }
 
 /* ========== 通用页面容器 ========== */

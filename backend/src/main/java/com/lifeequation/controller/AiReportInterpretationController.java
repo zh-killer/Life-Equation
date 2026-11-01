@@ -48,7 +48,12 @@ public class AiReportInterpretationController {
 
     @GetMapping("/interpret/{id}")
     public Result<AiReportInterpretation> getDetail(@PathVariable Long id) {
-        return Result.ok(aiReportService.getDetail(id));
+        AiReportInterpretation record = aiReportService.getDetail(id);
+        Long userId = SecurityUtils.getCurrentUserId();
+        if (record == null || !record.getUserId().equals(userId)) {
+            return Result.error(403, "无权查看他人记录");
+        }
+        return Result.ok(record);
     }
 
     @DeleteMapping("/interpret/{id}")

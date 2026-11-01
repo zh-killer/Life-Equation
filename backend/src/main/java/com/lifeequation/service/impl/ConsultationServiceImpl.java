@@ -46,9 +46,17 @@ public class ConsultationServiceImpl extends ServiceImpl<ConsultationMapper, Con
     }
 
     @Override
-    public Consultation getDetail(Long id) {
+    public Consultation getDetail(Long id, Long currentUserId) {
         Consultation c = this.getById(id);
-        if (c == null) throw new RuntimeException("问答不存在");
+        // 不存在和无权查看返回同一提示，避免通过报错探测私密问答是否存在
+        if (c == null) {
+            throw new RuntimeException("问答不存在");
+        }
+        boolean isPublic = Integer.valueOf(1).equals(c.getIsPublic());
+        boolean isOwner = currentUserId != null && currentUserId.equals(c.getUserId());
+        if (!isPublic && !isOwner) {
+            throw new RuntimeException("问答不存在");
+        }
         populateNames(java.util.List.of(c));
         return c;
     }

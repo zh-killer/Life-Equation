@@ -42,21 +42,30 @@ const todayStr = computed(() => {
 
 // 核心 AI 功能
 const aiCards = [
-  { icon: 'robot', label: '智能导诊', desc: '症状分析 · 科室推荐', url: '/pages/patient/ai/ai', gradient: '#2DD4BF' },
-  { icon: 'heart', label: '健康建议', desc: '个性化方案 · BMI评估', url: '/pages/patient/ai/health-advice', gradient: '#7FDBFF' },
-  { icon: 'file', label: '报告解读', desc: '上传即分析 · 指标解读', url: '/pages/patient/ai/report', gradient: '#AF52DE' },
+  { icon: 'robot', label: '智能导诊', desc: '症状分析 · 科室推荐', url: '/pages/patient/ai/ai', gradient: '#2563EB' },
+  { icon: 'heart', label: '健康建议', desc: '个性化方案 · BMI评估', url: '/pages/patient/ai/health-advice', gradient: '#60A5FA' },
+  { icon: 'file', label: '报告解读', desc: '上传即分析 · 指标解读', url: '/pages/patient/ai/report', gradient: '#8B5CF6' },
+]
+
+// 快捷入口（方案 B：四个主入口收进一张白卡）
+// 注意：本院医生已在下方“医疗服务”宫格中，这里不重复放
+const quickEntries = [
+  { icon: 'robot', label: 'AI 导诊', url: '/pages/patient/ai/ai', color: '#2563EB' },
+  { icon: 'heart', label: '健康建议', url: '/pages/patient/ai/health-advice', color: '#2563EB' },
+  { icon: 'file', label: '报告解读', url: '/pages/patient/ai/report', color: '#2563EB' },
+  { icon: 'calendar', label: '预约挂号', url: '/pages/patient/medical/medical', color: '#2563EB' },
 ]
 
 // 服务入口
 const services = [
-  { icon: 'hospital', label: '本院医生', url: '/pages/patient/medical/medical', color: '#2DD4BF' },
-  { icon: 'virus', label: '疾病百科', url: '/pages/patient/disease/disease', color: '#FF9500' },
-  { icon: 'pill', label: '药品查询', url: '/pages/patient/drug/drug', color: '#AF52DE' },
-  { icon: 'store', label: '院内药房', url: '/pages/patient/pharmacy/pharmacy', color: '#2DD4BF' },
-  { icon: 'message', label: '问答社区', url: '/pages/patient/consultation/list', color: '#7FDBFF' },
-  { icon: 'news', label: '健康资讯', url: '/pages/patient/article/article', color: '#FF9500' },
-  { icon: 'clipboard', label: '就诊指南', url: '/pages/patient/guide/guide', color: '#34C759' },
-  { icon: 'folder', label: '我的病历', url: '/pages/patient/records/records', color: '#FF9500' },
+  { icon: 'hospital', label: '本院医生', url: '/pages/patient/medical/medical', color: '#2563EB' },
+  { icon: 'virus', label: '疾病百科', url: '/pages/patient/disease/disease', color: '#F59E0B' },
+  { icon: 'pill', label: '药品查询', url: '/pages/patient/drug/drug', color: '#8B5CF6' },
+  { icon: 'store', label: '院内药房', url: '/pages/patient/pharmacy/pharmacy', color: '#2563EB' },
+  { icon: 'message', label: '问答社区', url: '/pages/patient/consultation/list', color: '#60A5FA' },
+  { icon: 'news', label: '健康资讯', url: '/pages/patient/article/article', color: '#F59E0B' },
+  { icon: 'clipboard', label: '就诊指南', url: '/pages/patient/guide/guide', color: '#10B981' },
+  { icon: 'folder', label: '我的病历', url: '/pages/patient/records/records', color: '#F59E0B' },
 ]
 
 function goPage(url) { uni.navigateTo({ url }) }
@@ -200,9 +209,9 @@ async function loadAvatarForIndex() {
       </view>
 
       <!-- 搜索栏 -->
-      <view class="search-bar" @click="goPage('/pages/patient/medical/medical')">
-        <ui-icon name="search" :size="64" color="#C7C7CC" />
-        <text class="search-ph">搜索本院医生姓名、职称、专长...</text>
+      <view class="search-bar" @click="goPage('/pages/patient/search/search')">
+        <ui-icon name="search" :size="64" color="#94A3B8" />
+        <text class="search-ph">搜索医生、疾病、药品、资讯</text>
       </view>
     </view>
 
@@ -220,33 +229,26 @@ async function loadAvatarForIndex() {
       </view>
     </view>
 
-    <!-- ===== AI 功能卡片 ===== -->
-    <view class="ai-section">
-      <view class="section-label">
-        <text class="label-text">AI 智能助手</text>
-      </view>
-      <view class="ai-cards">
+    <!-- ===== 快捷入口 ===== -->
+    <view class="quick-section">
+      <view class="quick-card">
         <view
-          v-for="card in aiCards" :key="card.label"
-          class="ai-card"
-          :style="{ background: card.gradient }"
-          @click="goPage(card.url)"
+          v-for="q in quickEntries" :key="q.label"
+          class="quick-item"
+          @click="goPage(q.url)"
         >
-          <view class="ai-card-icon">
-            <ui-icon :name="card.icon" :size="50" color="#fff" />
+          <view class="quick-icon">
+            <ui-icon :name="q.icon" :size="46" :color="q.color" />
           </view>
-          <view class="ai-card-info">
-            <text class="ai-card-label">{{ card.label }}</text>
-            <text class="ai-card-desc">{{ card.desc }}</text>
-          </view>
+          <text class="quick-label">{{ q.label }}</text>
         </view>
       </view>
     </view>
 
-    <!-- ===== 服务入口 ===== -->
-    <view class="service-section">
-      <view class="section-label">
-        <text class="label-text">医疗服务</text>
+    <!-- ===== 医疗服务 ===== -->
+    <view class="section service-section">
+      <view class="section-header">
+        <text class="section-title">医疗服务</text>
       </view>
       <view class="service-grid">
         <view
@@ -333,7 +335,7 @@ async function loadAvatarForIndex() {
 
 /* ===== 头部 ===== */
 .header {
-  background: #2DD4BF;
+  background: var(--c-primary);
   padding: 0 20px 24px;
 }
 .header-top {
@@ -362,7 +364,7 @@ async function loadAvatarForIndex() {
 .bell-badge {
   position: absolute; top: -2px; right: -2px;
   min-width: 18px; height: 18px; line-height: 18px;
-  background: #FF3B30; color: #fff; font-size: 10px; font-weight: 700;
+  background: var(--c-red); color: #fff; font-size: 10px; font-weight: 700;
   border-radius: 9px; text-align: center; padding: 0 4px;
   border: 2px solid rgba(255,255,255,0.3);
 }
@@ -387,12 +389,12 @@ async function loadAvatarForIndex() {
 }
 .reminder-item:last-child { border-bottom: none; }
 .reminder-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.reminder-dot.appointment { background: #2DD4BF; }
-.reminder-dot.unpaid { background: #FF3B30; }
-.reminder-dot.reply { background: #34C759; }
-.reminder-dot.pill { background: #FF9500; }
-.reminder-item.med { background: #FFF8F0; }
-.reminder-text { flex: 1; font-size: 13px; color: #8E8E93; }
+.reminder-dot.appointment { background: var(--c-primary); }
+.reminder-dot.unpaid { background: var(--c-red); }
+.reminder-dot.reply { background: var(--c-green); }
+.reminder-dot.pill { background: var(--c-orange); }
+.reminder-item.med { background: var(--c-orange-bg); }
+.reminder-text { flex: 1; font-size: 13px; color: var(--c-text-2); }
 
 /* ===== AI 功能卡片 ===== */
 .ai-section { padding: 16px 16px 0; }
@@ -447,7 +449,7 @@ async function loadAvatarForIndex() {
   margin-bottom: 12px;
 }
 .section-title { font-size: 16px; font-weight: 700; color: var(--c-text); }
-.section-more { font-size: 12px; color: #7FDBFF; }
+.section-more { font-size: 12px; color: var(--c-primary-light); }
 
 .article-list { display: flex; flex-direction: column; gap: 8px; }
 .article-item {
@@ -460,7 +462,7 @@ async function loadAvatarForIndex() {
 .article-summary { font-size: 12px; color: var(--c-text-3); display: block; margin-bottom: 8px; line-height: 1.4; }
 .article-meta { display: flex; align-items: center; gap: 8px; }
 .article-tag {
-  font-size: 10px; color: #7FDBFF; background: var(--c-primary-bg);
+  font-size: 10px; color: var(--c-primary-light); background: var(--c-primary-bg);
   padding: 2px 8px; border-radius: 8px;
 }
 .article-date { font-size: 11px; color: rgba(255,255,255,0.6); }
@@ -480,14 +482,47 @@ async function loadAvatarForIndex() {
 .med-modal { background: #fff; width: 85%; max-width: 340px; border-radius: 20px; padding: 28px 24px 20px; text-align: center; animation: medPop 0.3s ease; }
 @keyframes medPop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .med-modal-icon { font-size: 48px; margin-bottom: 8px; }
-.med-modal-title { font-size: 18px; font-weight: 700; color: #1C1C1E; display: block; margin-bottom: 16px; }
-.med-modal-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #FFF8F0; border-radius: 10px; margin-bottom: 8px; }
-.med-modal-dot { width: 8px; height: 8px; border-radius: 50%; background: #FF9500; flex-shrink: 0; }
-.med-modal-drug { font-size: 15px; font-weight: 600; color: #1C1C1E; }
-.med-modal-dosage { font-size: 13px; color: #8E8E93; }
-.med-modal-note { font-size: 12px; color: #C7C7CC; display: block; margin-top: 4px; }
+.med-modal-title { font-size: 18px; font-weight: 700; color: var(--c-text); display: block; margin-bottom: 16px; }
+.med-modal-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--c-orange-bg); border-radius: 10px; margin-bottom: 8px; }
+.med-modal-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-orange); flex-shrink: 0; }
+.med-modal-drug { font-size: 15px; font-weight: 600; color: var(--c-text); }
+.med-modal-dosage { font-size: 13px; color: var(--c-text-2); }
+.med-modal-note { font-size: 12px; color: var(--c-text-3); display: block; margin-top: 4px; }
 .med-modal-btns { display: flex; gap: 10px; margin-top: 18px; }
 .med-btn { flex: 1; height: 42px; line-height: 42px; text-align: center; border-radius: 21px; font-size: 14px; border: none; }
-.med-btn.cancel { background: #F2F2F7; color: #8E8E93; }
-.med-btn.goto { background: #FF9500; color: #fff; font-weight: 600; }
+.med-btn.cancel { background: var(--c-border); color: var(--c-text-2); }
+.med-btn.goto { background: var(--c-orange); color: #fff; font-weight: 600; }
+/* ===== 方案 B：卡片细边框 + 微阴影（后定义，覆盖上面的 box-shadow:none） ===== */
+.ai-card,
+.article-item,
+.article-skeleton,
+.reminder-bar {
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== 方案 B：快捷入口卡（四个主入口收进一张白卡） ===== */
+.quick-section { padding: 16px 16px 0; }
+.quick-card {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  padding: 16px 4px;
+}
+.quick-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.quick-icon {
+  width: 46px; height: 46px; border-radius: 14px;
+  background: var(--c-primary-bg);
+  display: flex; align-items: center; justify-content: center;
+}
+.quick-label { font-size: 11.5px; color: var(--c-text-2); }
+
+/* 服务网格统一成白卡 */
+.service-grid {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-md);
+}
 </style>

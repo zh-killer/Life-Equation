@@ -1,12 +1,14 @@
 package com.lifeequation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.lifeequation.entity.Doctor;
 import com.lifeequation.entity.DoctorSchedule;
 import com.lifeequation.mapper.DoctorMapper;
 import com.lifeequation.mapper.DoctorScheduleMapper;
 import com.lifeequation.service.DoctorScheduleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -96,16 +98,15 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService {
     }
 
     @Override
+    @Transactional
     public void applyStop(Long userId, String date, String reason) {
         Long doctorId = getDoctorId(userId);
         LocalDate stopDate = LocalDate.parse(date);
-        // 将该日所有排班状态置为停诊
-        List<DoctorSchedule> list = scheduleMapper.selectList(new LambdaQueryWrapper<DoctorSchedule>()
+        // 只更新 status。不能用整实体 updateById：它会把实体里读出来的旧 booked_count
+        // 一起写回数据库，覆盖掉并发中刚 +1 的计数，导致该时段能卖出超过 max_slots 个号。
+        scheduleMapper.update(null, new LambdaUpdateWrapper<DoctorSchedule>()
                 .eq(DoctorSchedule::getDoctorId, doctorId)
-                .eq(DoctorSchedule::getScheduleDate, stopDate));
-        for (DoctorSchedule s : list) {
-            s.setStatus(0);
-            scheduleMapper.updateById(s);
-        }
+                .eq(DoctorSchedule::getScheduleDate, stopDate)
+                .set(DoctorSchedule::getStatus, 0));
     }
 }

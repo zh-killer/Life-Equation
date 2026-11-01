@@ -103,17 +103,16 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         if (!appt.getUserId().equals(userId)) {
             throw new RuntimeException("无权取消他人的预约");
         }
-        if ("CANCELLED".equals(appt.getStatus())) {
+        // 先做状态 CAS：只有真正把 UNPAID/PENDING 改成 CANCELLED 的那一次请求才允许退号。
+        // 并发双击时其余请求会得到 0，不会重复归还号源（否则号源会被越退越多）。
+        int changed = baseMapper.cancelIfActive(id, userId);
+        if (changed == 0) {
+            if ("COMPLETED".equals(appt.getStatus())) {
+                throw new RuntimeException("该预约已完成，无法取消");
+            }
             throw new RuntimeException("该预约已取消");
         }
-        if ("COMPLETED".equals(appt.getStatus())) {
-            throw new RuntimeException("该预约已完成，无法取消");
-        }
-
-        // 先归还号源，再改状态；两步在同一事务内，失败一起回滚
         releaseSlot(appt);
-        appt.setStatus("CANCELLED");
-        this.updateById(appt);
     }
 
     @Override
@@ -126,12 +125,15 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         if (!appt.getUserId().equals(userId)) {
             throw new RuntimeException("无权支付他人的预约");
         }
-        if (!"UNPAID".equals(appt.getStatus())) {
+        // 状态 CAS：只有 UNPAID 能支付。避免"另一台设备刚取消、这台又支付成功"
+        // 导致预约复活但号源已被退回，同一个号被卖两次。
+        int changed = baseMapper.payIfUnpaid(id, userId);
+        if (changed == 0) {
+            if ("CANCELLED".equals(appt.getStatus())) {
+                throw new RuntimeException("该预约已取消，无法支付");
+            }
             throw new RuntimeException("该预约无需支付");
         }
-        // 模拟支付：真实项目这里应对接支付网关回调，成功后才改状态
-        appt.setStatus("PENDING");
-        this.updateById(appt);
     }
 
     // ==================== Admin methods ====================
@@ -148,18 +150,32 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         return result;
     }
 
+    /** 允许的预约状态，防止后台接口写入任意字符串 */
+    private static final java.util.Set<String> VALID_STATUS =
+            java.util.Set.of("UNPAID", "PENDING", "CONFIRMED", "COMPLETED", "CANCELLED");
+
     @Override
     @Transactional
     public void updateAppointmentStatus(Long id, String status) {
+        if (status == null || !VALID_STATUS.contains(status)) {
+            throw new RuntimeException("非法的预约状态: " + status);
+        }
         Appointment a = this.getById(id);
         if (a == null) throw new RuntimeException("预约不存在");
         String old = a.getStatus();
         if (status.equals(old)) return;
 
-        // 后台把预约改成已取消时，同样要归还号源；从已取消恢复时重新占用
+        // 显式状态机：已完成是终态，不允许再改；只有未完成状态才能取消
+        if ("COMPLETED".equals(old)) {
+            throw new RuntimeException("已完成的预约不能再变更状态");
+        }
         if ("CANCELLED".equals(status)) {
+            if (!"UNPAID".equals(old) && !"PENDING".equals(old) && !"CONFIRMED".equals(old)) {
+                throw new RuntimeException("当前状态不可取消");
+            }
             releaseSlot(a);
         } else if ("CANCELLED".equals(old)) {
+            // 从已取消恢复：需要重新占用号源，占不到就失败
             occupySlot(a);
         }
         a.setStatus(status);

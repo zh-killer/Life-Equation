@@ -35,7 +35,8 @@ public class ConsultationController {
 
     @GetMapping("/{id}")
     public Result<?> detail(@PathVariable Long id) {
-        return Result.ok(consultationService.getDetail(id));
+        // 匿名用户可以查看公开问答；私密问答只有提问者本人可见
+        return Result.ok(consultationService.getDetail(id, SecurityUtils.getCurrentUserId()));
     }
 
     @PostMapping

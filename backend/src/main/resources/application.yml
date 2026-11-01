@@ -49,7 +49,9 @@ mybatis-plus:
     map-underscore-to-camel-case: true
 
 jwt:
-  secret: ${JWT_SECRET:life-equation-2025-jwt-secret-key-for-medical-system}
+  # 不提供默认值：必须由环境变量 JWT_SECRET 或本地 config/application-local.yml 提供。
+  # 公开的默认密钥等于没有密钥——任何人都能离线签出 role=ADMIN 的令牌。
+  secret: ${JWT_SECRET:}
   expiration: 86400000
 
 deepseek:

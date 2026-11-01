@@ -86,12 +86,12 @@ public class DoctorWorkbenchController {
                 new LambdaQueryWrapper<Doctor>().eq(Doctor::getUserId, userId));
         if (doctor == null) return Result.error("无权操作");
 
-        Appointment appt = appointmentMapper.selectById(appointmentId);
-        if (appt == null || !appt.getDoctorId().equals(doctor.getId())) {
-            return Result.error("无权操作此预约");
+        // 状态 CAS：只有 PENDING/CONFIRMED 才允许完成。已取消的预约号源已经退回，
+        // 如果还能标记完成，号源计数就会和实际就诊数对不上，同一个号会被再卖一次。
+        int changed = appointmentMapper.completeIfActive(appointmentId, doctor.getId());
+        if (changed == 0) {
+            return Result.error("该预约已取消或尚未支付，不能标记为完成");
         }
-        appt.setStatus("COMPLETED");
-        appointmentMapper.updateById(appt);
         return Result.ok("已标记为就诊完成");
     }
 

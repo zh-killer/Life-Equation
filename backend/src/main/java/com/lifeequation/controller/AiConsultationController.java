@@ -45,7 +45,12 @@ public class AiConsultationController {
 
     @GetMapping("/consultation/{id}")
     public Result<AiConsultation> getDetail(@PathVariable Long id) {
-        return Result.ok(aiConsultationService.getDetail(id));
+        AiConsultation record = aiConsultationService.getDetail(id);
+        Long userId = SecurityUtils.getCurrentUserId();
+        if (record == null || !record.getUserId().equals(userId)) {
+            return Result.error(403, "无权查看他人记录");
+        }
+        return Result.ok(record);
     }
 
     @DeleteMapping("/consultation/{id}")

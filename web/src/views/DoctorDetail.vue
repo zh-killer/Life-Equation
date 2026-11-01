@@ -12,16 +12,16 @@ const imgError = ref(false)
 
 const bookForm = ref({
   appointmentDate: '',
-  timeSlot: '09:00-09:30',
+  timeSlot: '上午',
   symptomDesc: '',
   doctorId: null,
   hospitalId: null,
 })
 
-const timeSlots = [
-  '09:00-09:30', '09:30-10:00', '10:00-10:30', '10:30-11:00',
-  '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00'
-]
+// 必须与 doctor_schedule.time_slot 的取值一致（上午/下午/晚上）。
+// 之前写的是 "09:00-09:30" 这类具体时段，后端按字符串精确匹配排班，
+// 永远查不到记录，导致所有预约都返回"该时段暂无排班"。
+const timeSlots = ['上午', '下午', '晚上']
 
 const titleInfo = computed(() => {
   const t = doctor.value?.title || ''

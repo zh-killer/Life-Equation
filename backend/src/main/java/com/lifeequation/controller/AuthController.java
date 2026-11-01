@@ -54,20 +54,6 @@ public class AuthController {
         return Result.ok("注册成功");
     }
 
-    /**
-     * 临时接口：设置用户角色（仅开发调试用，生产环境请删除）
-     */
-    @PostMapping("/set-role")
-    public Result<?> setRole(@RequestBody Map<String, String> params) {
-        String username = params.get("username");
-        String role = params.get("role");
-        if (username == null || role == null) {
-            return Result.fail("username 和 role 不能为空");
-        }
-        userService.setUserRole(username, role);
-        return Result.ok("角色已更新为 " + role);
-    }
-
     @GetMapping("/info")
     public Result<?> getUserInfo() {
         Long userId = SecurityUtils.getCurrentUserId();
@@ -121,10 +107,15 @@ public class AuthController {
         try {
             String dir = uploadPath + "/avatars/" + userId;
             Files.createDirectories(Paths.get(dir));
-            String ext = file.getOriginalFilename() != null
-                    && file.getOriginalFilename().contains(".")
-                    ? file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."))
-                    : ".jpg";
+            String originalName = file.getOriginalFilename();
+            String ext = ".jpg";
+            if (originalName != null && originalName.contains(".")) {
+                String candidate = originalName.substring(originalName.lastIndexOf(".")).toLowerCase();
+                // 扩展名白名单：任意后缀会让人上传 .html/.svg 并在同源下被浏览器渲染
+                if (candidate.matches("\\.(jpg|jpeg|png|gif|webp)")) {
+                    ext = candidate;
+                }
+            }
             String fileName = UUID.randomUUID() + ext;
             Path target = Paths.get(dir, fileName);
             file.transferTo(target.toFile());
@@ -151,8 +142,10 @@ public class AuthController {
                 base64Data = base64Data.substring(base64Data.indexOf(",") + 1);
             }
             byte[] bytes = Base64.getDecoder().decode(base64Data);
-            String ext = params.getOrDefault("ext", "jpg");
-            if (!ext.startsWith(".")) ext = "." + ext;
+            String extParam = params.getOrDefault("ext", "jpg");
+            if (!extParam.startsWith(".")) extParam = "." + extParam;
+            extParam = extParam.toLowerCase();
+            String ext = extParam.matches("\\.(jpg|jpeg|png|gif|webp)") ? extParam : ".jpg";
             String dir = uploadPath + "/avatars/" + userId;
             Files.createDirectories(Paths.get(dir));
             String fileName = UUID.randomUUID() + ext;
@@ -180,8 +173,10 @@ public class AuthController {
             return Result.ok("");
         }
         try {
-            Path filePath = Paths.get(uploadPath, avatarUrl.replace("/uploads/", ""));
-            if (!Files.exists(filePath)) {
+            Path uploadRoot = Paths.get(uploadPath).toAbsolutePath().normalize();
+            Path filePath = uploadRoot.resolve(avatarUrl.replace("/uploads/", "")).normalize();
+            // 严格限定在上传根目录内，防止通过 ../ 穿越读取服务器任意文件
+            if (!filePath.startsWith(uploadRoot) || !Files.exists(filePath)) {
                 return Result.ok("");
             }
             byte[] bytes = Files.readAllBytes(filePath);

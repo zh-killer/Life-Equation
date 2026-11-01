@@ -18,6 +18,13 @@ public class JwtUtils {
 
     public JwtUtils(@Value("${jwt.secret}") String secret,
                     @Value("${jwt.expiration}") long expiration) {
+        if (secret == null || secret.isBlank()
+                || secret.getBytes(StandardCharsets.UTF_8).length < 32) {
+            throw new IllegalStateException(
+                    "jwt.secret 未配置或长度不足（至少 32 字节）。"
+                            + "请设置环境变量 JWT_SECRET，或在 config/application-local.yml 中配置 jwt.secret。"
+                            + "公开的默认密钥会让任何人都能离线伪造管理员令牌。");
+        }
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.expiration = expiration;
     }

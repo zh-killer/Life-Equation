@@ -71,7 +71,7 @@ public class SecurityConfig {
                 // 4. URL-based authorization rules (evaluated in order, first match wins)
                 .authorizeHttpRequests(auth -> auth
                         // --- Public: no authentication needed ---
-                        .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/set-role", "/api/auth/wx-login").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/wx-login").permitAll()
                         .requestMatchers("/api/home").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/api/diseases/**",

@@ -7,7 +7,7 @@ import com.lifeequation.entity.Consultation;
 public interface ConsultationService extends IService<Consultation> {
     Page<Consultation> getPublicPage(int page, int size, String keyword);
     Page<Consultation> getUserPage(int page, int size, Long userId);
-    Consultation getDetail(Long id);
+    Consultation getDetail(Long id, Long currentUserId);
     void createQuestion(Consultation c);
     void deleteQuestion(Long id, Long userId);
 
