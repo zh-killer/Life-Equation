@@ -125,7 +125,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
       <view class="header-btns">
         <view class="h-btn primary" @click="openAdd">
-          <UiIcon name="plus" :size="60" color="#2DD4BF" />
+          <UiIcon name="plus" :size="60" color="#10B981" />
           <text>添加排班</text>
         </view>
         <view class="h-btn danger" @click="openStop">
@@ -138,14 +138,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 月份切换 -->
     <view class="month-bar">
       <view class="month-nav" @click="prevMonth">
-        <UiIcon name="chevronLeft" :size="64" color="#7FDBFF" />
+        <UiIcon name="chevronLeft" :size="64" color="#34D399" />
       </view>
       <view class="month-center" @click="goToday">
         <text class="month-label">{{ monthLabel }}</text>
         <text class="today-btn">回到今天</text>
       </view>
       <view class="month-nav" @click="nextMonth">
-        <UiIcon name="chevronRight" :size="64" color="#7FDBFF" />
+        <UiIcon name="chevronRight" :size="64" color="#34D399" />
       </view>
     </view>
 
@@ -288,13 +288,13 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; padding-bottom: 20px; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 20px; }
+.gradient-header { background: #10B981; padding-bottom: 20px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
 .header-btns { display: flex; gap: 10px; padding: 4px 16px 0; }
 .h-btn { display: flex; align-items: center; gap: 4px; font-size: 13px; padding: 8px 16px; border-radius: var(--r-pill); }
-.h-btn.primary { background: #fff; color: #2DD4BF; }
+.h-btn.primary { background: #fff; color: #10B981; }
 .h-btn.danger { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.4); }
 
 /* 月份切换 */
@@ -302,7 +302,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .month-nav { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .month-center { display: flex; flex-direction: column; align-items: center; }
 .month-label { font-size: 17px; font-weight: 700; color: var(--c-text); }
-.today-btn { font-size: 11px; color: #7FDBFF; margin-top: 2px; }
+.today-btn { font-size: 11px; color: #34D399; margin-top: 2px; }
 
 /* 列表 */
 .list { padding: 12px 16px; }
@@ -330,8 +330,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .s-slot { font-size: 12px; color: var(--c-text-3); }
 .tag-area { display: flex; gap: 6px; }
 .type-tag { font-size: 10px; padding: 3px 8px; border-radius: var(--r-pill); font-weight: 600; }
-.type-tag.normal { background: #E6FAF5; color: #2DD4BF; }
-.type-tag.expert { background: #E6FAF5; color: #F57C00; }
+.type-tag.normal { background: #ECFDF5; color: #10B981; }
+.type-tag.expert { background: #ECFDF5; color: #F57C00; }
 .type-tag.special { background: #F3E5F5; color: #7B1FA2; }
 .status-tag { font-size: 10px; padding: 3px 8px; border-radius: var(--r-pill); background: #E9F7EF; color: #388E3C; font-weight: 600; }
 .status-tag.off { background: #FFEBEE; color: #C62828; }
@@ -362,10 +362,10 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .picker-item { flex: 1; height: 42px; line-height: 42px; background: var(--c-bg); border-radius: var(--r-md); padding: 0 14px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: var(--c-text); }
 .form-textarea { width: 100%; min-height: 80px; background: var(--c-bg); border-radius: var(--r-md); padding: 12px; font-size: 14px; box-sizing: border-box; color: var(--c-text); margin-bottom: 14px; }
 .num-control { display: flex; align-items: center; gap: 16px; }
-.num-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--c-bg); border-radius: 10px; font-size: 20px; color: #7FDBFF; }
+.num-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--c-bg); border-radius: 10px; font-size: 20px; color: #34D399; }
 .num-val { font-size: 18px; font-weight: 700; color: var(--c-text); min-width: 30px; text-align: center; }
 .modal-btns { display: flex; gap: 12px; margin-top: 6px; }
 .btn { flex: 1; height: 44px; line-height: 44px; text-align: center; border-radius: var(--r-pill); font-size: 15px; border: none; }
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
-.btn.confirm { background: #2DD4BF; color: #fff; }
+.btn.confirm { background: #10B981; color: #fff; }
 </style>

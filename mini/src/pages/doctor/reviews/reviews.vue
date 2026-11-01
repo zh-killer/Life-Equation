@@ -40,7 +40,7 @@ function formatTime(t) {
     <!-- 头部 -->
     <view class="nav-bar">
       <view class="nav-back" @click="uni.navigateBack()">
-        <UiIcon name="back" :size="44" color="#2DD4BF" />
+        <UiIcon name="back" :size="44" color="#10B981" />
       </view>
       <text class="nav-title">患者评价</text>
       <view style="width: 36px" />
@@ -131,16 +131,16 @@ function formatTime(t) {
 .r-user { display: flex; align-items: center; gap: 8px; }
 .r-avatar {
   width: 32px; height: 32px; border-radius: 50%;
-  background: #E6FAF5; display: flex; align-items: center; justify-content: center;
+  background: #ECFDF5; display: flex; align-items: center; justify-content: center;
 }
-.r-avatar text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
+.r-avatar text { font-size: 13px; color: #10B981; font-weight: 600; }
 .r-name { font-size: 14px; color: var(--c-text); font-weight: 500; }
 .r-stars { display: flex; gap: 2px; }
 .r-star { font-size: 15px; }
 .r-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
 .r-tag {
-  padding: 2px 10px; border-radius: 10px; background: #E6FAF5;
-  font-size: 11px; color: #2DD4BF;
+  padding: 2px 10px; border-radius: 10px; background: #ECFDF5;
+  font-size: 11px; color: #10B981;
 }
 .r-content { font-size: 14px; color: #8E8E93; line-height: 1.5; display: block; }
 .r-time { font-size: 11px; color: #C7C7CC; margin-top: 6px; display: block; }

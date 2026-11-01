@@ -12,7 +12,7 @@ const typeOptions = ['基本信息', '既往病史', '体检报告', '处方记�
 const typeMap = { BASIC_INFO: '基本信息', MEDICAL_HISTORY: '既往病史', CHECKUP: '体检报告', PRESCRIPTION: '处方记录', OTHER: '其他' }
 const typeValueMap = ['BASIC_INFO', 'MEDICAL_HISTORY', 'CHECKUP', 'PRESCRIPTION', 'OTHER']
 const typeIconMap = { BASIC_INFO: 'user', MEDICAL_HISTORY: 'clipboard', CHECKUP: 'activity', PRESCRIPTION: 'pill', OTHER: 'file' }
-const typeColorMap = { BASIC_INFO: '#2DD4BF', MEDICAL_HISTORY: '#FF9500', CHECKUP: '#34C759', PRESCRIPTION: '#7FDBFF', OTHER: '#C7C7CC' }
+const typeColorMap = { BASIC_INFO: '#2563EB', MEDICAL_HISTORY: '#FF9500', CHECKUP: '#34C759', PRESCRIPTION: '#60A5FA', OTHER: '#C7C7CC' }
 
 const form = ref({
   recordType: 3,
@@ -194,10 +194,10 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
         <view class="vis-toggle">
           <view class="vis-left">
-            <UiIcon name="eye" :size="60" color="#2DD4BF" />
+            <UiIcon name="eye" :size="60" color="#2563EB" />
             <text class="vis-label">允许医生查看</text>
           </view>
-          <switch :checked="form.visibleToDoctor" @change="e => form.visibleToDoctor = e.detail.value" color="#2DD4BF" />
+          <switch :checked="form.visibleToDoctor" @change="e => form.visibleToDoctor = e.detail.value" color="#2563EB" />
         </view>
 
         <view class="modal-btns">
@@ -213,7 +213,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 20px; }
+.gradient-header { background: #2563EB; padding-bottom: 20px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back, .nav-add { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
@@ -247,7 +247,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .empty-icon-box { width: 80px; height: 80px; background: #fff; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: none; }
 .empty-title { font-size: 16px; font-weight: 600; color: var(--c-text); display: block; }
 .empty-desc { font-size: 13px; color: var(--c-text-3); display: block; margin-top: 4px; }
-.empty-btn { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 24px auto 0; width: 160px; height: 42px; background: #2DD4BF; color: #fff; border: none; border-radius: var(--r-pill); font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
+.empty-btn { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 24px auto 0; width: 160px; height: 42px; background: #2563EB; color: #fff; border: none; border-radius: var(--r-pill); font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
 
 /* 弹窗 */
 .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: flex-end; }
@@ -268,5 +268,5 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .modal-btns { display: flex; gap: 12px; }
 .btn { flex: 1; height: 44px; line-height: 44px; text-align: center; border-radius: var(--r-pill); font-size: 15px; border: none; }
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
-.btn.confirm { background: #2DD4BF; color: #fff; }
+.btn.confirm { background: #2563EB; color: #fff; }
 </style>

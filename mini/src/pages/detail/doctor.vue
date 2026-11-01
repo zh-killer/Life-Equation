@@ -192,7 +192,7 @@ function askPay(apptId, amount) {
     content: `请支付挂号费 ¥${amount}，支付后等待医生确认。`,
     confirmText: '立即支付',
     cancelText: '稍后支付',
-    confirmColor: '#2DD4BF',
+    confirmColor: '#2563EB',
     success: async (r) => {
       if (!r.confirm) return
       try {
@@ -398,7 +398,7 @@ function askPay(apptId, amount) {
 
 /* 头部 */
 .hero {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 32px 20px 28px;
   display: flex; flex-direction: column; align-items: center;
 }
@@ -442,7 +442,7 @@ function askPay(apptId, amount) {
   display: flex; gap: 12px;
   background: #FFF8E1; border-radius: 14px; padding: 16px;
 }
-.specialty-icon { width: 36px; height: 36px; border-radius: 10px; background: #E6FAF5; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.specialty-icon { width: 36px; height: 36px; border-radius: 10px; background: #EFF4FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .specialty-text { font-size: 14px; color: #8E8E93; line-height: 1.7; flex: 1; }
 
 .content-card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: none; }
@@ -452,7 +452,7 @@ function askPay(apptId, amount) {
 .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 12px 16px; box-shadow: none; z-index: 50; }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; border: none; border-radius: 23px;
   font-size: 16px; font-weight: 600;
 }
@@ -495,7 +495,7 @@ function askPay(apptId, amount) {
   background: #F2F2F7; border-radius: 12px;
   border: 2px solid transparent;
 }
-.slot-item.active { border-color: #2DD4BF; background: #E6FAF5; }
+.slot-item.active { border-color: #2563EB; background: #EFF4FF; }
 .slot-name { font-size: 14px; font-weight: 600; color: #1C1C1E; }
 .slot-remain { font-size: 11px; color: #34C759; margin-top: 2px; }
 .no-slot-hint {
@@ -516,10 +516,10 @@ function askPay(apptId, amount) {
 .review-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 8px; border: 1px solid #F2F2F7; }
 .review-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .review-user { display: flex; align-items: center; gap: 8px; }
-.review-avatar { width: 28px; height: 28px; border-radius: 50%; background: #E6FAF5; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #2DD4BF; font-weight: 600; }
+.review-avatar { width: 28px; height: 28px; border-radius: 50%; background: #EFF4FF; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #2563EB; font-weight: 600; }
 .review-name { font-size: 13px; color: #8E8E93; }
 .review-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-.review-tag { font-size: 11px; color: #2DD4BF; background: #E6FAF5; padding: 2px 8px; border-radius: 6px; }
+.review-tag { font-size: 11px; color: #2563EB; background: #EFF4FF; padding: 2px 8px; border-radius: 6px; }
 .review-content { font-size: 14px; color: #1C1C1E; line-height: 1.6; display: block; }
 .review-date { font-size: 11px; color: #C7C7CC; margin-top: 8px; display: block; }
 </style>

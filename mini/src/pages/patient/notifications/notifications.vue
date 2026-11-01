@@ -29,11 +29,11 @@ const unreadCount = computed(() => {
 
 // 图标与颜色映射
 const typeConfig = {
-  appointment_confirmed: { icon: 'calendar', color: '#2DD4BF', bg: '#E6FAF5', label: '预约确认' },
+  appointment_confirmed: { icon: 'calendar', color: '#2563EB', bg: '#EFF4FF', label: '预约确认' },
   appointment_unpaid: { icon: 'calendar', color: '#FF3B30', bg: '#FFF1F0', label: '待支付' },
   appointment_reminder: { icon: 'clock', color: '#FF9500', bg: '#FFF4E5', label: '预约提醒' },
   consult_replied: { icon: 'message', color: '#34C759', bg: '#E9F7EF', label: '咨询回复' },
-  system: { icon: 'shield', color: '#7FDBFF', bg: '#E6FAF5', label: '系统通知' },
+  system: { icon: 'shield', color: '#60A5FA', bg: '#EFF4FF', label: '系统通知' },
 }
 
 onMounted(async () => {
@@ -135,7 +135,7 @@ function formatTime(t) {
     <view class="header">
       <view class="nav-bar">
         <view class="nav-back" @click="uni.navigateBack()">
-          <UiIcon name="back" :size="44" color="#2DD4BF" />
+          <UiIcon name="back" :size="44" color="#2563EB" />
         </view>
         <text class="nav-title">消息中心</text>
         <view class="nav-action" v-if="unreadCount" @click="markAllRead">
@@ -215,7 +215,7 @@ function formatTime(t) {
 .nav-back { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: var(--c-text); }
 .nav-action { padding: 4px 10px; }
-.nav-action text { font-size: 13px; color: #7FDBFF; }
+.nav-action text { font-size: 13px; color: #60A5FA; }
 
 .tabs { display: flex; padding: 0 16px 0; }
 .tab {
@@ -253,13 +253,13 @@ function formatTime(t) {
   margin-bottom: 8px; box-shadow: none;
   position: relative;
 }
-.noti-item.unread { background: #F8FAFF; border-left: 3px solid #7FDBFF; }
+.noti-item.unread { background: #F8FAFF; border-left: 3px solid #60A5FA; }
 .noti-left { position: relative; flex-shrink: 0; }
 .noti-icon { width: 42px; height: 42px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
 .unread-dot { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; border-radius: 50%; background: #FF3B30; border: 2px solid #fff; }
 .noti-body { flex: 1; min-width: 0; }
 .noti-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-.noti-label { font-size: 11px; color: #7FDBFF; font-weight: 600; background: var(--c-primary-bg); padding: 2px 8px; border-radius: 8px; }
+.noti-label { font-size: 11px; color: #60A5FA; font-weight: 600; background: var(--c-primary-bg); padding: 2px 8px; border-radius: 8px; }
 .noti-time { font-size: 11px; color: #C7C7CC; }
 .noti-title { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; margin-bottom: 3px; }
 .noti-content { font-size: 12px; color: var(--c-text-3); display: block; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

@@ -33,14 +33,14 @@ defineProps({
 }
 .avatar {
   width: 44px; height: 44px; border-radius: 50%;
-  background: #2DD4BF; color: #fff;
+  background: #2563EB; color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 700; flex-shrink: 0;
 }
 .body { flex: 1; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
 .name { font-size: 15px; font-weight: 700; color: #1C1C1E; }
-.title { font-size: 11px; color: #7FDBFF; background: #E6FAF5; padding: 1px 6px; border-radius: 4px; }
+.title { font-size: 11px; color: #60A5FA; background: #EFF4FF; padding: 1px 6px; border-radius: 4px; }
 .dept { font-size: 12px; color: #8E8E93; display: block; }
 .spec { font-size: 11px; color: #C7C7CC; display: block; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 180px; }
 .right { text-align: center; flex-shrink: 0; }

@@ -86,7 +86,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
 .ph { color: #C7C7CC; }
 .search-btn {
   height: 30px; padding: 0 14px;
-  background: #2DD4BF; border-radius: 15px;
+  background: #2563EB; border-radius: 15px;
   display: flex; align-items: center; justify-content: center;
 }
 .search-btn text { color: #fff; font-size: 13px; }
@@ -98,7 +98,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
   background: #fff; border: 1px solid #F2F2F7;
 }
 .chip text { font-size: 13px; color: #8E8E93; }
-.chip.active { background: #2DD4BF; border-color: #2DD4BF; }
+.chip.active { background: #2563EB; border-color: #2563EB; }
 .chip.active text { color: #fff; }
 .chip.clear text { color: #FF3B30; }
 
@@ -111,7 +111,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
 }
 .card-icon-wrap {
   width: 40px; height: 40px; border-radius: 12px;
-  background: #E6FAF5;
+  background: #EFF4FF;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 10px;
 }

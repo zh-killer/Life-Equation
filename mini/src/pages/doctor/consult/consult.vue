@@ -90,11 +90,11 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view class="tab-bar" :style="{ paddingTop: statusBarHeight + 10 + 'px' }">
       <view class="nav-bar">
         <view class="nav-back" @click="uni.navigateBack()">
-          <UiIcon name="back" :size="44" color="#2DD4BF" />
+          <UiIcon name="back" :size="44" color="#10B981" />
         </view>
         <text class="nav-title">咨询管理</text>
         <view class="nav-refresh" @click="fetchData">
-          <UiIcon name="refresh" :size="40" color="#2DD4BF" />
+          <UiIcon name="refresh" :size="40" color="#10B981" />
         </view>
       </view>
       <view class="tabs">
@@ -239,8 +239,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .nav-title { font-size: 17px; font-weight: 700; color: var(--c-text); }
 .tabs { display: flex; padding: 0 16px; }
 .tab-item { flex: 1; text-align: center; padding: 14px 0; font-size: 14px; color: var(--c-text-3); position: relative; }
-.tab-item.active { color: #2DD4BF; font-weight: 700; }
-.tab-indicator { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: #2DD4BF; border-radius: 2px; }
+.tab-item.active { color: #10B981; font-weight: 700; }
+.tab-indicator { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: #10B981; border-radius: 2px; }
 
 /* 列表 */
 .list { padding: 12px 16px; }
@@ -261,7 +261,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .consult-card { padding: 16px; }
 .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .user-block { display: flex; align-items: center; gap: 8px; }
-.avatar { width: 36px; height: 36px; border-radius: 50%; background: #7FDBFF; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+.avatar { width: 36px; height: 36px; border-radius: 50%; background: #34D399; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
 .c-user { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; }
 .c-time-row { display: flex; align-items: center; gap: 3px; }
 .c-time { font-size: 11px; color: var(--c-text-3); }
@@ -284,7 +284,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .card-actions { display: flex; gap: 10px; padding-top: 10px; border-top: 1px solid #f5f5f5; }
 .action-btn { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; font-size: 13px; color: var(--c-text-2); padding: 8px 0; border-radius: var(--r-md); background: var(--c-bg); }
 .action-btn text { font-size: 13px; }
-.action-btn.primary { background: #2DD4BF; color: #fff; font-weight: 600; }
+.action-btn.primary { background: #10B981; color: #fff; font-weight: 600; }
 .action-btn.primary text { color: #fff; }
 
 /* 弹窗 */
@@ -302,14 +302,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .modal-btns { display: flex; gap: 12px; margin-top: 14px; }
 .btn { flex: 1; height: 44px; line-height: 44px; text-align: center; border-radius: var(--r-pill); font-size: 15px; border: none; }
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
-.btn.confirm { background: #2DD4BF; color: #fff; }
+.btn.confirm { background: #10B981; color: #fff; }
 .btn.confirm[disabled] { opacity: 0.6; }
 
 .loading-text, .empty-text { text-align: center; color: var(--c-text-3); padding: 24px; font-size: 13px; }
 .records-list { max-height: 60vh; }
 .record-item { background: var(--c-bg); border-radius: var(--r-md); padding: 12px; margin-bottom: 10px; }
 .rec-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.rec-type { font-size: 11px; padding: 3px 8px; border-radius: var(--r-pill); background: #E6FAF5; color: #7FDBFF; font-weight: 600; }
+.rec-type { font-size: 11px; padding: 3px 8px; border-radius: var(--r-pill); background: #ECFDF5; color: #34D399; font-weight: 600; }
 .rec-date { font-size: 11px; color: var(--c-text-3); }
 .rec-title { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; }
 .rec-content { font-size: 13px; color: var(--c-text-2); line-height: 1.6; display: block; margin-top: 6px; }

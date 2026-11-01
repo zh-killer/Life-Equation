@@ -79,7 +79,7 @@ function callPhone() {
     <!-- 信息卡片 -->
     <view class="info-card">
       <view class="info-row">
-        <view class="info-icon-wrap"><ui-icon name="pin" :size="60" color="#7FDBFF" /></view>
+        <view class="info-icon-wrap"><ui-icon name="pin" :size="60" color="#60A5FA" /></view>
         <text class="info-text">{{ pharmacy.address }}</text>
       </view>
       <view class="info-row" v-if="pharmacy.phone" @click="callPhone">
@@ -110,7 +110,7 @@ function callPhone() {
           :markers="[{ id: 1, latitude: Number(pharmacy.latitude), longitude: Number(pharmacy.longitude), title: pharmacy.name, width: 28, height: 28 }]"
           :scale="16" />
         <view class="map-tip">
-          <ui-icon name="location" :size="54" color="#7FDBFF" />
+          <ui-icon name="location" :size="54" color="#60A5FA" />
           <text>点击地图可导航至此</text>
         </view>
       </view>
@@ -124,7 +124,7 @@ function callPhone() {
     <!-- 底部操作 -->
     <view class="bottom-bar">
       <view class="btn-outline" @click="callPhone">
-        <ui-icon name="phone" :size="64" color="#2DD4BF" />
+        <ui-icon name="phone" :size="64" color="#2563EB" />
         <text>拨打电话</text>
       </view>
       <view class="btn-go" @click="openLocation">
@@ -140,7 +140,7 @@ function callPhone() {
 
 /* 头部 */
 .hero {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 24px 20px;
   position: relative;
 }
@@ -171,7 +171,7 @@ function callPhone() {
 .info-row:last-child { border-bottom: none; }
 .info-icon-wrap { width: 28px; height: 28px; border-radius: 8px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .info-text { font-size: 14px; color: #8E8E93; flex: 1; }
-.info-text.link { color: #7FDBFF; }
+.info-text.link { color: #60A5FA; }
 
 /* Section */
 .section { padding: 20px 16px 0; }
@@ -183,11 +183,11 @@ function callPhone() {
 .map-box { border-radius: 14px; overflow: hidden; background: #fff; box-shadow: none; }
 .map { width: 100%; height: 200px; }
 .map-tip { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 10px; }
-.map-tip text { font-size: 13px; color: #7FDBFF; }
+.map-tip text { font-size: 13px; color: #60A5FA; }
 .addr-card { background: #fff; border-radius: 14px; padding: 28px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .addr-text { font-size: 14px; color: #8E8E93; text-align: center; line-height: 1.6; }
-.addr-btn { background: #E6FAF5; padding: 8px 20px; border-radius: 20px; }
-.addr-btn text { font-size: 14px; color: #7FDBFF; font-weight: 600; }
+.addr-btn { background: #EFF4FF; padding: 8px 20px; border-radius: 20px; }
+.addr-btn text { font-size: 14px; color: #60A5FA; font-weight: 600; }
 
 /* 底部操作 */
 .bottom-bar {
@@ -199,14 +199,14 @@ function callPhone() {
 }
 .btn-outline {
   flex: 1; height: 46px;
-  background: #fff; border: 1px solid #2DD4BF;
+  background: #fff; border: 1px solid #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.btn-outline text { font-size: 14px; color: #2DD4BF; font-weight: 600; }
+.btn-outline text { font-size: 14px; color: #2563EB; font-weight: 600; }
 .btn-go {
   flex: 1; height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }

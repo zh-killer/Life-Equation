@@ -149,7 +149,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             <text>{{ c.createTime?.substring(0, 10) }}</text>
           </view>
           <view class="meta-item" v-if="c.doctorName">
-            <UiIcon name="user" :size="13" color="#7FDBFF" />
+            <UiIcon name="user" :size="13" color="#60A5FA" />
             <text class="doctor-name">{{ c.doctorName }}</text>
           </view>
         </view>
@@ -193,8 +193,8 @@ n    <!-- 悬浮提问按钮 -->
 
         <text class="field-label">是否公开</text>
         <radio-group @change="e => askForm.isPublic = Number(e.detail.value)" class="radio-group">
-          <label class="radio-item"><radio value="1" :checked="askForm.isPublic === 1" color="#2DD4BF" />公开</label>
-          <label class="radio-item"><radio value="0" :checked="askForm.isPublic === 0" color="#2DD4BF" />私密</label>
+          <label class="radio-item"><radio value="1" :checked="askForm.isPublic === 1" color="#2563EB" />公开</label>
+          <label class="radio-item"><radio value="0" :checked="askForm.isPublic === 0" color="#2563EB" />私密</label>
         </radio-group>
 
         <view class="modal-btns">
@@ -210,7 +210,7 @@ n    <!-- 悬浮提问按钮 -->
 .page { background: var(--c-bg); min-height: 100vh; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 24px; }
+.gradient-header { background: #2563EB; padding-bottom: 24px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-ask { display: flex; align-items: center; justify-content: center; padding: 5px 14px; background: rgba(255,255,255,0.2); border-radius: 16px; }
@@ -224,14 +224,14 @@ n    <!-- 悬浮提问按钮 -->
 /* Tab */
 .tabs { display: flex; background: #fff; padding: 0 16px; }
 .tab { flex: 1; text-align: center; padding: 14px 0; font-size: 15px; color: var(--c-text-3); position: relative; }
-.tab.active { color: #2DD4BF; font-weight: 700; }
-.tab-indicator { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 32px; height: 3px; background: #2DD4BF; border-radius: 2px; }
+.tab.active { color: #2563EB; font-weight: 700; }
+.tab-indicator { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 32px; height: 3px; background: #2563EB; border-radius: 2px; }
 
 /* 搜索 */
 .search-bar { display: flex; gap: 8px; padding: 12px 16px; background: #fff; align-items: center; }
 .search-icon-box { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--c-bg); border-radius: 8px; }
 .search-input { flex: 1; height: 36px; background: var(--c-bg); border-radius: 18px; padding: 0 14px; font-size: 13px; color: var(--c-text); }
-.search-btn { height: 36px; line-height: 36px; padding: 0 18px; background: #2DD4BF; color: #fff; border-radius: 18px; font-size: 13px; border: none; }
+.search-btn { height: 36px; line-height: 36px; padding: 0 18px; background: #2563EB; color: #fff; border-radius: 18px; font-size: 13px; border: none; }
 
 /* 列表 */
 .list { padding: 12px 16px; }
@@ -247,7 +247,7 @@ n    <!-- 悬浮提问按钮 -->
 .q-card { padding: 16px; }
 .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .user-info { display: flex; align-items: center; gap: 8px; }
-.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2DD4BF; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
 .c-user { font-size: 13px; color: var(--c-text-2); }
 .status-badge { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: var(--r-pill); }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; }
@@ -256,7 +256,7 @@ n    <!-- 悬浮提问按钮 -->
 .card-foot { display: flex; justify-content: space-between; margin-top: 12px; align-items: center; }
 .meta-item { display: flex; align-items: center; gap: 4px; }
 .meta-item text { font-size: 11px; color: var(--c-text-3); }
-.doctor-name { color: #7FDBFF !important; }
+.doctor-name { color: #60A5FA !important; }
 
 /* 空状态 */
 .empty-state { text-align: center; padding: 60px 40px; }
@@ -279,15 +279,15 @@ n    <!-- 悬浮提问按钮 -->
 .modal-btns { display: flex; gap: 12px; margin-top: 8px; }
 .btn { flex: 1; height: 44px; line-height: 44px; text-align: center; border-radius: var(--r-pill); font-size: 15px; border: none; }
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
-.btn.confirm { background: #2DD4BF; color: #fff; }
+.btn.confirm { background: #2563EB; color: #fff; }
 
 /* 悬浮提问按钮 */
 .fab-ask {
   position: fixed; bottom: 32px; right: 20px;
   display: flex; align-items: center; gap: 6px;
-  background: #2DD4BF; padding: 12px 20px;
+  background: #2563EB; padding: 12px 20px;
   border-radius: 28px; z-index: 99;
-  box-shadow: 0 4px 16px rgba(45,212,191,0.35);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.35);
 }
 .fab-icon { font-size: 18px; }
 .fab-text { font-size: 15px; font-weight: 700; color: #fff; }

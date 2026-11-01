@@ -34,7 +34,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
     <!-- 筛选 -->
     <view class="filters">
       <view class="filter-chip" :class="{ active: h24 }" @click="h24=!h24;search()">
-        <ui-icon name="clock" :size="54" :color="h24 ? '#fff' : '#2DD4BF'" />
+        <ui-icon name="clock" :size="54" :color="h24 ? '#fff' : '#2563EB'" />
         <text :style="{ color: h24 ? '#fff' : '#8E8E93' }">24小时</text>
       </view>
       <view v-if="keyword||h24" class="filter-clear" @click="clearAll">
@@ -55,7 +55,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
         <view v-for="p in list" :key="p.id" class="card" @click="goDetail(p.id)">
           <view class="card-top">
             <view class="card-icon-wrap">
-              <ui-icon name="store" :size="40" color="#2DD4BF" />
+              <ui-icon name="store" :size="40" color="#2563EB" />
             </view>
             <view class="card-info">
               <view class="name-row">
@@ -98,7 +98,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
 .ph { color: #C7C7CC; }
 .search-btn {
   height: 30px; padding: 0 14px;
-  background: #2DD4BF; border-radius: 15px;
+  background: #2563EB; border-radius: 15px;
   display: flex; align-items: center; justify-content: center;
 }
 .search-btn text { color: #fff; font-size: 13px; }
@@ -110,7 +110,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
   border-radius: 16px; padding: 6px 12px;
 }
 .filter-chip text { font-size: 13px; color: #8E8E93; }
-.filter-chip.active { background: #2DD4BF; border-color: #2DD4BF; }
+.filter-chip.active { background: #2563EB; border-color: #2563EB; }
 .filter-clear text { font-size: 13px; color: #FF3B30; }
 
 .list { display: flex; flex-direction: column; gap: 10px; }
@@ -129,7 +129,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
 .name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
 .card-name { font-size: 15px; font-weight: 700; color: #1C1C1E; }
 .badge { padding: 1px 6px; border-radius: 4px; }
-.badge.h24 { background: #2DD4BF; }
+.badge.h24 { background: #2563EB; }
 .badge.h24 text { font-size: 10px; color: #fff; font-weight: 800; }
 .card-addr { font-size: 13px; color: #8E8E93; display: block; }
 .card-meta-row { display: flex; gap: 12px; margin-top: 6px; }

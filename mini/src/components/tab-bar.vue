@@ -10,7 +10,7 @@
       <ui-icon
         :name="tab.icon"
         :size="44"
-        :color="current === tab.key ? '#2DD4BF' : '#C7C7CC'"
+        :color="current === tab.key ? '#2563EB' : '#C7C7CC'"
       />
       <view v-if="current === tab.key" class="tab-dot" />
       <text class="tab-label" :class="{ active: current === tab.key }">{{ tab.label }}</text>
@@ -62,7 +62,7 @@ function switchTab(tab) {
   bottom: -2px;
   width: 4px; height: 4px;
   border-radius: 50%;
-  background: #2DD4BF;
+  background: #2563EB;
 }
 .tab-label {
   font-size: 10px;
@@ -70,7 +70,7 @@ function switchTab(tab) {
   font-weight: 400;
 }
 .tab-label.active {
-  color: #2DD4BF;
+  color: #2563EB;
   font-weight: 500;
 }
 </style>

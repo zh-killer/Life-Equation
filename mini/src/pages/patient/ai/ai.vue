@@ -57,7 +57,7 @@ function riskColor(level) {
 }
 function riskBg(level) {
   if (level === 'HIGH') return '#FFEBEA'
-  if (level === 'MEDIUM') return '#E6FAF5'
+  if (level === 'MEDIUM') return '#EFF4FF'
   return '#E8F5E9'
 }
 function riskText(level) {
@@ -96,9 +96,9 @@ function riskText(level) {
       <!-- 历史记录 -->
       <view class="history-section">
         <view class="history-toggle" @click="loadHistory">
-          <ui-icon name="clock" :size="60" color="#7FDBFF" />
+          <ui-icon name="clock" :size="60" color="#60A5FA" />
           <text>{{ showHistory ? '收起历史记录' : '查看历史记录' }}</text>
-          <ui-icon name="chevronRight" :size="54" :color="showHistory ? '#7FDBFF' : '#C7C7CC'" />
+          <ui-icon name="chevronRight" :size="54" :color="showHistory ? '#60A5FA' : '#C7C7CC'" />
         </view>
         <view v-if="showHistory" class="history-list">
           <view v-for="h in history" :key="h.id" class="history-item" @click="result = h; showHistory = false">
@@ -137,7 +137,7 @@ function riskText(level) {
       <view class="result-body">
         <view class="rb-card">
           <view class="rb-header">
-            <view class="rb-icon" style="background: #E6FAF5"><ui-icon name="brain" :size="60" color="#2DD4BF" /></view>
+            <view class="rb-icon" style="background: #EFF4FF"><ui-icon name="brain" :size="60" color="#2563EB" /></view>
             <text class="rb-label">AI 分析</text>
           </view>
           <text class="rb-text">{{ result.aiAnalysis }}</text>
@@ -161,7 +161,7 @@ function riskText(level) {
       <!-- 操作按钮 -->
       <view class="result-actions">
         <view class="btn-outline" @click="reset">
-          <ui-icon name="refresh" :size="64" color="#2DD4BF" />
+          <ui-icon name="refresh" :size="64" color="#2563EB" />
           <text>重新咨询</text>
         </view>
         <view class="btn-go" @click="goAppoint">
@@ -178,7 +178,7 @@ function riskText(level) {
 
 /* 头部 */
 .hero {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 32px 20px;
   display: flex; flex-direction: column; align-items: center;
 }
@@ -205,7 +205,7 @@ function riskText(level) {
 .char-count { font-size: 12px; color: #C7C7CC; }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; border: none; border-radius: 23px;
   font-size: 16px; font-weight: 600;
 }
@@ -216,7 +216,7 @@ function riskText(level) {
   display: flex; align-items: center; justify-content: center; gap: 6px;
   padding: 12px;
 }
-.history-toggle text { font-size: 14px; color: #7FDBFF; }
+.history-toggle text { font-size: 14px; color: #60A5FA; }
 .history-list { display: flex; flex-direction: column; gap: 8px; }
 .history-item {
   display: flex; align-items: center; gap: 8px;
@@ -226,8 +226,8 @@ function riskText(level) {
 .hi-main { flex: 1; min-width: 0; }
 .hi-symptoms { font-size: 13px; color: #1C1C1E; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
 .hi-meta { display: flex; gap: 8px; margin-top: 4px; align-items: center; }
-.hi-dept { background: #E6FAF5; padding: 2px 8px; border-radius: 4px; }
-.hi-dept text { font-size: 11px; color: #7FDBFF; }
+.hi-dept { background: #EFF4FF; padding: 2px 8px; border-radius: 4px; }
+.hi-dept text { font-size: 11px; color: #60A5FA; }
 .hi-time { font-size: 11px; color: #C7C7CC; }
 .hi-del { padding: 4px; }
 
@@ -256,14 +256,14 @@ function riskText(level) {
 .result-actions { display: flex; gap: 12px; padding: 0 16px 20px; }
 .btn-outline {
   flex: 1; height: 46px;
-  background: #fff; border: 1px solid #2DD4BF;
+  background: #fff; border: 1px solid #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.btn-outline text { font-size: 14px; color: #2DD4BF; font-weight: 600; }
+.btn-outline text { font-size: 14px; color: #2563EB; font-weight: 600; }
 .btn-go {
   flex: 1; height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }

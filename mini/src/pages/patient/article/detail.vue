@@ -63,7 +63,7 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
     <!-- 底部操作 -->
     <view class="bottom-bar">
       <view class="btn-outline" @click="uni.navigateBack()">
-        <ui-icon name="chevronLeft" :size="64" color="#2DD4BF" />
+        <ui-icon name="chevronLeft" :size="64" color="#2563EB" />
         <text>返回</text>
       </view>
       <view class="btn-go" @click="goConsult">
@@ -81,8 +81,8 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
 .header { background: #fff; padding: 20px 16px; }
 .title { font-size: 20px; font-weight: 800; color: #1C1C1E; line-height: 1.5; display: block; }
 .meta { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
-.meta-cat { background: #E6FAF5; padding: 2px 8px; border-radius: 4px; }
-.meta-cat text { font-size: 11px; color: #7FDBFF; }
+.meta-cat { background: #EFF4FF; padding: 2px 8px; border-radius: 4px; }
+.meta-cat text { font-size: 11px; color: #60A5FA; }
 .meta-item { display: flex; align-items: center; gap: 3px; }
 .meta-item text { font-size: 11px; color: #C7C7CC; }
 .fav-btn-inline { display: flex; align-items: center; gap: 2px; margin-left: auto; }
@@ -104,14 +104,14 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
 }
 .btn-outline {
   flex: 1; height: 46px;
-  background: #fff; border: 1px solid #2DD4BF;
+  background: #fff; border: 1px solid #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.btn-outline text { font-size: 14px; color: #2DD4BF; font-weight: 600; }
+.btn-outline text { font-size: 14px; color: #2563EB; font-weight: 600; }
 .btn-go {
   flex: 1; height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }

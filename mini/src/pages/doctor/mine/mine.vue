@@ -134,8 +134,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view class="section">
       <text class="section-title">工作管理</text>
       <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/patients/patients' })">
-        <view class="mi-icon-box" style="background: #E6FAF5">
-          <UiIcon name="user" :size="64" color="#7FDBFF" />
+        <view class="mi-icon-box" style="background: #ECFDF5">
+          <UiIcon name="user" :size="64" color="#34D399" />
         </view>
         <text class="mi-label">我的患者</text>
         <view class="mi-arrow">
@@ -143,8 +143,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         </view>
       </view>
       <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/schedule/schedule' })">
-        <view class="mi-icon-box" style="background: #E6FAF5">
-          <UiIcon name="calendar" :size="64" color="#2DD4BF" />
+        <view class="mi-icon-box" style="background: #ECFDF5">
+          <UiIcon name="calendar" :size="64" color="#10B981" />
         </view>
         <text class="mi-label">排班管理</text>
         <view class="mi-arrow">
@@ -207,8 +207,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
       <view class="info-item">
         <view class="ii-label-row">
-          <view class="ii-icon-box" style="background: #E6FAF5">
-            <UiIcon name="message" :size="54" color="#7FDBFF" />
+          <view class="ii-icon-box" style="background: #ECFDF5">
+            <UiIcon name="message" :size="54" color="#34D399" />
           </view>
           <text class="ii-label">绑定邮箱</text>
         </view>
@@ -297,7 +297,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; padding-bottom: 24px; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 28px; }
+.gradient-header { background: #10B981; padding-bottom: 28px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
@@ -340,8 +340,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
 .avatar-edit { display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; }
 .avatar-preview { width: 64px; height: 64px; border-radius: 50%; }
-.avatar-placeholder { width: 64px; height: 64px; border-radius: 50%; background: var(--c-bg); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #7FDBFF; }
-.avatar-tip { font-size: 12px; color: #7FDBFF; margin-top: 6px; }
+.avatar-placeholder { width: 64px; height: 64px; border-radius: 50%; background: var(--c-bg); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #34D399; }
+.avatar-tip { font-size: 12px; color: #34D399; margin-top: 6px; }
 
 .input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .label { font-size: 14px; color: var(--c-text-2); width: 60px; flex-shrink: 0; }
@@ -349,6 +349,6 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .modal-btns { display: flex; gap: 12px; margin-top: 6px; }
 .btn { flex: 1; height: 44px; line-height: 44px; text-align: center; border-radius: var(--r-pill); font-size: 15px; border: none; }
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
-.btn.confirm { background: #2DD4BF; color: #fff; }
+.btn.confirm { background: #10B981; color: #fff; }
 .btn.confirm[disabled] { opacity: 0.6; }
 </style>

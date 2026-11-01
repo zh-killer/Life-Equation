@@ -93,7 +93,7 @@ async function handleRegister() {
     <!-- 头部 -->
     <view class="hero">
       <view class="hero-icon-wrap">
-        <ui-icon name="pulse" :size="64" color="#2DD4BF" />
+        <ui-icon name="pulse" :size="64" color="#2563EB" />
       </view>
       <text class="hero-title">湖南省三甲医院</text>
       <text class="hero-desc">医院患者服务平台</text>
@@ -211,7 +211,7 @@ async function handleRegister() {
 .deco-circle {
   position: absolute;
   border-radius: 50%;
-  background: rgba(45,212,191,0.06);
+  background: rgba(37,99,235,0.06);
 }
 .deco-1 { width: 240px; height: 240px; top: -80px; right: -60px; }
 .deco-2 { width: 180px; height: 180px; bottom: 100px; left: -80px; }
@@ -220,7 +220,7 @@ async function handleRegister() {
 .hero { text-align: center; margin: 40px 0 36px; position: relative; z-index: 1; }
 .hero-icon-wrap {
   width: 72px; height: 72px; border-radius: 20px;
-  background: #E6FAF5;
+  background: #EFF4FF;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 16px;
 }
@@ -281,14 +281,14 @@ async function handleRegister() {
   position: relative;
   transition: color 0.2s;
 }
-.tab-item.active { color: #2DD4BF; font-weight: 700; }
+.tab-item.active { color: #2563EB; font-weight: 700; }
 .tab-underline {
   position: absolute;
   bottom: 0; left: 50%;
   transform: translateX(-50%);
   width: 32px; height: 3px;
   border-radius: 2px;
-  background: #2DD4BF;
+  background: #2563EB;
 }
 
 /* 表单 */
@@ -302,13 +302,13 @@ async function handleRegister() {
   border: 1px solid #F2F2F7;
   transition: border-color 0.2s;
 }
-.input-group:focus-within { border-color: #7FDBFF; }
+.input-group:focus-within { border-color: #60A5FA; }
 .input { flex: 1; font-size: 15px; color: #1C1C1E; }
 .ph { color: #C7C7CC; }
 
 .btn-primary {
   width: 100%; height: 50px; line-height: 50px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; border: none; border-radius: 25px;
   font-size: 16px; font-weight: 700; letter-spacing: 4px;
   margin-top: 8px;

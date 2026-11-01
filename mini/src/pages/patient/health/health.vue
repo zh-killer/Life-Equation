@@ -71,7 +71,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
         </view>
         <view class="doctor-row" v-if="r.doctorName">
           <view class="doctor-badge">
-            <UiIcon name="user" :size="11" color="#7FDBFF" />
+            <UiIcon name="user" :size="11" color="#60A5FA" />
             <text>{{ r.doctorName }} 医生</text>
           </view>
         </view>
@@ -97,7 +97,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 20px; }
+.gradient-header { background: #2563EB; padding-bottom: 20px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back, .nav-ask { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
@@ -123,15 +123,15 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .question-row { display: flex; gap: 6px; align-items: flex-start; }
 .card-q { font-size: 13px; color: var(--c-text); line-height: 1.5; flex: 1; }
 .answer-row { display: flex; gap: 6px; align-items: flex-start; margin-top: 8px; }
-.card-a { font-size: 13px; color: #7FDBFF; line-height: 1.5; flex: 1; }
+.card-a { font-size: 13px; color: #60A5FA; line-height: 1.5; flex: 1; }
 .doctor-row { margin-top: 8px; }
-.doctor-badge { display: inline-flex; align-items: center; gap: 4px; background: #E6FAF5; padding: 3px 8px; border-radius: var(--r-pill); }
-.doctor-badge text { font-size: 11px; color: #7FDBFF; }
+.doctor-badge { display: inline-flex; align-items: center; gap: 4px; background: #EFF4FF; padding: 3px 8px; border-radius: var(--r-pill); }
+.doctor-badge text { font-size: 11px; color: #60A5FA; }
 
 /* 空状态 */
 .empty-state { text-align: center; padding: 60px 40px; }
 .empty-icon-box { width: 80px; height: 80px; background: #fff; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: none; }
 .empty-title { font-size: 16px; font-weight: 600; color: var(--c-text); display: block; }
 .empty-desc { font-size: 13px; color: var(--c-text-3); display: block; margin-top: 4px; }
-.empty-btn { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 24px auto 0; width: 160px; height: 42px; background: #2DD4BF; color: #fff; border: none; border-radius: var(--r-pill); font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
+.empty-btn { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 24px auto 0; width: 160px; height: 42px; background: #2563EB; color: #fff; border: none; border-radius: var(--r-pill); font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
 </style>

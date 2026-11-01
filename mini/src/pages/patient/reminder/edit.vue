@@ -142,7 +142,7 @@ function handleSave() {
 
 .btn-save {
   width: 100%; height: 48px; line-height: 48px;
-  background: #2DD4BF; color: #fff; border: none;
+  background: #2563EB; color: #fff; border: none;
   border-radius: 12px; font-size: 16px; font-weight: 600;
   margin-top: 24px;
 }

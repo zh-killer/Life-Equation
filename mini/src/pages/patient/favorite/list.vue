@@ -49,7 +49,7 @@ function goDetail(item) {
 }
 
 const iconMap = { doctor: 'stethoscope', hospital: 'hospital', article: 'news', disease: 'virus', drug: 'pill' }
-const colorMap = { doctor: '#2DD4BF', hospital: '#7FDBFF', article: '#FF9500', disease: '#FF3B30', drug: '#AF52DE' }
+const colorMap = { doctor: '#2563EB', hospital: '#60A5FA', article: '#FF9500', disease: '#FF3B30', drug: '#AF52DE' }
 const labelMap = { doctor: '医生', hospital: '本院', article: '资讯', disease: '疾病', drug: '药品' }
 </script>
 
@@ -65,8 +65,8 @@ const labelMap = { doctor: '医生', hospital: '本院', article: '资讯', dise
     <view class="list">
       <view v-for="item in list" :key="item.id" class="card" @click="goDetail(item)">
         <view class="card-left">
-          <view class="icon-wrap" :style="{ background: (colorMap[item.targetType] || '#2DD4BF') + '15' }">
-            <ui-icon :name="iconMap[item.targetType] || 'star'" :size="54" :color="colorMap[item.targetType] || '#2DD4BF'" />
+          <view class="icon-wrap" :style="{ background: (colorMap[item.targetType] || '#2563EB') + '15' }">
+            <ui-icon :name="iconMap[item.targetType] || 'star'" :size="54" :color="colorMap[item.targetType] || '#2563EB'" />
           </view>
           <view class="info">
             <text class="type-label">{{ labelMap[item.targetType] || item.targetType }}</text>
@@ -91,7 +91,7 @@ const labelMap = { doctor: '医生', hospital: '本院', article: '资讯', dise
 .tabs { display: flex; padding: 12px 16px; white-space: nowrap; background: #fff; border-bottom: 1px solid #F2F2F7; }
 .tab-item { display: inline-flex; padding: 6px 16px; margin-right: 8px; border-radius: 18px; background: #F2F2F7; }
 .tab-item text { font-size: 13px; color: #8E8E93; }
-.tab-item.active { background: #2DD4BF; }
+.tab-item.active { background: #2563EB; }
 .tab-item.active text { color: #fff; font-weight: 600; }
 
 .list { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }

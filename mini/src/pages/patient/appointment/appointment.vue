@@ -18,7 +18,7 @@ const selectedMemberId = ref('')
 const timeSlots = ['上午', '下午', '晚上']
 const statusMap = { UNPAID: '待支付', PENDING: '待确认', CONFIRMED: '已确认', COMPLETED: '已完成', CANCELLED: '已取消' }
 const statusColor = { UNPAID: '#FF3B30', PENDING: '#FF9500', CONFIRMED: '#34C759', COMPLETED: '#C7C7CC', CANCELLED: '#C7C7CC' }
-const statusBg = { UNPAID: '#FFF1F0', PENDING: '#E6FAF5', CONFIRMED: '#E8F5E9', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }
+const statusBg = { UNPAID: '#FFF1F0', PENDING: '#EFF4FF', CONFIRMED: '#E8F5E9', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }
 
 const ID_CARD_REGEX = /^[1-9]\d{5}(18|19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]$/
 
@@ -101,7 +101,7 @@ function askPay(apptId, fee) {
     content: `请支付挂号费 ¥${fee}，支付后等待医生确认。`,
     confirmText: '立即支付',
     cancelText: '稍后支付',
-    confirmColor: '#2DD4BF',
+    confirmColor: '#2563EB',
     success: async (r) => {
       if (!r.confirm) return
       try {
@@ -119,7 +119,7 @@ async function payAppt(a) {
       title: '支付挂号费',
       content: `应付 ¥${a.amount}（${a.doctorName} · ${a.department}）`,
       confirmText: '模拟支付',
-      confirmColor: '#2DD4BF',
+      confirmColor: '#2563EB',
       success: r => resolve(r.confirm),
       fail: () => resolve(false),
     })
@@ -209,7 +209,7 @@ function goReview(a) {
         <text class="card-symptom" v-if="a.symptomDesc">{{ a.symptomDesc?.substring(0, 50) }}</text>
         <view class="card-actions" v-if="a.status !== 'CANCELLED'">
           <view v-if="a.status === 'UNPAID'" class="pay-action" @click="payAppt(a)">
-            <ui-icon name="checkCircle" :size="44" color="#2DD4BF" />
+            <ui-icon name="checkCircle" :size="44" color="#2563EB" />
             <text>支付挂号费 ¥{{ a.amount }}</text>
           </view>
           <view v-if="a.status === 'UNPAID' || a.status === 'PENDING' || a.status === 'CONFIRMED'" class="cancel-action" @click="cancelAppt(a)">
@@ -217,7 +217,7 @@ function goReview(a) {
             <text>取消预约</text>
           </view>
           <view v-if="a.status === 'COMPLETED'" class="review-action" @click="goReview(a)">
-            <ui-icon name="edit" :size="48" color="#2DD4BF" />
+            <ui-icon name="edit" :size="48" color="#2563EB" />
             <text>去评价</text>
           </view>
         </view>
@@ -320,7 +320,7 @@ function goReview(a) {
 .title { font-size: 18px; font-weight: 700; color: var(--c-text); }
 .add-btn {
   display: flex; align-items: center; gap: 4px;
-  background: #2DD4BF; padding: 6px 14px; border-radius: 16px;
+  background: #2563EB; padding: 6px 14px; border-radius: 16px;
 }
 .add-btn text { font-size: 13px; color: #fff; }
 
@@ -333,7 +333,7 @@ function goReview(a) {
 .doctor-info { display: flex; align-items: center; gap: 10px; }
 .doc-avatar {
   width: 40px; height: 40px; border-radius: 12px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; display: flex; align-items: center; justify-content: center;
   font-size: 16px; font-weight: 700;
 }
@@ -349,7 +349,7 @@ function goReview(a) {
 .empty-state { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
 .empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F2F2F7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
 .empty-text { font-size: 14px; color: #C7C7CC; margin-bottom: 16px; }
-.empty-btn { background: #2DD4BF; padding: 8px 24px; border-radius: 20px; }
+.empty-btn { background: #2563EB; padding: 8px 24px; border-radius: 20px; }
 .empty-btn text { font-size: 14px; color: #fff; }
 
 /* 弹窗 */
@@ -368,7 +368,7 @@ function goReview(a) {
 .picker-item text.ph { color: #C7C7CC; }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; border: none; border-radius: 23px;
   font-size: 16px; font-weight: 600; margin-top: 8px;
 }
@@ -388,9 +388,9 @@ function goReview(a) {
 .review-action {
   display: flex; align-items: center; gap: 4px;
   padding: 8px 12px;
-  background: #E6FAF5; border-radius: 10px;
+  background: #EFF4FF; border-radius: 10px;
 }
-.review-action text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
+.review-action text { font-size: 13px; color: #2563EB; font-weight: 600; }
 .cancel-action {
   display: flex; align-items: center; gap: 4px;
   padding: 8px 12px;
@@ -400,7 +400,7 @@ function goReview(a) {
 .pay-action {
   display: flex; align-items: center; gap: 4px;
   padding: 8px 12px;
-  background: #E6FAF5; border-radius: 10px;
+  background: #EFF4FF; border-radius: 10px;
 }
-.pay-action text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
+.pay-action text { font-size: 13px; color: #2563EB; font-weight: 600; }
 </style>

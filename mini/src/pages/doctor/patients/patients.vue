@@ -133,13 +133,13 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             </view>
           </view>
           <view class="status-badge" :class="{ done: p.status === 'COMPLETED' }">
-            <view class="status-dot" :style="{ background: p.status === 'COMPLETED' ? '#34C759' : p.status === 'CONFIRMED' ? '#7FDBFF' : '#FF9500' }"></view>
+            <view class="status-dot" :style="{ background: p.status === 'COMPLETED' ? '#34C759' : p.status === 'CONFIRMED' ? '#34D399' : '#FF9500' }"></view>
             <text>{{ p.status === 'COMPLETED' ? '已完成' : p.status === 'CONFIRMED' ? '已确认' : '待确认' }}</text>
           </view>
         </view>
         <view v-if="p.patientPhone" class="card-row" @click="callPhone(p.patientPhone)">
           <view class="row-icon-box">
-            <UiIcon name="phone" :size="54" color="#7FDBFF" />
+            <UiIcon name="phone" :size="54" color="#34D399" />
           </view>
           <text class="row-label">电话</text>
           <text class="row-val phone">{{ p.patientPhone }}</text>
@@ -204,7 +204,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; padding-bottom: 24px; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 20px; }
+.gradient-header { background: #10B981; padding-bottom: 20px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
@@ -239,7 +239,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 /* 患者卡片 */
 .patient-card { padding: 16px; }
 .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.avatar { width: 42px; height: 42px; border-radius: 50%; background: #7FDBFF; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; flex-shrink: 0; }
+.avatar { width: 42px; height: 42px; border-radius: 50%; background: #34D399; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; flex-shrink: 0; }
 .head-info { flex: 1; }
 .p-name { font-size: 15px; font-weight: 600; color: var(--c-text); display: block; }
 .p-meta-row { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
@@ -256,7 +256,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .row-icon-box { width: 28px; height: 28px; border-radius: 8px; background: var(--c-bg); display: flex; align-items: center; justify-content: center; }
 .row-label { font-size: 12px; color: var(--c-text-3); width: 36px; flex-shrink: 0; }
 .row-val { font-size: 13px; color: var(--c-text-2); flex: 1; line-height: 1.5; }
-.row-val.phone { color: #7FDBFF; text-decoration: underline; }
+.row-val.phone { color: #34D399; text-decoration: underline; }
 
 .card-actions { display: flex; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0f0f0; }
 .act-btn { display: flex; align-items: center; justify-content: center; gap: 4px; flex: 1; height: 36px; border-radius: var(--r-pill); font-size: 13px; background: var(--c-bg); color: var(--c-text-2); }
@@ -275,7 +275,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .records-list { max-height: 60vh; }
 .record-item { background: var(--c-bg); border-radius: var(--r-md); padding: 12px; margin-bottom: 10px; }
 .rec-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.rec-type { font-size: 11px; padding: 3px 8px; border-radius: var(--r-pill); background: #E6FAF5; color: #7FDBFF; font-weight: 600; }
+.rec-type { font-size: 11px; padding: 3px 8px; border-radius: var(--r-pill); background: #ECFDF5; color: #34D399; font-weight: 600; }
 .rec-date { font-size: 11px; color: var(--c-text-3); }
 .rec-title { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; }
 .rec-content { font-size: 13px; color: var(--c-text-2); line-height: 1.6; display: block; margin-top: 6px; }

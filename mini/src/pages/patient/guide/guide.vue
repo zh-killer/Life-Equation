@@ -5,10 +5,10 @@ import UiIcon from '@/components/ui-icon.vue'
 const keyword = ref('')
 
 const steps = [
-  { icon: 'calendar', title: '在线预约', desc: '选择科室→医生→时段，一键预约挂号', color: '#2DD4BF' },
+  { icon: 'calendar', title: '在线预约', desc: '选择科室→医生→时段，一键预约挂号', color: '#2563EB' },
   { icon: 'file', title: '携带证件', desc: '身份证、医保卡、既往病历资料、检查报告单', color: '#FF9500' },
-  { icon: 'hospital', title: '到院取号', desc: '提前15分钟到达，自助机或窗口取号，候诊区等候', color: '#2DD4BF' },
-  { icon: 'stethoscope', title: '医生问诊', desc: '详细描述症状、发病时间，告知用药史和过敏史', color: '#7FDBFF' },
+  { icon: 'hospital', title: '到院取号', desc: '提前15分钟到达，自助机或窗口取号，候诊区等候', color: '#2563EB' },
+  { icon: 'stethoscope', title: '医生问诊', desc: '详细描述症状、发病时间，告知用药史和过敏史', color: '#60A5FA' },
   { icon: 'activity', title: '检查检验', desc: '按医嘱完成检查，拿到报告后回诊室复诊', color: '#AF52DE' },
   { icon: 'pill', title: '缴费取药', desc: '窗口或自助缴费，药房取药，遵医嘱用药', color: '#34C759' },
 ]
@@ -102,7 +102,7 @@ const filteredDept = computed(() => {
 .page { background: var(--c-bg); min-height: 100vh; padding-bottom: 20px; }
 
 .hero {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 32px 20px;
   display: flex; flex-direction: column; align-items: center;
 }
@@ -166,6 +166,6 @@ const filteredDept = computed(() => {
 }
 .dept-item.no-border { border-bottom: none; }
 .dept-symptom { flex: 1; font-size: 14px; color: #1C1C1E; }
-.dept-name { background: #E6FAF5; padding: 4px 12px; border-radius: 12px; }
-.dept-name text { font-size: 13px; color: #7FDBFF; font-weight: 600; }
+.dept-name { background: #EFF4FF; padding: 4px 12px; border-radius: 12px; }
+.dept-name text { font-size: 13px; color: #60A5FA; font-weight: 600; }
 </style>

@@ -95,7 +95,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
 .ph { color: #C7C7CC; }
 .search-btn {
   height: 30px; padding: 0 14px;
-  background: #2DD4BF; border-radius: 15px;
+  background: #2563EB; border-radius: 15px;
   display: flex; align-items: center; justify-content: center;
 }
 .search-btn text { color: #fff; font-size: 13px; }
@@ -104,7 +104,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
 .cat-inner { display: inline-flex; gap: 8px; }
 .cat-item { display: inline-flex; padding: 6px 16px; border-radius: 16px; background: #fff; border: 1px solid #F2F2F7; }
 .cat-item text { font-size: 13px; color: #8E8E93; }
-.cat-item.active { background: #2DD4BF; border-color: #2DD4BF; }
+.cat-item.active { background: #2563EB; border-color: #2563EB; }
 .cat-item.active text { color: #fff; font-weight: 600; }
 
 .list { padding: 0 16px 16px; }
@@ -119,7 +119,7 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=
 .card-title { font-size: 16px; font-weight: 700; color: var(--c-text); display: block; margin-bottom: 6px; }
 .card-summary { font-size: 13px; color: #8E8E93; line-height: 1.5; display: block; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-.card-cat { background: #E6FAF5; padding: 2px 8px; border-radius: 4px; }
-.card-cat text { font-size: 11px; color: #7FDBFF; }
+.card-cat { background: #EFF4FF; padding: 2px 8px; border-radius: 4px; }
+.card-cat text { font-size: 11px; color: #60A5FA; }
 .card-time { font-size: 11px; color: #C7C7CC; }
 </style>

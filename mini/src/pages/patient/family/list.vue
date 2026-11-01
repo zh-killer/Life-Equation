@@ -39,7 +39,7 @@ async function handleSetDefault(m) {
   } catch {}
 }
 
-const relMap = { '本人': '#2DD4BF', '配偶': '#FF9500', '子女': '#AF52DE', '父母': '#FF3B30', '其他': '#7FDBFF' }
+const relMap = { '本人': '#2563EB', '配偶': '#FF9500', '子女': '#AF52DE', '父母': '#FF3B30', '其他': '#60A5FA' }
 </script>
 
 <template>
@@ -66,15 +66,15 @@ const relMap = { '本人': '#2DD4BF', '配偶': '#FF9500', '子女': '#AF52DE', 
     <view v-else class="list">
       <view v-for="m in members" :key="m.id" class="card" @click="goEdit(m)">
         <view class="card-left">
-          <view class="avatar" :style="{ background: (relMap[m.relationship] || '#2DD4BF') + '1A' }">
-            <text :style="{ color: relMap[m.relationship] || '#2DD4BF', fontSize: '20px', fontWeight: '700' }">
+          <view class="avatar" :style="{ background: (relMap[m.relationship] || '#2563EB') + '1A' }">
+            <text :style="{ color: relMap[m.relationship] || '#2563EB', fontSize: '20px', fontWeight: '700' }">
               {{ m.name?.charAt(0) }}
             </text>
           </view>
           <view class="info">
             <view class="name-row">
               <text class="name">{{ m.name }}</text>
-              <view v-if="m.relationship" class="rel-tag" :style="{ background: (relMap[m.relationship] || '#2DD4BF') + '20', color: relMap[m.relationship] }">
+              <view v-if="m.relationship" class="rel-tag" :style="{ background: (relMap[m.relationship] || '#2563EB') + '20', color: relMap[m.relationship] }">
                 <text>{{ m.relationship }}</text>
               </view>
               <view v-if="m.isDefault === 1" class="default-tag">
@@ -87,7 +87,7 @@ const relMap = { '本人': '#2DD4BF', '配偶': '#FF9500', '子女': '#AF52DE', 
         </view>
         <view class="card-actions" @click.stop>
           <view class="action-btn" v-if="m.isDefault !== 1" @click="handleSetDefault(m)">
-            <ui-icon name="check" :size="48" color="#2DD4BF" />
+            <ui-icon name="check" :size="48" color="#2563EB" />
             <text>设为默认</text>
           </view>
           <view class="action-btn del" @click="handleDelete(m)">
@@ -111,7 +111,7 @@ const relMap = { '本人': '#2DD4BF', '配偶': '#FF9500', '子女': '#AF52DE', 
 .page { background: #FFFFFF; min-height: 100vh; padding: 16px; }
 .header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .title { font-size: 18px; font-weight: 700; color: #1C1C1E; }
-.add-btn { display: flex; align-items: center; gap: 2px; background: #2DD4BF; padding: 6px 14px; border-radius: 16px; }
+.add-btn { display: flex; align-items: center; gap: 2px; background: #2563EB; padding: 6px 14px; border-radius: 16px; }
 .add-btn text { font-size: 13px; color: #fff; }
 
 .list { display: flex; flex-direction: column; gap: 10px; }
@@ -123,8 +123,8 @@ const relMap = { '本人': '#2DD4BF', '配偶': '#FF9500', '子女': '#AF52DE', 
 .name { font-size: 16px; font-weight: 600; color: #1C1C1E; }
 .rel-tag { padding: 2px 8px; border-radius: 6px; }
 .rel-tag text { font-size: 11px; }
-.default-tag { padding: 2px 8px; border-radius: 6px; background: #E6FAF5; }
-.default-tag text { font-size: 11px; color: #2DD4BF; font-weight: 600; }
+.default-tag { padding: 2px 8px; border-radius: 6px; background: #EFF4FF; }
+.default-tag text { font-size: 11px; color: #2563EB; font-weight: 600; }
 .sub { font-size: 12px; color: #8E8E93; display: block; margin-top: 2px; }
 .card-actions { display: flex; gap: 16px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #F2F2F7; }
 .action-btn { display: flex; align-items: center; gap: 4px; }
@@ -139,6 +139,6 @@ const relMap = { '本人': '#2DD4BF', '配偶': '#FF9500', '子女': '#AF52DE', 
 .empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F2F2F7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
 .empty-text { font-size: 15px; color: #8E8E93; font-weight: 500; }
 .empty-desc { font-size: 13px; color: #C7C7CC; margin-top: 6px; margin-bottom: 20px; }
-.empty-btn { background: #2DD4BF; padding: 10px 28px; border-radius: 22px; }
+.empty-btn { background: #2563EB; padding: 10px 28px; border-radius: 22px; }
 .empty-btn text { font-size: 14px; color: #fff; font-weight: 600; }
 </style>

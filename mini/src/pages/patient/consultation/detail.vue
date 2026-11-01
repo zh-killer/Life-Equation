@@ -81,14 +81,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             </view>
           </view>
           <view class="q-tag" :class="consultation.isPublic === 1 ? 'tag-public' : 'tag-private'">
-            <UiIcon :name="consultation.isPublic === 1 ? 'eye' : 'lock'" :size="11" :color="consultation.isPublic === 1 ? '#7FDBFF' : '#C7C7CC'" />
-            <text :style="{ color: consultation.isPublic === 1 ? '#7FDBFF' : '#C7C7CC' }">{{ consultation.isPublic === 1 ? '公开' : '私密' }}</text>
+            <UiIcon :name="consultation.isPublic === 1 ? 'eye' : 'lock'" :size="11" :color="consultation.isPublic === 1 ? '#60A5FA' : '#C7C7CC'" />
+            <text :style="{ color: consultation.isPublic === 1 ? '#60A5FA' : '#C7C7CC' }">{{ consultation.isPublic === 1 ? '公开' : '私密' }}</text>
           </view>
         </view>
         <text class="q-text">{{ consultation.question }}</text>
         <view class="q-doctor" v-if="consultation.doctorName">
           <view class="doctor-tag">
-            <UiIcon name="user" :size="54" color="#7FDBFF" />
+            <UiIcon name="user" :size="54" color="#60A5FA" />
             <text>咨询医生：{{ consultation.doctorName }}</text>
           </view>
         </view>
@@ -124,7 +124,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 底部操作 -->
     <view class="actions">
       <button class="btn outline" @click="goBack">
-        <UiIcon name="back" :size="60" color="#2DD4BF" />
+        <UiIcon name="back" :size="60" color="#2563EB" />
         <text>返回列表</text>
       </button>
       <button v-if="currentUserId && consultation.userId === currentUserId" class="btn danger" @click="doDelete">
@@ -153,21 +153,21 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .card { background: #fff; border-radius: var(--r-lg); padding: 16px; box-shadow: none; margin-bottom: 12px; }
 
 /* 问题卡片 */
-.question-card { border-left: 4px solid #2DD4BF; }
+.question-card { border-left: 4px solid #2563EB; }
 .q-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.q-avatar { width: 40px; height: 40px; border-radius: 50%; background: #2DD4BF; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+.q-avatar { width: 40px; height: 40px; border-radius: 50%; background: #2563EB; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
 .q-meta { flex: 1; }
 .q-user { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; }
 .q-time-row { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .q-time { font-size: 11px; color: var(--c-text-3); }
 .q-tag { display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--r-pill); font-size: 10px; }
-.tag-public { background: #E6FAF5; }
+.tag-public { background: #EFF4FF; }
 .tag-private { background: #F5F5F5; }
 .q-tag text { font-size: 10px; font-weight: 600; }
 .q-text { font-size: 15px; color: var(--c-text); line-height: 1.8; display: block; }
 .q-doctor { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
 .doctor-tag { display: flex; align-items: center; gap: 6px; }
-.doctor-tag text { font-size: 12px; color: #7FDBFF; }
+.doctor-tag text { font-size: 12px; color: #60A5FA; }
 
 /* 回答卡片 */
 .answer-card { border-left: 4px solid #34C759; }
@@ -189,6 +189,6 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 /* 底部操作 */
 .actions { display: flex; gap: 12px; padding: 16px; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #F2F2F7; }
 .btn { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; height: 44px; border-radius: var(--r-pill); font-size: 14px; border: none; }
-.btn.outline { background: #fff; color: #2DD4BF; border: 2px solid #2DD4BF; }
+.btn.outline { background: #fff; color: #2563EB; border: 2px solid #2563EB; }
 .btn.danger { background: #fff; color: #FF3B30; border: 2px solid #FF3B30; }
 </style>

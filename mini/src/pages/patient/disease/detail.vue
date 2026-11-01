@@ -35,8 +35,8 @@ function goDoctor() { uni.navigateTo({ url: '/pages/patient/medical/medical' }) 
 
 const sections = [
   { key: 'symptoms', icon: 'activity', title: '典型症状', color: '#FF3B30', bg: '#FFEBEA' },
-  { key: 'description', icon: 'file', title: '疾病概述', color: '#2DD4BF', bg: '#E6FAF5' },
-  { key: 'cause', icon: 'virus', title: '病因分析', color: '#FF9500', bg: '#E6FAF5' },
+  { key: 'description', icon: 'file', title: '疾病概述', color: '#2563EB', bg: '#EFF4FF' },
+  { key: 'cause', icon: 'virus', title: '病因分析', color: '#FF9500', bg: '#EFF4FF' },
   { key: 'treatment', icon: 'pill', title: '治疗方法', color: '#34C759', bg: '#E8F5E9' },
   { key: 'prevention', icon: 'shield', title: '预防措施', color: '#AF52DE', bg: '#F3E5F5' },
 ]
@@ -80,7 +80,7 @@ const sections = [
     <!-- 操作按钮 -->
     <view class="actions">
       <view class="btn-outline" @click="goAi">
-        <ui-icon name="robot" :size="64" color="#2DD4BF" />
+        <ui-icon name="robot" :size="64" color="#2563EB" />
         <text>AI 智能导诊</text>
       </view>
       <view class="btn-go" @click="goDoctor">
@@ -96,7 +96,7 @@ const sections = [
 
 /* 头部 */
 .hero {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 28px 20px;
   position: relative;
 }
@@ -129,14 +129,14 @@ const sections = [
 .actions { display: flex; gap: 12px; padding: 0 16px; }
 .btn-outline {
   flex: 1; height: 46px;
-  background: #fff; border: 1px solid #2DD4BF;
+  background: #fff; border: 1px solid #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.btn-outline text { font-size: 14px; color: #2DD4BF; font-weight: 600; }
+.btn-outline text { font-size: 14px; color: #2563EB; font-weight: 600; }
 .btn-go {
   flex: 1; height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }

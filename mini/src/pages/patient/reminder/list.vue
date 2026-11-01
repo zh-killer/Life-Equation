@@ -52,14 +52,14 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
         <view class="card-top">
           <view class="drug-info">
             <view class="drug-icon">
-              <ui-icon name="pill" :size="54" :color="r.isActive === 1 ? '#2DD4BF' : '#C7C7CC'" />
+              <ui-icon name="pill" :size="54" :color="r.isActive === 1 ? '#2563EB' : '#C7C7CC'" />
             </view>
             <view class="drug-text">
               <text class="drug-name">{{ r.drugName }}</text>
               <text class="drug-dosage" v-if="r.dosage">{{ r.dosage }} · {{ freqMap[r.frequency] || r.frequency }}</text>
             </view>
           </view>
-          <switch :checked="r.isActive === 1" @change.stop="handleToggle(r)" color="#2DD4BF" />
+          <switch :checked="r.isActive === 1" @change.stop="handleToggle(r)" color="#2563EB" />
         </view>
         <view class="card-bottom" v-if="r.reminderTimes">
           <ui-icon name="clock" :size="48" :color="r.isActive === 1 ? '#FF9500' : '#C7C7CC'" />
@@ -86,7 +86,7 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
 .page { background: #FFFFFF; min-height: 100vh; padding: 16px; }
 .header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .title { font-size: 18px; font-weight: 700; color: #1C1C1E; }
-.add-btn { display: flex; align-items: center; gap: 2px; background: #2DD4BF; padding: 6px 14px; border-radius: 16px; }
+.add-btn { display: flex; align-items: center; gap: 2px; background: #2563EB; padding: 6px 14px; border-radius: 16px; }
 .add-btn text { font-size: 13px; color: #fff; }
 
 .list { display: flex; flex-direction: column; gap: 10px; }
@@ -94,7 +94,7 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
 .card.inactive { opacity: 0.5; }
 .card-top { display: flex; align-items: center; justify-content: space-between; }
 .drug-info { display: flex; align-items: center; gap: 12px; flex: 1; }
-.drug-icon { width: 40px; height: 40px; border-radius: 12px; background: #E6FAF5; display: flex; align-items: center; justify-content: center; }
+.drug-icon { width: 40px; height: 40px; border-radius: 12px; background: #EFF4FF; display: flex; align-items: center; justify-content: center; }
 .drug-name { font-size: 16px; font-weight: 600; color: #1C1C1E; display: block; }
 .drug-dosage { font-size: 13px; color: #8E8E93; margin-top: 2px; display: block; }
 .card-bottom { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
@@ -107,6 +107,6 @@ const freqMap = { daily: '每天', twice_daily: '每天2次', three_times: '每�
 .empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F2F2F7; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
 .empty-text { font-size: 15px; color: #8E8E93; font-weight: 500; }
 .empty-desc { font-size: 13px; color: #C7C7CC; margin-top: 6px; margin-bottom: 20px; }
-.empty-btn { background: #2DD4BF; padding: 10px 28px; border-radius: 22px; }
+.empty-btn { background: #2563EB; padding: 10px 28px; border-radius: 22px; }
 .empty-btn text { font-size: 14px; color: #fff; font-weight: 600; }
 </style>

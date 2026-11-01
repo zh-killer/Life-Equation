@@ -87,7 +87,7 @@ async function submit() {
     <!-- 匿名 -->
     <view class="anon-row">
       <text>匿名评价</text>
-      <switch :checked="isAnonymous" @change="e => isAnonymous = e.detail.value" color="#2DD4BF" />
+      <switch :checked="isAnonymous" @change="e => isAnonymous = e.detail.value" color="#2563EB" />
     </view>
 
     <button class="btn-submit" :loading="loading" @click="submit">提交评价</button>
@@ -111,8 +111,8 @@ async function submit() {
 .tag-list { display: flex; flex-wrap: wrap; gap: 10px; }
 .tag-item { padding: 8px 16px; border-radius: 20px; background: #F2F2F7; }
 .tag-item text { font-size: 13px; color: #8E8E93; }
-.tag-item.active { background: #E6FAF5; }
-.tag-item.active text { color: #2DD4BF; font-weight: 600; }
+.tag-item.active { background: #EFF4FF; }
+.tag-item.active text { color: #2563EB; font-weight: 600; }
 
 .content-area { padding: 16px 0; }
 .textarea { width: 100%; height: 120px; background: #F9F9FB; border-radius: 12px; padding: 14px; font-size: 14px; color: #1C1C1E; box-sizing: border-box; }
@@ -123,7 +123,7 @@ async function submit() {
 
 .btn-submit {
   width: 100%; height: 48px; line-height: 48px;
-  background: #2DD4BF; color: #fff; border: none;
+  background: #2563EB; color: #fff; border: none;
   border-radius: 12px; font-size: 16px; font-weight: 600;
   margin-top: 24px;
 }

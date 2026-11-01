@@ -89,20 +89,20 @@ const groups = [
   {
     title: '医疗服务',
     items: [
-      { icon: 'calendar', label: '我的预约', url: '/pages/patient/appointment/appointment', color: '#2DD4BF' },
+      { icon: 'calendar', label: '我的预约', url: '/pages/patient/appointment/appointment', color: '#2563EB' },
       { icon: 'folder', label: '我的病历', url: '/pages/patient/records/records', color: '#FF9500' },
-      { icon: 'user', label: '就诊人管理', url: '/pages/patient/family/list', color: '#7FDBFF' },
+      { icon: 'user', label: '就诊人管理', url: '/pages/patient/family/list', color: '#60A5FA' },
       { icon: 'clock', label: '用药提醒', url: '/pages/patient/reminder/list', color: '#FF9500' },
       { icon: 'heart', label: '我的收藏', url: '/pages/patient/favorite/list', color: '#FF3B30' },
       { icon: 'message', label: '消息中心', url: '/pages/patient/notifications/notifications', color: '#FF3B30' },
-      { icon: 'message', label: '问答社区', url: '/pages/patient/consultation/list', color: '#2DD4BF' },
+      { icon: 'message', label: '问答社区', url: '/pages/patient/consultation/list', color: '#2563EB' },
       { icon: 'file', label: '我的咨询', url: '/pages/patient/health/health', color: '#AF52DE' },
     ],
   },
   {
     title: 'AI 智能助手',
     items: [
-      { icon: 'robot', label: 'AI 智能导诊', url: '/pages/patient/ai/ai', color: '#7FDBFF' },
+      { icon: 'robot', label: 'AI 智能导诊', url: '/pages/patient/ai/ai', color: '#60A5FA' },
       { icon: 'heart', label: 'AI 健康建议', url: '/pages/patient/ai/health-advice', color: '#FF3B30' },
       { icon: 'file', label: 'AI 报告解读', url: '/pages/patient/ai/report', color: '#AF52DE' },
     ],
@@ -112,8 +112,8 @@ const groups = [
     items: [
       { icon: 'virus', label: '疾病百科', url: '/pages/patient/disease/disease', color: '#FF9500' },
       { icon: 'pill', label: '药品查询', url: '/pages/patient/drug/drug', color: '#AF52DE' },
-      { icon: 'store', label: '院内药房', url: '/pages/patient/pharmacy/pharmacy', color: '#2DD4BF' },
-      { icon: 'news', label: '健康资讯', url: '/pages/patient/article/article', color: '#2DD4BF' },
+      { icon: 'store', label: '院内药房', url: '/pages/patient/pharmacy/pharmacy', color: '#2563EB' },
+      { icon: 'news', label: '健康资讯', url: '/pages/patient/article/article', color: '#2563EB' },
       { icon: 'clipboard', label: '就诊指南', url: '/pages/patient/guide/guide', color: '#34C759' },
     ],
   },
@@ -328,7 +328,7 @@ function logout() {
 
 /* ===== 头部 ===== */
 .header {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 0 20px 30px;
 }
 .user-card {
@@ -406,7 +406,7 @@ function logout() {
 .pwd-hint { font-size: 13px; color: #8E8E93; margin-bottom: 14px; display: block; line-height: 1.5; }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; border: none; border-radius: 23px;
   font-size: 16px; font-weight: 600; margin-top: 8px;
 }
@@ -415,7 +415,7 @@ function logout() {
 .home-fab {
   position: fixed; bottom: 80px; right: 20px;
   width: 48px; height: 48px;
-  background: #2DD4BF;
+  background: #2563EB;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   z-index: 50;

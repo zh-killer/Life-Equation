@@ -29,7 +29,7 @@ defineProps({
 }
 .avatar {
   width: 44px; height: 44px; border-radius: 12px;
-  background: #E6FAF5; display: flex; align-items: center; justify-content: center;
+  background: #EFF4FF; display: flex; align-items: center; justify-content: center;
   font-size: 22px; flex-shrink: 0;
 }
 .avatar.top { background: #FFEBEA; }
@@ -37,7 +37,7 @@ defineProps({
 .title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 .name { font-size: 15px; font-weight: 700; color: #1C1C1E; }
 .level {
-  padding: 1px 8px; border-radius: 4px; font-size: 10px; color: #7FDBFF; background: #E6FAF5; font-weight: 700;
+  padding: 1px 8px; border-radius: 4px; font-size: 10px; color: #60A5FA; background: #EFF4FF; font-weight: 700;
 }
 .level.top { color: #FF3B30; background: #FFEBEA; }
 .addr { font-size: 12px; color: #C7C7CC; display: block; }

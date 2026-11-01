@@ -100,7 +100,7 @@ function openLocation() {
     <!-- 信息卡片 -->
     <view class="info-card">
       <view class="info-row">
-        <view class="info-icon-wrap"><ui-icon name="pin" :size="60" color="#7FDBFF" /></view>
+        <view class="info-icon-wrap"><ui-icon name="pin" :size="60" color="#60A5FA" /></view>
         <text class="info-text">{{ hospital.address }}</text>
       </view>
       <view class="info-row" v-if="hospital.phone">
@@ -141,7 +141,7 @@ function openLocation() {
           :markers="[{ id: 1, latitude: Number(hospital.latitude), longitude: Number(hospital.longitude), title: hospital.name, width: 28, height: 28 }]"
           :scale="16" />
         <view class="map-tip">
-          <ui-icon name="location" :size="54" color="#7FDBFF" />
+          <ui-icon name="location" :size="54" color="#60A5FA" />
           <text>点击地图可导航至此</text>
         </view>
       </view>
@@ -214,7 +214,7 @@ function openLocation() {
 
 /* 头部 */
 .hero {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 24px 20px;
 }
 .hero-top { display: flex; gap: 14px; align-items: center; }
@@ -256,18 +256,18 @@ function openLocation() {
 
 /* 科室 */
 .dept-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.dept-tag { background: #E6FAF5; padding: 6px 14px; border-radius: 16px; }
-.dept-tag text { font-size: 13px; color: #7FDBFF; }
+.dept-tag { background: #EFF4FF; padding: 6px 14px; border-radius: 16px; }
+.dept-tag text { font-size: 13px; color: #60A5FA; }
 
 /* 地图 */
 .map-box { border-radius: 14px; overflow: hidden; background: #fff; box-shadow: none; }
 .map { width: 100%; height: 200px; }
 .map-tip { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 10px; }
-.map-tip text { font-size: 13px; color: #7FDBFF; }
+.map-tip text { font-size: 13px; color: #60A5FA; }
 .addr-card { background: #fff; border-radius: 14px; padding: 28px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: none; }
 .addr-text { font-size: 14px; color: #8E8E93; text-align: center; line-height: 1.6; }
-.addr-btn { background: #E6FAF5; padding: 8px 20px; border-radius: 20px; }
-.addr-btn text { font-size: 14px; color: #7FDBFF; font-weight: 600; }
+.addr-btn { background: #EFF4FF; padding: 8px 20px; border-radius: 20px; }
+.addr-btn text { font-size: 14px; color: #60A5FA; font-weight: 600; }
 
 /* 医生列表 */
 .doc-item {
@@ -277,14 +277,14 @@ function openLocation() {
 }
 .doc-avatar {
   width: 44px; height: 44px; border-radius: 12px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 700; flex-shrink: 0;
 }
 .doc-body { flex: 1; }
 .doc-name-row { display: flex; align-items: center; gap: 6px; }
 .doc-name { font-size: 15px; font-weight: 700; color: #1C1C1E; }
-.doc-title-badge { background: #E6FAF5; padding: 1px 6px; border-radius: 4px; }
+.doc-title-badge { background: #EFF4FF; padding: 1px 6px; border-radius: 4px; }
 .doc-title-badge text { font-size: 10px; color: #FF9500; font-weight: 700; }
 .doc-dept { font-size: 13px; color: #8E8E93; margin-top: 2px; display: block; }
 .doc-fee { display: flex; align-items: baseline; }
@@ -300,7 +300,7 @@ function openLocation() {
 }
 .btn-primary {
   width: 100%; height: 46px; line-height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; border: none; border-radius: 23px;
   font-size: 16px; font-weight: 600;
 }
@@ -316,10 +316,10 @@ function openLocation() {
 .review-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 8px; border: 1px solid #F2F2F7; }
 .review-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .review-user { display: flex; align-items: center; gap: 8px; }
-.review-avatar { width: 28px; height: 28px; border-radius: 50%; background: #E6FAF5; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #2DD4BF; font-weight: 600; }
+.review-avatar { width: 28px; height: 28px; border-radius: 50%; background: #EFF4FF; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #2563EB; font-weight: 600; }
 .review-name { font-size: 13px; color: #8E8E93; }
 .review-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-.review-tag { font-size: 11px; color: #2DD4BF; background: #E6FAF5; padding: 2px 8px; border-radius: 6px; }
+.review-tag { font-size: 11px; color: #2563EB; background: #EFF4FF; padding: 2px 8px; border-radius: 6px; }
 .review-content { font-size: 14px; color: #1C1C1E; line-height: 1.6; display: block; }
 .review-date { font-size: 11px; color: #C7C7CC; margin-top: 8px; display: block; }
 </style>

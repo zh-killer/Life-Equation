@@ -59,7 +59,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
       <view class="hospital-card" @click="goHospital">
         <view class="hc-main">
           <view class="hc-icon">
-            <ui-icon name="hospital" :size="52" color="#2DD4BF" />
+            <ui-icon name="hospital" :size="52" color="#2563EB" />
           </view>
           <view class="hc-info">
             <view class="hc-name-row">
@@ -82,7 +82,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
           </view>
           <view class="hc-appoint" @click.stop="goAppoint">
             <text>预约挂号</text>
-            <ui-icon name="chevronRight" :size="40" color="#2DD4BF" />
+            <ui-icon name="chevronRight" :size="40" color="#2563EB" />
           </view>
         </view>
       </view>
@@ -173,7 +173,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 
 /* 本院概况 */
 .hospital-card {
-  background: linear-gradient(135deg, #E6FAF5 0%, #F7FFFD 60%, #FFFFFF 100%);
+  background: linear-gradient(135deg, #EFF4FF 0%, #F7FFFD 60%, #FFFFFF 100%);
   border-radius: 16px; padding: 16px; margin-bottom: 12px;
 }
 .hc-main { display: flex; align-items: center; gap: 12px; }
@@ -195,18 +195,18 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 .hc-foot {
   display: flex; align-items: center; gap: 14px;
   margin-top: 14px; padding-top: 12px;
-  border-top: 1px solid rgba(45, 212, 191, 0.12);
+  border-top: 1px solid rgba(37,99,235, 0.12);
 }
 .hc-stat { display: flex; flex-direction: column; align-items: flex-start; }
-.hc-num { font-size: 20px; font-weight: 800; color: #2DD4BF; line-height: 1.1; }
+.hc-num { font-size: 20px; font-weight: 800; color: #2563EB; line-height: 1.1; }
 .hc-label { font-size: 11px; color: var(--c-text-3); margin-top: 2px; }
-.hc-line { width: 1px; height: 26px; background: rgba(45, 212, 191, 0.15); }
+.hc-line { width: 1px; height: 26px; background: rgba(37,99,235, 0.15); }
 .hc-appoint {
   margin-left: auto;
   display: flex; align-items: center; gap: 2px;
   background: #fff; border-radius: 16px; padding: 7px 14px;
 }
-.hc-appoint text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
+.hc-appoint text { font-size: 13px; color: #2563EB; font-weight: 600; }
 
 /* 搜索 */
 .search-bar {
@@ -232,7 +232,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
   background: #fff;
 }
 .dept-chip text { font-size: 13px; color: var(--c-text-2); }
-.dept-chip.active { background: #2DD4BF; }
+.dept-chip.active { background: #2563EB; }
 .dept-chip.active text { color: #fff; font-weight: 600; }
 
 /* 结果统计 */
@@ -241,7 +241,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
   padding: 4px 2px 8px;
 }
 .result-tip text { font-size: 12px; color: var(--c-text-3); }
-.result-reset { color: #2DD4BF; }
+.result-reset { color: #2563EB; }
 
 /* 列表 */
 .doc-list { padding-bottom: 16px; }
@@ -256,14 +256,14 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 .doctor-card { display: flex; gap: 12px; align-items: flex-start; }
 .doc-avatar {
   width: 48px; height: 48px; border-radius: 14px;
-  background: #2DD4BF;
+  background: #2563EB;
   color: #fff; display: flex; align-items: center; justify-content: center;
   font-size: 20px; font-weight: 700; flex-shrink: 0;
 }
 .doc-body { flex: 1; min-width: 0; }
 .doc-name-row { display: flex; align-items: center; gap: 6px; }
 .doc-name { font-size: 16px; font-weight: 700; color: var(--c-text); }
-.doc-title { font-size: 11px; color: #FF9500; background: #E6FAF5; padding: 1px 6px; border-radius: 4px; }
+.doc-title { font-size: 11px; color: #FF9500; background: #EFF4FF; padding: 1px 6px; border-radius: 4px; }
 .doc-dept { font-size: 13px; color: var(--c-text-2); margin-top: 4px; display: block; }
 .doc-spec {
   font-size: 12px; color: var(--c-text-3); margin-top: 4px; display: block;
@@ -295,7 +295,7 @@ function goAppoint() { uni.navigateTo({ url: '/pages/patient/appointment/appoint
 .empty-text { font-size: 14px; color: var(--c-text-3); }
 .empty-btn {
   margin-top: 16px; padding: 8px 20px;
-  background: #E6FAF5; border-radius: 18px;
+  background: #EFF4FF; border-radius: 18px;
 }
-.empty-btn text { font-size: 13px; color: #2DD4BF; font-weight: 600; }
+.empty-btn text { font-size: 13px; color: #2563EB; font-weight: 600; }
 </style>

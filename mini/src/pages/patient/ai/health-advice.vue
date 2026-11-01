@@ -94,8 +94,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <view class="col">
             <text class="label">性别</text>
             <radio-group @change="onGenderChange" class="radio-group">
-              <label class="radio-item"><radio value="0" :checked="form.gender === 'M'" color="#2DD4BF" />男</label>
-              <label class="radio-item"><radio value="1" :checked="form.gender === 'F'" color="#2DD4BF" />女</label>
+              <label class="radio-item"><radio value="0" :checked="form.gender === 'M'" color="#2563EB" />男</label>
+              <label class="radio-item"><radio value="1" :checked="form.gender === 'F'" color="#2563EB" />女</label>
             </radio-group>
           </view>
         </view>
@@ -136,13 +136,13 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </button>
 
       <view class="history-toggle" @click="loadHistory">
-        <UiIcon name="clock" :size="60" color="#7FDBFF" />
+        <UiIcon name="clock" :size="60" color="#60A5FA" />
         <text>{{ showHistory ? '收起' : '查看' }}历史记录</text>
       </view>
       <view v-if="showHistory" class="history-list">
         <view v-for="h in history" :key="h.id" class="card history-item" @click="viewHistory(h)">
           <view class="hi-left">
-            <UiIcon name="activity" :size="64" color="#2DD4BF" />
+            <UiIcon name="activity" :size="64" color="#2563EB" />
             <text class="hi-bmi">BMI {{ h.bmi || '—' }}</text>
           </view>
           <text class="hi-time">{{ h.createTime?.substring(0, 10) }}</text>
@@ -177,7 +177,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
 
       <button class="btn-outline" @click="reset">
-        <UiIcon name="refresh" :size="64" color="#2DD4BF" />
+        <UiIcon name="refresh" :size="64" color="#2563EB" />
         <text>重新生成</text>
       </button>
     </view>
@@ -226,14 +226,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .bmi-cat { font-size: 13px; font-weight: 600; }
 
 /* 按钮 */
-.btn-primary { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 48px; background: #2DD4BF; color: #fff; border: none; border-radius: var(--r-pill); font-size: 16px; font-weight: 600; margin-top: 4px; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
-.btn-outline { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 46px; background: #fff; color: #2DD4BF; border: 2px solid #2DD4BF; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; }
+.btn-primary { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 48px; background: #2563EB; color: #fff; border: none; border-radius: var(--r-pill); font-size: 16px; font-weight: 600; margin-top: 4px; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
+.btn-outline { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 46px; background: #fff; color: #2563EB; border: 2px solid #2563EB; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; }
 
 /* 历史记录 */
-.history-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 20px 0; color: #7FDBFF; font-size: 13px; }
+.history-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 20px 0; color: #60A5FA; font-size: 13px; }
 .history-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .hi-left { display: flex; align-items: center; gap: 8px; }
-.hi-bmi { font-size: 14px; color: #2DD4BF; font-weight: 600; }
+.hi-bmi { font-size: 14px; color: #2563EB; font-weight: 600; }
 .hi-time { font-size: 12px; color: var(--c-text-3); }
 .empty-text { text-align: center; color: var(--c-text-3); padding: 20px; font-size: 13px; }
 

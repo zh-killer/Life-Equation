@@ -131,7 +131,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view class="stats">
       <view class="stat-card blue">
         <view class="stat-icon-box" style="background: rgba(59,111,182,0.12)">
-          <UiIcon name="calendar" :size="40" color="#7FDBFF" />
+          <UiIcon name="calendar" :size="40" color="#34D399" />
         </view>
         <text class="stat-num">{{ workbench?.todayAppointmentCount || 0 }}</text>
         <text class="stat-label">今日预约</text>
@@ -156,14 +156,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view class="section">
       <view class="section-head">
         <view class="section-title-row">
-          <view class="section-icon" style="background: #E6FAF5">
-            <UiIcon name="user" :size="60" color="#2DD4BF" />
+          <view class="section-icon" style="background: #ECFDF5">
+            <UiIcon name="user" :size="60" color="#10B981" />
           </view>
           <text class="section-title">待就诊患者</text>
         </view>
         <view class="section-more" @click="goPatients">
           <text>查看全部</text>
-          <UiIcon name="chevronRight" :size="54" color="#7FDBFF" />
+          <UiIcon name="chevronRight" :size="54" color="#34D399" />
         </view>
       </view>
       <view v-if="pendingPatients.length">
@@ -182,7 +182,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             </view>
           </view>
           <view v-if="p.patientPhone" class="p-phone-row">
-            <UiIcon name="phone" :size="13" color="#7FDBFF" />
+            <UiIcon name="phone" :size="13" color="#34D399" />
             <text class="p-phone">{{ p.patientPhone }}</text>
           </view>
         </view>
@@ -226,7 +226,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <text class="section-title">待处理咨询</text>
         </view>
         <view class="section-more" @click="loadConsults">
-          <UiIcon name="refresh" :size="54" color="#7FDBFF" />
+          <UiIcon name="refresh" :size="54" color="#34D399" />
           <text>刷新</text>
         </view>
       </view>
@@ -279,7 +279,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; padding-bottom: 20px; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 20px; }
+.gradient-header { background: #10B981; padding-bottom: 20px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
 .status-toggle { display: flex; align-items: center; gap: 8px; }
@@ -310,7 +310,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .section-icon { width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
 .section-title { font-size: 16px; font-weight: 700; color: var(--c-text); }
 .section-more { display: flex; align-items: center; gap: 2px; }
-.section-more text { font-size: 12px; color: #7FDBFF; }
+.section-more text { font-size: 12px; color: #34D399; }
 
 /* 卡片 */
 .card { background: #fff; border-radius: var(--r-lg); padding: 14px 16px; box-shadow: none; margin-bottom: 8px; }
@@ -319,29 +319,29 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .patient-card { padding: 14px 16px; }
 .patient-card.done { opacity: 0.7; }
 .p-head { display: flex; align-items: center; gap: 10px; }
-.p-avatar { width: 40px; height: 40px; border-radius: 50%; background: #7FDBFF; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+.p-avatar { width: 40px; height: 40px; border-radius: 50%; background: #34D399; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
 .done-avatar { background: #34C759; }
 .p-info { flex: 1; }
 .p-name { font-size: 14px; font-weight: 600; color: var(--c-text); display: block; }
 .p-time-row { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .p-time { font-size: 12px; color: var(--c-text-3); }
 .p-status-badge { display: flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--r-pill); font-size: 11px; font-weight: 600; }
-.p-status-badge.confirmed { background: #E6FAF5; color: #7FDBFF; }
+.p-status-badge.confirmed { background: #ECFDF5; color: #34D399; }
 .p-status-badge.pending { background: #FFF4E5; color: #FF9500; }
 .p-status-badge.done-badge { background: #E9F7EF; color: #34C759; }
 .p-phone-row { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
-.p-phone { font-size: 12px; color: #7FDBFF; }
+.p-phone { font-size: 12px; color: #34D399; }
 
 /* 咨询卡片 */
 .consult-card { padding: 14px 16px; }
 .c-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .c-user-row { display: flex; align-items: center; gap: 8px; }
-.c-avatar { width: 30px; height: 30px; border-radius: 50%; background: #7FDBFF; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.c-avatar { width: 30px; height: 30px; border-radius: 50%; background: #34D399; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
 .c-user { font-size: 13px; font-weight: 600; color: var(--c-text); }
 .c-time { font-size: 11px; color: var(--c-text-3); }
 .c-question { font-size: 13px; color: var(--c-text-2); display: block; margin-bottom: 10px; line-height: 1.5; }
 .c-actions { display: flex; justify-content: flex-end; }
-.c-btn { display: flex; align-items: center; gap: 4px; background: #2DD4BF; color: #fff; padding: 6px 16px; border-radius: var(--r-pill); }
+.c-btn { display: flex; align-items: center; gap: 4px; background: #10B981; color: #fff; padding: 6px 16px; border-radius: var(--r-pill); }
 .c-btn text { font-size: 12px; font-weight: 600; }
 
 .empty-text { text-align: center; color: var(--c-text-3); padding: 24px; font-size: 13px; display: block; }
@@ -361,6 +361,6 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .modal-btns { display: flex; gap: 12px; margin-top: 14px; }
 .btn { flex: 1; height: 44px; line-height: 44px; text-align: center; border-radius: var(--r-pill); font-size: 15px; border: none; }
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
-.btn.confirm { background: #2DD4BF; color: #fff; }
+.btn.confirm { background: #10B981; color: #fff; }
 .btn.confirm[disabled] { opacity: 0.6; }
 </style>

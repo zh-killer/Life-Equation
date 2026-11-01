@@ -33,10 +33,10 @@ function goReminder() {
 }
 
 const sections = [
-  { key: 'indications', icon: 'pill', title: '适应症', color: '#2DD4BF', bg: '#E6FAF5' },
+  { key: 'indications', icon: 'pill', title: '适应症', color: '#2563EB', bg: '#EFF4FF' },
   { key: 'usageDosage', icon: 'file', title: '用法用量', color: '#34C759', bg: '#E8F5E9' },
   { key: 'contraindications', icon: 'shield', title: '禁忌事项', color: '#FF3B30', bg: '#FFEBEA' },
-  { key: 'adverseReactions', icon: 'activity', title: '不良反应', color: '#FF9500', bg: '#E6FAF5' },
+  { key: 'adverseReactions', icon: 'activity', title: '不良反应', color: '#FF9500', bg: '#EFF4FF' },
   { key: 'precautions', icon: 'clipboard', title: '注意事项', color: '#AF52DE', bg: '#F3E5F5' },
 ]
 </script>
@@ -102,7 +102,7 @@ const sections = [
 
 /* 头部 */
 .hero {
-  background: #2DD4BF;
+  background: #2563EB;
   padding: 24px 20px;
   display: flex; justify-content: space-between; align-items: center;
   position: relative;
@@ -139,14 +139,14 @@ const sections = [
 .actions { display: flex; gap: 8px; padding: 0 16px; }
 .btn-outline {
   flex: 1; height: 46px;
-  background: #fff; border: 1px solid #2DD4BF;
+  background: #fff; border: 1px solid #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }
-.btn-outline text { font-size: 14px; color: #2DD4BF; font-weight: 600; }
+.btn-outline text { font-size: 14px; color: #2563EB; font-weight: 600; }
 .btn-go {
   flex: 1; height: 46px;
-  background: #2DD4BF;
+  background: #2563EB;
   border-radius: 23px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }

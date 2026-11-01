@@ -98,7 +98,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
 .ph { color: #C7C7CC; }
 .search-btn {
   height: 30px; padding: 0 14px;
-  background: #2DD4BF; border-radius: 15px;
+  background: #2563EB; border-radius: 15px;
   display: flex; align-items: center; justify-content: center;
 }
 .search-btn text { color: #fff; font-size: 13px; }
@@ -110,7 +110,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
   background: #fff; border: 1px solid #F2F2F7;
 }
 .chip text { font-size: 13px; color: #8E8E93; }
-.chip.active { background: #2DD4BF; border-color: #2DD4BF; }
+.chip.active { background: #2563EB; border-color: #2563EB; }
 .chip.active text { color: #fff; }
 .chip.otc-chip.active { background: #34C759; border-color: #34C759; }
 .chip.clear text { color: #FF3B30; }
@@ -130,11 +130,11 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
 .card-body { flex: 1; min-width: 0; }
 .card-top { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
 .card-name { font-size: 15px; font-weight: 700; color: var(--c-text); }
-.badge { padding: 1px 6px; border-radius: 4px; background: #E6FAF5; }
+.badge { padding: 1px 6px; border-radius: 4px; background: #EFF4FF; }
 .badge text { font-size: 10px; color: #E65100; font-weight: 800; }
 .badge.otc { background: #E8F5E9; }
 .badge.otc text { color: #2E7D32; }
 .card-trade { font-size: 12px; color: #C7C7CC; display: block; }
-.card-cat { font-size: 12px; color: #7FDBFF; display: block; margin-top: 2px; }
+.card-cat { font-size: 12px; color: #60A5FA; display: block; margin-top: 2px; }
 .card-ind { font-size: 11px; color: #C7C7CC; margin-top: 4px; line-height: 1.4; display: block; }
 </style>

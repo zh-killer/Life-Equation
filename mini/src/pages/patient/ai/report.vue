@@ -124,7 +124,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <image v-if="filePath" :src="filePath" class="preview" mode="aspectFit" />
           <view v-else class="upload-placeholder">
             <view class="upload-icon-box">
-              <UiIcon name="file" :size="60" color="#7FDBFF" />
+              <UiIcon name="file" :size="60" color="#60A5FA" />
             </view>
             <text class="upload-text">点击上传报告图片</text>
             <text class="upload-tip">支持拍照或相册，JPG/PNG，≤10MB</text>
@@ -145,7 +145,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       <view class="card extra-card">
         <view class="extra-toggle" @click="showExtra = !showExtra">
           <view class="extra-left">
-            <UiIcon name="edit" :size="60" color="#7FDBFF" />
+            <UiIcon name="edit" :size="60" color="#60A5FA" />
             <text>手动补充数据（可选）</text>
           </view>
           <UiIcon :name="showExtra ? 'arrowUp' : 'arrowDown'" :size="60" color="#C7C7CC" />
@@ -160,14 +160,14 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </button>
 
       <view class="history-toggle" @click="loadHistory">
-        <UiIcon name="clock" :size="60" color="#7FDBFF" />
+        <UiIcon name="clock" :size="60" color="#60A5FA" />
         <text>{{ showHistory ? '收起' : '查看' }}历史报告</text>
       </view>
       <view v-if="showHistory" class="history-list">
         <view v-for="h in history" :key="h.id" class="card history-item" @click="viewHistory(h)">
           <view class="hi-left">
             <view class="hi-icon-box">
-              <UiIcon name="file" :size="60" color="#2DD4BF" />
+              <UiIcon name="file" :size="60" color="#2563EB" />
             </view>
             <text class="hi-type">{{ h.reportType || '报告' }}</text>
           </view>
@@ -180,7 +180,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 加载中 -->
     <view v-else-if="loading" class="loading-area">
       <view class="loading-icon-box">
-        <UiIcon name="robot" :size="40" color="#2DD4BF" />
+        <UiIcon name="robot" :size="40" color="#2563EB" />
       </view>
       <text class="loading-text">{{ stageText }}</text>
       <view class="loading-dots">
@@ -218,8 +218,8 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
       <view class="card result-section" v-if="result.interpretation">
         <view class="section-header">
-          <view class="section-icon" style="background: #E6FAF5">
-            <UiIcon name="brain" :size="64" color="#2DD4BF" />
+          <view class="section-icon" style="background: #EFF4FF">
+            <UiIcon name="brain" :size="64" color="#2563EB" />
           </view>
           <text class="section-title">AI 解读</text>
         </view>
@@ -237,7 +237,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
 
       <button class="btn-outline" @click="reset">
-        <UiIcon name="refresh" :size="64" color="#2DD4BF" />
+        <UiIcon name="refresh" :size="64" color="#2563EB" />
         <text>解读新报告</text>
       </button>
     </view>
@@ -253,7 +253,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .page { background: var(--c-bg); min-height: 100vh; }
 
 /* 渐变头部 */
-.gradient-header { background: #2DD4BF; padding-bottom: 28px; }
+.gradient-header { background: #2563EB; padding-bottom: 28px; }
 .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; }
 .nav-back { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .nav-title { font-size: 17px; font-weight: 700; color: #fff; }
@@ -273,37 +273,37 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .upload-zone { border: 2px dashed #D0D7DE; border-radius: var(--r-md); min-height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .preview { width: 100%; height: 160px; }
 .upload-placeholder { text-align: center; }
-.upload-icon-box { width: 64px; height: 64px; background: #E6FAF5; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
-.upload-text { font-size: 14px; color: #7FDBFF; display: block; }
+.upload-icon-box { width: 64px; height: 64px; background: #EFF4FF; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.upload-text { font-size: 14px; color: #60A5FA; display: block; }
 .upload-tip { font-size: 11px; color: var(--c-text-3); display: block; margin-top: 4px; }
 
 .picker-item { background: var(--c-bg); border-radius: var(--r-md); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; color: var(--c-text); font-size: 14px; }
 
 /* 额外数据 */
 .extra-toggle { display: flex; justify-content: space-between; align-items: center; }
-.extra-left { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #7FDBFF; }
+.extra-left { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #60A5FA; }
 .textarea { width: 100%; min-height: 80px; background: var(--c-bg); border-radius: var(--r-md); padding: 12px; font-size: 14px; box-sizing: border-box; margin-top: 12px; color: var(--c-text); }
 
 /* 按钮 */
-.btn-primary { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 48px; background: #2DD4BF; color: #fff; border: none; border-radius: var(--r-pill); font-size: 16px; font-weight: 600; margin-top: 4px; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
-.btn-outline { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 46px; background: #fff; color: #2DD4BF; border: 2px solid #2DD4BF; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; }
+.btn-primary { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 48px; background: #2563EB; color: #fff; border: none; border-radius: var(--r-pill); font-size: 16px; font-weight: 600; margin-top: 4px; box-shadow: 0 4px 12px rgba(26,60,110,0.25); }
+.btn-outline { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 46px; background: #fff; color: #2563EB; border: 2px solid #2563EB; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; }
 
 /* 历史记录 */
-.history-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 20px 0; color: #7FDBFF; font-size: 13px; }
+.history-toggle { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 20px 0; color: #60A5FA; font-size: 13px; }
 .history-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .hi-left { display: flex; align-items: center; gap: 10px; }
-.hi-icon-box { width: 32px; height: 32px; background: #E6FAF5; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-.hi-type { font-size: 14px; color: #2DD4BF; font-weight: 600; }
+.hi-icon-box { width: 32px; height: 32px; background: #EFF4FF; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.hi-type { font-size: 14px; color: #2563EB; font-weight: 600; }
 .hi-time { font-size: 12px; color: var(--c-text-3); }
 .empty-text { text-align: center; color: var(--c-text-3); padding: 20px; font-size: 13px; }
 
 /* 加载中 */
 .loading-area { padding: 80px 30px; text-align: center; }
-.loading-icon-box { width: 80px; height: 80px; background: #E6FAF5; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: pulse 2s ease-in-out infinite; }
+.loading-icon-box { width: 80px; height: 80px; background: #EFF4FF; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.92); } }
-.loading-text { font-size: 15px; color: #2DD4BF; font-weight: 600; display: block; }
+.loading-text { font-size: 15px; color: #2563EB; font-weight: 600; display: block; }
 .loading-dots { display: flex; justify-content: center; gap: 6px; margin: 16px 0; }
-.loading-dots .dot { width: 8px; height: 8px; background: #7FDBFF; border-radius: 50%; animation: bounce 1.4s ease-in-out infinite; }
+.loading-dots .dot { width: 8px; height: 8px; background: #60A5FA; border-radius: 50%; animation: bounce 1.4s ease-in-out infinite; }
 .loading-dots .dot:nth-child(2) { animation-delay: 0.2s; }
 .loading-dots .dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
