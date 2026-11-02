@@ -4,11 +4,16 @@
 #       application-local.yml 已被 .gitignore 忽略，不会提交到仓库。
 #       application.yml 里通过 spring.config.import 自动加载它。
 #
-# 这些 Key 也可以改用环境变量（DEEPSEEK_API_KEY / GAODE_AK / WECHAT_SECRET），
+# 这些 Key 也可以改用环境变量（JWT_SECRET / DEEPSEEK_API_KEY / GAODE_AK / WECHAT_SECRET），
 # Docker 部署时由 docker-compose 注入，此时不需要本文件。
 #
 # 注意：报告图片识别（AI 报告解读）也用这个 DeepSeek Key（多模态模型 deepseek-flash），
 #       不再需要智谱的 Key。
+
+# 必填：缺失或不足 32 字节时后端启动直接失败。
+# 生成方式可用：openssl rand -base64 48
+jwt:
+  secret: 换成至少32字节的随机串
 
 deepseek:
   api:
