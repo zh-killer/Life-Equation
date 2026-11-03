@@ -1,5 +1,6 @@
 # ============================================================
 # 生命方程式 - 后端 Dockerfile (Spring Boot 3.2.5 + JDK 18)
+# ⚠️ 实验性：配套 compose 未端到端验证，见 deploy/README.md
 # 先本地执行 mvn clean package -DskipTests 再 docker compose up -d
 # ============================================================
 

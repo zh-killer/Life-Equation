@@ -69,7 +69,10 @@ app:
 
 file:
   upload:
-    path: C:/Users/ZH/IdeaProjects/Quation of Life/uploads
+    # 相对路径：默认落在启动目录下的 uploads/（IDEA 与 mvn spring-boot:run 都是 backend/）。
+    # 不要写死绝对路径 —— 换台机器/换用户目录就写不进去，报告图和头像会直接上传失败。
+    # 需要改位置就设环境变量 FILE_UPLOAD_PATH。
+    path: ${FILE_UPLOAD_PATH:./uploads}
 
 # 高德地图地理编码（每天免费5000次）
 gaode:

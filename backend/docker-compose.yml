@@ -1,5 +1,7 @@
 # ============================================================
 # 生命方程式 - Docker Compose 编排
+# ⚠️ 实验性：未在干净环境端到端验证，直接 up 会在若干步失败。
+#    已知缺口与补法见 deploy/README.md，补完再跑。
 # 启动: docker compose up -d
 # 查看: docker compose ps
 # 停止: docker compose down
@@ -80,7 +82,8 @@ services:
   # --- 前端 Vue + Nginx ---
   frontend:
     build:
-      context: ../life_eqation
+      # 早先目录叫 life_eqation，现在仓库里是 web/
+      context: ../web
       dockerfile: Dockerfile
     container_name: life-frontend
     restart: unless-stopped

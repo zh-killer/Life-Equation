@@ -98,7 +98,7 @@
 | **地图服务** | 高德地图 API（地理编码） |
 | **Web 前端** | Vue 3 + Vite + Element Plus + ECharts + Axios |
 | **小程序** | Uni-app (Vue 3) → 微信小程序 |
-| **部署** | Docker Compose + Nginx |
+| **部署** | Nginx 反向代理 + Docker（编排脚本在 `backend/`，未端到端验证，见 `deploy/README.md`） |
 | **API 文档** | Knife4j (Swagger) |
 
 ---
@@ -106,7 +106,7 @@
 ## 📁 项目结构
 
 ```
--Life-Equation/
+Life-Equation/
 ├── backend/                          # Spring Boot 后端
 │   ├── src/main/java/com/lifeequation/
 │   │   ├── common/                   # 通用工具（JWT、全局异常处理等）
@@ -123,8 +123,8 @@
 │   │       ├── WeChatService         # 微信登录
 │   │       └── BaiduMapService       # 地图服务
 │   ├── src/main/resources/
-│   │   ├── application.yml           # 开发环境配置（密钥通过 config/application-local.yml 注入）
-│   │   └── application-prod.yml      # 生产环境配置
+│   │   ├── application.yml           # 主配置（密钥通过 config/application-local.yml 注入）
+│   │   └── rbac-schema.sql           # 权限表 DDL
 │   ├── config/
 │   │   └── application-local.yml.example  # 本地密钥模板（复制为 application-local.yml 后填写）
 │   ├── init.sql                      # 数据库初始化脚本
@@ -133,7 +133,7 @@
 │   ├── doctor_fee_update.sql         # 按职称重定挂号费
 │   ├── schedule_rollout.sql          # 生成未来 30 天排班（幂等）
 │   ├── Dockerfile
-│   ├── docker-compose.yml            # 一键启动 MySQL + Redis + 后端 + 前端
+│   ├── docker-compose.yml            # 容器编排（实验性，未端到端验证）
 │   └── pom.xml
 │
 ├── web/                              # Vue 3 Web 管理端
@@ -164,7 +164,9 @@
 │   ├── package.json
 │   └── vite.config.js
 │
-├── .env.example                      # 环境变量模板（部署前复制为 .env 并填写）
+├── deploy/
+│   └── README.md                     # 容器化已知缺口与验证步骤
+├── .env.example                      # 环境变量模板（容器部署时复制为 .env）
 ├── .gitignore
 └── README.md
 ```
@@ -181,66 +183,33 @@
 - **MySQL 8.0 + Redis 7** — 数据存储与缓存
 - **微信开发者工具** — 小程序调试运行
 
-### 方式一：Docker Compose 一键部署（推荐生产环境）
+### 方式一：本地开发（推荐）
 
-```bash
-# 1. 克隆项目
-git clone https://github.com/zh-killer/-Life-Equation.git
-cd -Life-Equation
-
-# 2. 配置环境变量
-cp .env.example .env
-# 编辑 .env 填写你的 API Key：DEEPSEEK_API_KEY 等
-
-# 3. 构建后端 JAR
-cd backend
-mvn clean package -DskipTests
-cd ..
-
-# 4. 构建前端
-cd web
-npm install && npm run build
-cd ..
-
-# 5. 一键启动所有服务（MySQL + Redis + 后端 + 前端 Nginx）
-cd backend
-docker compose up -d
-
-# 6. 访问
-# Web 前端: http://localhost
-# 后端 API: http://localhost:8080
-# API 文档: http://localhost:8080/doc.html
-```
-
-### 方式二：本地开发启动
-
-**启动后端：**
+**1. 后端**
 
 ```bash
 cd backend
 
-# 确保 MySQL 和 Redis 已在本地运行
+# 先在本地跑起 MySQL 3306 / Redis 6379
 
-# 填密钥：把 config/application-local.yml.example 复制为 config/application-local.yml
-# 修改 application.yml 中的数据库连接信息，或设置环境变量
-# 然后启动
+# 密钥不进仓库：把模板复制成实际配置再填
+cp config/application-local.yml.example config/application-local.yml
+
 mvn spring-boot:run
-
-# 后端运行在 http://localhost:8888
-# API 文档: http://localhost:8888/doc.html
+# 后端:     http://localhost:8888
+# 接口文档: http://localhost:8888/doc.html
 ```
 
-**启动 Web 前端：**
+**2. Web 端**
 
 ```bash
 cd web
 npm install
 npm run dev
-
-# 前端运行在 http://localhost:5173
+# http://localhost:5173
 ```
 
-**启动小程序：**
+**3. 小程序**
 
 ```bash
 cd mini
@@ -250,11 +219,27 @@ npm run dev:mp-weixin
 # 用微信开发者工具打开 mini/dist/dev/mp-weixin 目录
 ```
 
+> 上传的文件默认落在 `backend/uploads/`；要换位置就设环境变量 `FILE_UPLOAD_PATH`，
+> 不要把绝对路径写进 `application.yml`（换台机器就写不进去了）。
+
+### 方式二：容器化（实验性，未端到端验证）
+
+`backend/docker-compose.yml` + `backend/Dockerfile` 把 MySQL / Redis / 后端 / Nginx 串成一套编排，但**没有在干净环境里跑通过**：前端构建目录写的是改名前的老名字、prod 配置缺文件、容器内数据源仍指向 localhost、env 文件位置与 README 不一致。
+
+这些缺口和逐条补法都记在 [`deploy/README.md`](deploy/README.md) 里。想用容器就跑之前先照着补完，不要直接 `docker compose up`。
+
 ---
 
 ## 🔧 环境变量配置
 
-复制 `.env.example` 为 `.env`，填写以下配置：
+两种填法，选一种即可：
+
+- **本地开发**：`cp backend/config/application-local.yml.example backend/config/application-local.yml`，把下面的值写进这个文件（该文件已被 `.gitignore` 忽略）。
+- **容器部署**：`cp .env.example .env`，compose 从 `.env` 读环境变量。
+
+同一个 Key 在两种写法里名字不同（yml 里是 `jwt.secret`，env 里是 `JWT_SECRET`），改的时候别只改一处。
+
+下表按环境变量写：
 
 | 变量名 | 说明 | 必填 |
 |--------|------|------|
@@ -339,14 +324,14 @@ npm run dev:mp-weixin
           │ 调用 REST API
           ▼
 ┌──────────────────────┐      ┌─────────┐
-│   Quation of Life     │ ──── │  MySQL  │
+│   life-equation       │ ──── │  MySQL  │
 │      (backend/)       │ ──── │  Redis  │
 │   Spring Boot 后端    │      └─────────┘
 └─────────┬────────────┘
           │ 同一套 API
           ▼
 ┌──────────────────────┐
-│     life_eqation      │  Web 管理端 (Vue 3)
+│        web            │  Web 管理端 (Vue 3)
 │       (web/)         │  患者 + 医生 + 管理员
 └──────────────────────┘
 ```
