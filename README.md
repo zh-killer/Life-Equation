@@ -166,6 +166,7 @@ Life-Equation/
 │
 ├── deploy/
 │   └── README.md                     # 容器化已知缺口与验证步骤
+├── LICENSE                           # MIT
 ├── .env.example                      # 环境变量模板（容器部署时复制为 .env）
 ├── .gitignore
 └── README.md
