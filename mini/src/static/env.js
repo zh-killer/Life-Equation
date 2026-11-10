@@ -12,7 +12,7 @@ var CURRENT_ENV = 'lan'
 
 var ENV_LIST = {
   dev:        'http://localhost:8888/api',
-  lan:        'http://10.16.18.201:8888/api',
+  lan:        'http://192.168.88.152:8888/api',
   production: 'https://your-server.com/api',
 }
 

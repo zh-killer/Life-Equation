@@ -21,7 +21,10 @@ function getLanIp() {
       lower.includes('docker') ||
       lower.includes('hyper-v') ||
       lower.includes('bluetooth') ||
-      lower.includes('loopback')
+      lower.includes('loopback') ||
+      lower.includes('wi-fi direct') ||
+      lower.includes('本地连接') ||
+      name.includes('*')
     ) continue
 
     for (const addr of addrs) {
