@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ★★★ 环境配置 ★★★
  * 手动切换 CURRENT_ENV：
  *   'dev'        → 微信开发者工具，本机后端
@@ -8,11 +8,12 @@
  * ⚠ 发布前务必改成 'production'。微信正式版/体验版只允许 https + 白名单域名，
  *   指向 http://10.x.x.x 的包在真机上所有请求都会失败。
  */
+// lan 默认占位符；真机调试前执行 npm run set-ip，脚本会写入本机局域网 IP
 var CURRENT_ENV = 'lan'
 
 var ENV_LIST = {
   dev:        'http://localhost:8888/api',
-  lan:        'http://192.168.88.152:8888/api',
+  lan:        'http://127.0.0.1:8888/api',
   production: 'https://your-server.com/api',
 }
 
