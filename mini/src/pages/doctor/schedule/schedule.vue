@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { getDoctorSchedules, addDoctorSchedule, deleteDoctorSchedule, stopDoctorSchedule } from '@/utils/api'
+import { getDoctorSchedules, addDoctorSchedule, updateDoctorSchedule, deleteDoctorSchedule, stopDoctorSchedule } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
 const schedules = ref([])
@@ -16,6 +16,9 @@ const showAdd = ref(false)
 const addForm = ref({ scheduleDate: '', timeSlot: '上午', type: '普通门诊', maxSlots: 20 })
 const timeSlots = ['上午', '下午', '晚上']
 const clinicTypes = ['普通门诊', '专家门诊', '特需门诊']
+
+const showEdit = ref(false)
+const editForm = ref({ id: null, date: '', timeSlot: '上午', type: '普通门诊', maxSlots: 20, bookedCount: 0 })
 
 const showStop = ref(false)
 const stopForm = ref({ scheduleDate: '', reason: '' })
@@ -67,6 +70,37 @@ async function doAdd() {
     showAdd.value = false
     fetchData()
   } catch {}
+}
+
+const slotMin = computed(() => Math.max(5, editForm.value.bookedCount || 0))
+
+function openEdit(s) {
+  editForm.value = {
+    id: s.id,
+    date: s.scheduleDate,
+    timeSlot: s.timeSlot || '上午',
+    type: s.type || '普通门诊',
+    maxSlots: s.maxSlots || 20,
+    bookedCount: s.bookedCount || 0
+  }
+  showEdit.value = true
+}
+
+async function doEdit() {
+  const lower = Math.max(5, editForm.value.bookedCount)
+  if (editForm.value.maxSlots < lower) {
+    uni.showToast({ title: `号源不能少于 ${lower}`, icon: 'none' })
+    return
+  }
+  try {
+    await updateDoctorSchedule(editForm.value.id, {
+      timeSlot: editForm.value.timeSlot,
+      maxSlots: editForm.value.maxSlots
+    })
+    uni.showToast({ title: '已保存' })
+    showEdit.value = false
+    fetchData()
+  } catch (e) {}
 }
 
 async function doDelete(s) {
@@ -169,37 +203,87 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 
     <!-- 排班列表 -->
     <view v-else class="list">
-      <view v-for="s in schedules" :key="s.id" class="card schedule-card" :class="{ off: s.status === 0 }">
-        <view class="card-top">
-          <view class="date-block">
-            <text class="s-date">{{ s.scheduleDate }}</text>
-            <view class="s-slot-row">
-              <UiIcon name="clock" :size="50" color="#64748B" />
-              <text class="s-slot">{{ s.timeSlot }}</text>
-            </view>
-          </view>
-          <view class="tag-area">
+      <view v-for="s in schedules" :key="s.id" class="srow" :class="{ off: s.status === 0 }" @click="openEdit(s)">
+        <view class="srow-date">
+          <text class="d-text">{{ s.scheduleDate }}</text>
+          <text class="d-sub">{{ s.timeSlot }}</text>
+        </view>
+        <view class="srow-mid">
+          <view class="srow-tags">
             <text class="type-tag" :class="typeColor(s.type)">{{ s.type }}</text>
             <text class="status-tag" :class="{ off: s.status === 0 }">{{ s.status === 1 ? '正常' : '已停诊' }}</text>
+            <text class="num-text">{{ s.bookedCount || 0 }}/{{ s.maxSlots }}</text>
           </view>
-        </view>
-        <view class="slot-bar">
-          <view class="slot-info">
-            <text class="slot-label">号源</text>
-            <text class="slot-num">{{ s.bookedCount || 0 }} / {{ s.maxSlots }}</text>
-          </view>
-          <view class="slot-progress">
+          <view class="srow-bar">
             <view class="progress-bar">
-              <view class="progress-fill" :style="{ width: ((s.bookedCount || 0) / s.maxSlots * 100) + '%' }"></view>
+              <view class="progress-fill"
+                    :style="{ width: ((s.bookedCount || 0) / s.maxSlots * 100) + '%' }"></view>
             </view>
             <text class="slot-remain">剩 {{ s.maxSlots - (s.bookedCount || 0) }}</text>
           </view>
         </view>
-        <view class="card-actions">
-          <view class="action-btn danger" @click="doDelete(s)">
-            <UiIcon name="close" :size="54" color="#EF4444" />
-            <text>删除</text>
+        <view class="srow-act" @click.stop="doDelete(s)">
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 编辑弹窗 -->
+    <view v-if="showEdit" class="modal-mask" @click="showEdit = false">
+      <view class="modal" @click.stop>
+        <view class="modal-header">
+          <text class="modal-title">修改排班</text>
+          <view class="modal-close" @click="showEdit = false">
+            <UiIcon name="close" :size="40" color="#94A3B8" />
           </view>
+        </view>
+        <view class="edit-date">{{ editForm.date }}</view>
+
+        <view class="form-row">
+          <text class="form-label">时段</text>
+          <picker mode="selector" :range="timeSlots" :value="timeSlots.indexOf(editForm.timeSlot)"
+                  @change="e => editForm.timeSlot = timeSlots[e.detail.value]">
+            <view class="picker-item">
+              <text>{{ editForm.timeSlot }}</text>
+              <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
+            </view>
+          </picker>
+        </view>
+
+        <view class="form-row">
+          <text class="form-label">门诊类型</text>
+          <view class="readonly-val">
+            <text>{{ editForm.type }}</text>
+            <text class="lock-tip">门诊部设定</text>
+          </view>
+        </view>
+
+        <view class="form-row">
+          <text class="form-label">号源上限</text>
+          <view class="num-control">
+            <view class="num-btn" :class="{ dim: editForm.maxSlots <= slotMin }"
+                  @click="editForm.maxSlots > slotMin && (editForm.maxSlots = editForm.maxSlots - 1)">−</view>
+            <text class="num-val">{{ editForm.maxSlots }}</text>
+            <view class="num-btn" :class="{ dim: editForm.maxSlots >= 50 }"
+                  @click="editForm.maxSlots < 50 && (editForm.maxSlots = editForm.maxSlots + 1)">+</view>
+          </view>
+        </view>
+
+        <view class="form-row">
+          <text class="form-label">已预约</text>
+          <view class="readonly-val">
+            <text>{{ editForm.bookedCount }} 人</text>
+            <text class="lock-tip">系统统计</text>
+          </view>
+        </view>
+
+        <view class="form-tip">
+          号源可在 {{ slotMin }}~50 之间调整；门诊类型与已预约数由门诊部和系统维护。
+        </view>
+
+        <view class="modal-btns">
+          <view class="btn-cancel" @click="showEdit = false">取消</view>
+          <view class="btn-confirm" @click="doEdit">保存</view>
         </view>
       </view>
     </view>
@@ -320,35 +404,50 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .empty-title { font-size: 16px; font-weight: 600; color: var(--c-text); display: block; }
 .empty-desc { font-size: 13px; color: var(--c-text-3); display: block; margin-top: 4px; }
 
-/* 排班卡片 */
-.schedule-card { padding: 16px; }
-.schedule-card.off { opacity: 0.6; }
-.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-.date-block { display: flex; flex-direction: column; }
-.s-date { font-size: 15px; font-weight: 700; color: var(--c-text); }
-.s-slot-row { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
-.s-slot { font-size: 12px; color: var(--c-text-3); }
-.tag-area { display: flex; gap: 6px; }
-.type-tag { font-size: 10px; padding: 3px 8px; border-radius: var(--r-pill); font-weight: 600; }
-.type-tag.normal { background: #ECFDF5; color: #10B981; }
-.type-tag.expert { background: #ECFDF5; color: #B45309; }
+/* 排班行：一行一条，避免内容把卡片撑高 */
+.srow {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: var(--r-lg);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.srow.off { opacity: 0.55; }
+
+.srow-date {
+  width: 92px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+.d-text { font-size: 14px; font-weight: 700; color: var(--c-text); line-height: 1.2; }
+.d-sub { font-size: 11px; color: var(--c-text-3); margin-top: 2px; }
+
+.srow-mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+
+.srow-tags { display: flex; align-items: center; gap: 6px; }
+.type-tag { font-size: 10px; padding: 2px 8px; border-radius: var(--r-pill); font-weight: 600; }
+.type-tag.normal { background: #ECFDF5; color: #059669; }
+.type-tag.expert { background: #FEF3C7; color: #B45309; }
 .type-tag.special { background: #F5F3FF; color: #6D28D9; }
-.status-tag { font-size: 10px; padding: 3px 8px; border-radius: var(--r-pill); background: #ECFDF5; color: #047857; font-weight: 600; }
+.status-tag { font-size: 10px; padding: 2px 8px; border-radius: var(--r-pill); background: #ECFDF5; color: #047857; font-weight: 600; }
 .status-tag.off { background: #FEF2F2; color: #B91C1C; }
+.num-text { font-size: 11px; color: var(--c-text-3); margin-left: auto; }
 
-.slot-bar { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #F5F7FA; }
-.slot-info { display: flex; flex-direction: column; }
-.slot-label { font-size: 11px; color: var(--c-text-3); }
-.slot-num { font-size: 15px; font-weight: 700; color: var(--c-text); }
-.slot-progress { flex: 1; display: flex; align-items: center; gap: 8px; }
-.progress-bar { flex: 1; height: 6px; background: #F5F7FA; border-radius: 3px; overflow: hidden; }
-.progress-fill { height: 100%; background: #10B981; border-radius: 3px; transition: width 0.3s; }
-.slot-remain { font-size: 11px; color: #10B981; font-weight: 600; min-width: 30px; }
+.srow-bar { display: flex; align-items: center; gap: 8px; }
+.progress-bar { flex: 1; height: 5px; background: #F1F5F9; border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: #10B981; border-radius: 3px; }
+.slot-remain { font-size: 10px; color: #10B981; font-weight: 600; flex-shrink: 0; }
 
-.card-actions { display: flex; justify-content: flex-end; padding-top: 10px; border-top: 1px solid #F5F7FA; }
-.action-btn { display: flex; align-items: center; gap: 4px; padding: 6px 14px; border-radius: var(--r-pill); }
-.action-btn text { font-size: 12px; }
-.action-btn.danger { background: #FEF2F2; }
+.srow-act {
+  flex-shrink: 0;
+  margin-left: 10px;
+  padding: 6px 10px;
+  border-radius: var(--r-pill);
+  background: #FEF2F2;
+}
+.srow-act text { font-size: 12px; color: #EF4444; }
 
 /* 弹窗 */
 .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: flex-end; }
@@ -368,4 +467,10 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .btn { flex: 1; height: 44px; line-height: 44px; text-align: center; border-radius: var(--r-pill); font-size: 15px; border: none; }
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
 .btn.confirm { background: #10B981; color: #fff; }
+.edit-date { padding: 4px 0 12px; font-size: 15px; font-weight: 700; color: var(--c-text); }
+.readonly-val { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--c-text-2); }
+.lock-tip { font-size: 10px; color: var(--c-text-3); background: #F1F5F9; padding: 2px 6px; border-radius: 6px; }
+.num-btn.dim { opacity: 0.35; }
+.form-tip { font-size: 11px; color: var(--c-text-3); line-height: 1.5; padding: 10px 0 4px; }
+
 </style>

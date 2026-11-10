@@ -3,6 +3,9 @@ import { ref, onMounted } from 'vue'
 import { getDoctorReviews } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
+const statusBarHeight = ref(0)
+uni.getSystemInfo({ success: (res) => { statusBarHeight.value = res.statusBarHeight || 0 } })
+
 const loading = ref(true)
 const reviews = ref([])
 const ratingSummary = ref({ avgRating: 0, count: 0 })
@@ -38,7 +41,7 @@ function formatTime(t) {
 <template>
   <view class="page">
     <!-- 头部 -->
-    <view class="nav-bar">
+    <view class="nav-bar" :style="{ paddingTop: statusBarHeight + 8 + 'px' }">
       <view class="nav-back" @click="uni.navigateBack()">
         <UiIcon name="back" :size="44" color="#10B981" />
       </view>

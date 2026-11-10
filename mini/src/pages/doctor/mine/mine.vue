@@ -1,10 +1,22 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getUserInfo, updateProfile, changePassword, logout, uploadAvatar } from '@/utils/api'
+import { ref, computed, onMounted } from 'vue'
+import { getUserInfo, updateProfile, changePassword, logout, uploadAvatarBase64, getAvatarBase64 } from '@/utils/api'
 import config from '@/utils/config'
 import UiIcon from '@/components/ui-icon.vue'
 
 const userInfo = ref(null)
+
+const avatarSrc = computed(() => {
+  const u = userInfo.value && userInfo.value.avatarUrl
+  if (!u) return ''
+  if (/^https?:\/\//.test(u)) return u
+  const base = (config && config.uploadBase) || ''
+  return base + (u.charAt(0) === '/' ? u : '/' + u)
+})
+
+function onAvatarError() {
+  if (userInfo.value) userInfo.value = { ...userInfo.value, avatarUrl: '' }
+}
 const loading = ref(false)
 
 const showEdit = ref(false)
@@ -15,7 +27,19 @@ const showPwd = ref(false)
 const pwdForm = ref({ oldPassword: '', newPassword: '', confirmPassword: '' })
 const changingPwd = ref(false)
 
-onMounted(loadUserInfo)
+const avatarDataUri = ref('')
+
+async function loadAvatar() {
+  try {
+    const res = await getAvatarBase64()
+    if (res.data) avatarDataUri.value = res.data
+  } catch {}
+}
+
+onMounted(() => {
+  loadUserInfo()
+  loadAvatar()
+})
 
 async function loadUserInfo() {
   try {
@@ -40,17 +64,39 @@ function editAvatar() {
   uni.chooseImage({
     count: 1, sizeType: ['compressed'], sourceType: ['album', 'camera'],
     success: async (res) => {
+      const tempPath = res.tempFilePaths[0]
+      // 先本地预览，用户立刻能看到变化
+      localPreview.value = tempPath
       try {
-        uni.showLoading({ title: '上传中...' })
-        const result = await uploadAvatar(res.tempFilePaths[0])
+        uni.showLoading({ title: '上传中...', mask: true })
+        const fs = uni.getFileSystemManager()
+        const base64 = fs.readFileSync(tempPath, 'base64')
+        const ext = (tempPath.split('.').pop() || 'jpg').toLowerCase()
+        console.log('[avatar] base64 长度', base64.length)
+        const result = await uploadAvatarBase64({ file: base64, ext })
+        console.log('[avatar] 上传返回', JSON.stringify(result))
         userInfo.value = { ...userInfo.value, avatarUrl: result.data }
         uni.setStorageSync('userInfo', JSON.stringify(userInfo.value))
+        const avRes = await getAvatarBase64()
+        if (avRes && avRes.data) {
+          avatarDataUri.value = avRes.data
+          localPreview.value = ''
+        }
         uni.hideLoading()
-        uni.showToast({ title: '头像已上传' })
-      } catch { uni.hideLoading() }
+        uni.showToast({ title: '头像已更新' })
+      } catch (e) {
+        uni.hideLoading()
+        const msg = (e && (e.message || e.errMsg)) || '上传失败'
+        console.error('[avatar] 失败', msg)
+        uni.showToast({ title: '头像保存失败：' + msg, icon: 'none', duration: 3000 })
+      }
     }
   })
 }
+
+function goPatients() { uni.navigateTo({ url: '/pages/doctor/patients/patients' }) }
+function goSchedule() { uni.navigateTo({ url: '/pages/doctor/schedule/schedule' }) }
+function goReviews() { uni.navigateTo({ url: '/pages/doctor/reviews/reviews' }) }
 
 async function saveEdit() {
   if (!editForm.value.realName.trim()) { uni.showToast({ title: '请填写姓名', icon: 'none' }); return }
@@ -116,7 +162,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
       </view>
       <view class="user-card">
         <view class="avatar-wrap" @click="editAvatar">
-          <image v-if="userInfo?.avatarUrl" class="avatar-img" :src="config.uploadBase + userInfo.avatarUrl" mode="aspectFill" />
+          <image v-if="localPreview || avatarDataUri || avatarSrc" class="avatar-img" :src="localPreview || avatarDataUri || avatarSrc" mode="aspectFill" @error="onAvatarError" />
           <view v-else class="avatar-default">{{ userInfo?.realName?.charAt(0) || userInfo?.username?.charAt(0) || 'D' }}</view>
           <view class="avatar-camera"><text>📷</text></view>
         </view>
@@ -133,7 +179,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 功能菜单 -->
     <view class="section">
       <text class="section-title">工作管理</text>
-      <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/patients/patients' })">
+      <view class="menu-item" @click="goPatients">
         <view class="mi-icon-box" style="background: #ECFDF5">
           <UiIcon name="user" :size="64" color="#34D399" />
         </view>
@@ -142,7 +188,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
-      <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/schedule/schedule' })">
+      <view class="menu-item" @click="goSchedule">
         <view class="mi-icon-box" style="background: #ECFDF5">
           <UiIcon name="calendar" :size="64" color="#10B981" />
         </view>
@@ -151,7 +197,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <UiIcon name="chevronRight" :size="60" color="#94A3B8" />
         </view>
       </view>
-      <view class="menu-item" @click="uni.navigateTo({ url: '/pages/doctor/reviews/reviews' })">
+      <view class="menu-item" @click="goReviews">
         <view class="mi-icon-box" style="background: #FFFBEB">
           <UiIcon name="star" :size="64" color="#F59E0B" />
         </view>

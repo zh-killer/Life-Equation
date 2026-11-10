@@ -143,6 +143,9 @@ async function handleLogout() {
             <router-link to="/admin/doctors" class="nav-item sub-item" :class="{ active: route.path.startsWith('/admin/doctors') }">
               <el-icon><UserFilled /></el-icon> 医生管理
             </router-link>
+            <router-link to="/admin/schedules" class="nav-item sub-item" :class="{ active: route.path.startsWith('/admin/schedules') }">
+              <el-icon><Calendar /></el-icon> 排班管理
+            </router-link>
           </div>
           <div class="nav-divider"></div>
           <div class="menu-group">

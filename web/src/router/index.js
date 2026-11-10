@@ -45,6 +45,7 @@ const routes = [
       { path: 'admin/dashboard', name: 'AdminDashboard', component: () => import('@/views/admin/AdminDashboard.vue'), meta: { title: '管理仪表盘', requireAdmin: true } },
       { path: 'admin/hospitals', name: 'HospitalManagement', component: () => import('@/views/admin/HospitalManagement.vue'), meta: { title: '本院信息', requireAdmin: true } },
       { path: 'admin/doctors', name: 'DoctorManagement', component: () => import('@/views/admin/DoctorManagement.vue'), meta: { title: '医生管理', requireAdmin: true } },
+      { path: 'admin/schedules', name: 'ScheduleManagement', component: () => import('@/views/admin/ScheduleManagement.vue'), meta: { title: '排班管理', requireAdmin: true } },
       { path: 'admin/articles', name: 'ArticleManagement', component: () => import('@/views/admin/ArticleManagement.vue'), meta: { title: '文章管理', requireAdmin: true } },
       { path: 'admin/diseases', name: 'DiseaseManagement', component: () => import('@/views/admin/DiseaseManagement.vue'), meta: { title: '疾病管理', requireAdmin: true } },
       { path: 'admin/drugs', name: 'DrugManagement', component: () => import('@/views/admin/DrugManagement.vue'), meta: { title: '药品管理', requireAdmin: true } },

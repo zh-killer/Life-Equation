@@ -30,11 +30,11 @@
     },
     {
       "path": "pages/patient/ai/health-advice",
-      "style": { "navigationBarTitleText": "AI 健康建议" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "AI 健康建议" }
     },
     {
       "path": "pages/patient/ai/report",
-      "style": { "navigationBarTitleText": "AI 报告解读" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "AI 报告解读" }
     },
     {
       "path": "pages/patient/appointment/appointment",
@@ -50,7 +50,7 @@
     },
     {
       "path": "pages/patient/disease/detail",
-      "style": { "navigationBarTitleText": "疾病详情" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "疾病详情" }
     },
     {
       "path": "pages/patient/drug/drug",
@@ -58,7 +58,7 @@
     },
     {
       "path": "pages/patient/drug/detail",
-      "style": { "navigationBarTitleText": "药品详情" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "药品详情" }
     },
     {
       "path": "pages/patient/pharmacy/pharmacy",
@@ -66,7 +66,7 @@
     },
     {
       "path": "pages/patient/pharmacy/detail",
-      "style": { "navigationBarTitleText": "药房详情" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "药房详情" }
     },
     {
       "path": "pages/patient/article/article",
@@ -74,7 +74,7 @@
     },
     {
       "path": "pages/patient/article/detail",
-      "style": { "navigationBarTitleText": "资讯详情" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "资讯详情" }
     },
     {
       "path": "pages/patient/guide/guide",
@@ -82,11 +82,11 @@
     },
     {
       "path": "pages/patient/health/health",
-      "style": { "navigationBarTitleText": "我的咨询" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "我的咨询" }
     },
     {
       "path": "pages/patient/consultation/list",
-      "style": { "navigationBarTitleText": "问答社区" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "问答社区" }
     },
     {
       "path": "pages/patient/consultation/detail",
@@ -94,11 +94,11 @@
     },
     {
       "path": "pages/patient/records/records",
-      "style": { "navigationBarTitleText": "我的病历" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "我的病历" }
     },
     {
       "path": "pages/patient/notifications/notifications",
-      "style": { "navigationBarTitleText": "消息中心" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "消息中心" }
     },
     {
       "path": "pages/patient/family/list",
@@ -130,23 +130,23 @@
     },
     {
       "path": "pages/doctor/consult/consult",
-      "style": { "navigationBarTitleText": "咨询回复" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "咨询回复" }
     },
     {
       "path": "pages/doctor/schedule/schedule",
-      "style": { "navigationBarTitleText": "排班管理" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "排班管理" }
     },
     {
       "path": "pages/doctor/mine/mine",
-      "style": { "navigationBarTitleText": "我的" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "我的" }
     },
     {
       "path": "pages/doctor/patients/patients",
-      "style": { "navigationBarTitleText": "患者管理" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "患者管理" }
     },
     {
       "path": "pages/doctor/reviews/reviews",
-      "style": { "navigationBarTitleText": "患者评价" }
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "患者评价" }
     }
   ],
   "globalStyle": {

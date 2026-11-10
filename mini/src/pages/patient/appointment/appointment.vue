@@ -324,9 +324,9 @@ function goReview(a) {
 }
 .add-btn text { font-size: 13px; color: #fff; }
 
-.list { display: flex; flex-direction: column; gap: 10px; }
+.list { display: flex; flex-direction: column; gap: 8px; }
 .card {
-  background: #fff; border-radius: 14px; padding: 14px 16px;
+  background: #fff; border-radius: 14px; padding: 12px 14px;
   box-shadow: none;
 }
 .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
@@ -339,12 +339,17 @@ function goReview(a) {
 }
 .card-doctor { font-size: 15px; font-weight: 700; color: var(--c-text); display: block; }
 .card-dept { font-size: 12px; color: #64748B; }
-.status-badge { padding: 3px 10px; border-radius: 12px; }
+.status-badge { padding: 4px 10px; border-radius: 12px; flex-shrink: 0; }
+.status-badge text { font-size: 11px; font-weight: 600; }
 .status-badge text { font-size: 12px; font-weight: 600; }
 .card-info-row { display: flex; flex-direction: column; gap: 4px; }
 .info-item { display: flex; align-items: center; gap: 6px; }
 .info-item text { font-size: 13px; color: #64748B; }
-.card-symptom { font-size: 12px; color: #94A3B8; margin-top: 8px; display: block; padding: 8px; background: #FFFFFF; border-radius: 8px; }
+.card-symptom {
+  font-size: 12px; color: #94A3B8; margin-top: 8px; display: block;
+  padding: 6px 8px; background: #F8FAFC; border-radius: 8px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 
 .empty-state { display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
 .empty-icon { width: 72px; height: 72px; border-radius: 50%; background: #F5F7FA; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }

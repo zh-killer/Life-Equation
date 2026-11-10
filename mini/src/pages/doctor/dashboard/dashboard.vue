@@ -96,15 +96,13 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <view class="gradient-header" :style="{ paddingTop: statusBarHeight + 10 + 'px' }">
       <view class="nav-bar">
         <text class="nav-title">医生工作台</text>
-        <view class="status-toggle">
-          <text class="status-label">接诊状态</text>
-          <switch :checked="workbench?.isAvailable === 1" @change="toggleAvail" color="#10B981" :disabled="loading" />
-        </view>
       </view>
       <view class="header-body">
-        <view class="status-badge" :class="workbench?.isAvailable === 1 ? 'on' : 'off'">
-          <view class="status-dot"></view>
-          <text>{{ workbench?.isAvailable === 1 ? '接诊中' : '已停诊' }}</text>
+        <view class="avail-row" @click="loading ? null : toggleAvail()">
+          <text class="avail-label">{{ workbench?.isAvailable === 1 ? '接诊中' : '已停诊' }}</text>
+          <view class="avail-track" :class="{ on: workbench?.isAvailable === 1 }">
+            <view class="avail-knob"></view>
+          </view>
         </view>
         <view class="header-actions">
           <view class="header-action-btn" @click="goSchedule">
@@ -289,19 +287,20 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .header-actions { display: flex; gap: 4px; }
 .header-action-btn { display: flex; align-items: center; gap: 3px; padding: 6px 10px; border-radius: var(--r-pill); background: rgba(255,255,255,0.15); }
 .header-action-btn text { font-size: 11px; color: #fff; font-weight: 500; }
-.status-badge.on { background: rgba(92,184,92,0.25); }
-.status-badge.off { background: rgba(255,255,255,0.15); }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; }
-.status-badge.on .status-dot { background: #10B981; }
+.status-badge.on { background: #FFFFFF; color: #059669; }
+.status-badge.off { background: rgba(255,255,255,0.16); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.55); }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.status-badge.on .status-dot { background: #059669; }
 .status-badge.off .status-dot { background: rgba(255,255,255,0.6); }
-.status-badge text { font-size: 13px; font-weight: 600; color: #fff; }
+.status-badge text { font-size: 13px; font-weight: 600; color: inherit; }
+.status-hint { font-size: 10px; opacity: 0.65; margin-left: 2px; }
 
 /* 统计卡片 */
 .stats { display: flex; gap: 10px; padding: 16px; }
-.stat-card { flex: 1; background: #fff; border-radius: var(--r-lg); padding: 16px 8px; text-align: center; box-shadow: none; }
+.stat-card { flex: 1; min-width: 0; background: #fff; border-radius: var(--r-lg); padding: 14px 6px; text-align: center; box-shadow: none; }
 .stat-icon-box { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
 .stat-num { font-size: 26px; font-weight: 800; color: var(--c-text); display: block; }
-.stat-label { font-size: 11px; color: var(--c-text-3); display: block; margin-top: 4px; }
+.stat-label { font-size: 11px; color: var(--c-text-3); display: block; margin-top: 4px; line-height: 1.3; padding: 0 2px; }
 
 /* 区块 */
 .section { padding: 0 16px 12px; }
@@ -363,4 +362,21 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 .btn.cancel { background: var(--c-bg); color: var(--c-text-2); }
 .btn.confirm { background: #10B981; color: #fff; }
 .btn.confirm[disabled] { opacity: 0.6; }
+
+/* 接诊开关：轨道 + 滑块 */
+/* 接诊开关：文字 + 标准滑块 */
+.avail-row { display: inline-flex; align-items: center; gap: 8px; }
+.avail-label { font-size: 12px; font-weight: 600; color: #FFFFFF; }
+.avail-track {
+  width: 44px; height: 24px; border-radius: 999px; padding: 2px;
+  background: rgba(255,255,255,0.28); box-sizing: border-box;
+  transition: background 0.2s ease;
+}
+.avail-track.on { background: #FFFFFF; }
+.avail-knob {
+  width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.avail-track.on .avail-knob { background: #10B981; transform: translateX(20px); }
+
 </style>

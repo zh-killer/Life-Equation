@@ -84,6 +84,9 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
     <!-- 统计 -->
     <view class="stats">
       <view class="stat-card">
+        <view class="stat-icon" style="background: rgba(37,99,235,0.10)">
+          <UiIcon name="calendar" :size="60" color="#2563EB" />
+        </view>
         <text class="num">{{ stat.total }}</text>
         <text class="lbl">今日总预约</text>
       </view>

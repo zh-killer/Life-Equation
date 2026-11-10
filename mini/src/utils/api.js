@@ -69,6 +69,7 @@ export const getPatientRecords = (patientId) => request.get(`/doctor/patient/${p
 export const getDoctorSchedules = (params) => request.get('/doctor/schedule', params)
 export const addDoctorSchedule = (data) => request.post('/doctor/schedule', data)
 export const deleteDoctorSchedule = (id) => request.delete(`/doctor/schedule/${id}`)
+export const updateDoctorSchedule = (id, data) => request.put(`/doctor/schedule/${id}`, data)
 export const stopDoctorSchedule = (data) => request.post('/doctor/schedule/stop', data)
 export const completeAppointment = (id) => request.put(`/doctor/complete/${id}`)
 export const getDoctorReviews = (params) => request.get('/doctor/reviews', params)
