@@ -6,6 +6,19 @@ import UiIcon from '@/components/ui-icon.vue'
 const list = ref([])
 const keyword = ref(''); const h24 = ref(false); const page = ref(1)
 const loading = ref(false)
+const flowSteps = [
+  { label: '挂号', icon: 'clipboard' },
+  { label: '就诊', icon: 'stethoscope' },
+  { label: '缴费', icon: 'file' },
+  { label: '取药', icon: 'pill' },
+]
+const openFaq = ref(-1)
+const faqs = [
+  { q: '取药需要带什么？', a: '就诊卡（或电子健康卡）、医生开具的处方、缴费凭证。医保结算请携带医保卡或电子医保凭证。' },
+  { q: '家属可以代取吗？', a: '可以。代取人需携带患者就诊卡、处方和缴费凭证；麻醉、精神类等特殊药品须本人凭身份证领取。' },
+  { q: '本院药房没有的药怎么办？', a: '可先在「药品查询」确认是否有货；缺药时医生会开具外配处方，可到院外定点药店购买。' },
+]
+
 
 onMounted(() => {
   fetchData()
@@ -42,6 +55,23 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
       </view>
     </view>
 
+    <!-- 取药流程 -->
+    <view class="flow-card">
+      <view class="flow-hd">
+        <text class="flow-title">取药流程</text>
+        <text class="flow-sub">就诊当天即可取药</text>
+      </view>
+      <view class="flow-steps">
+        <view class="step" v-for="(st, i) in flowSteps" :key="st.label">
+          <view class="step-dot">
+            <ui-icon :name="st.icon" :size="46" color="#2563EB" />
+          </view>
+          <text class="step-text">{{ st.label }}</text>
+          <view v-if="i < flowSteps.length - 1" class="step-line"></view>
+        </view>
+      </view>
+    </view>
+
     <!-- 列表 -->
     <view class="list">
       <template v-if="loading">
@@ -52,25 +82,25 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
         </view>
       </template>
       <template v-else-if="list.length">
-        <view v-for="p in list" :key="p.id" class="card" @click="goDetail(p.id)">
+        <view v-for="ph in list" :key="ph.id" class="card" @click="goDetail(ph.id)">
           <view class="card-top">
             <view class="card-icon-wrap">
               <ui-icon name="store" :size="40" color="#2563EB" />
             </view>
             <view class="card-info">
               <view class="name-row">
-                <text class="card-name">{{ p.name }}</text>
-                <view v-if="p.is24h === 1" class="badge h24"><text>24H</text></view>
+                <text class="card-name">{{ ph.name }}</text>
+                <view v-if="ph.is24h === 1" class="badge h24"><text>24H</text></view>
               </view>
-              <text class="card-addr">{{ p.address?.substring(0, 30) }}</text>
+              <text class="card-addr">{{ ph.address?.substring(0, 30) }}</text>
               <view class="card-meta-row">
-                <view v-if="p.phone" class="meta-item">
+                <view v-if="ph.phone" class="meta-item">
                   <ui-icon name="phone" :size="50" color="#94A3B8" />
-                  <text>{{ p.phone }}</text>
+                  <text>{{ ph.phone }}</text>
                 </view>
-                <view v-if="p.businessHours" class="meta-item">
+                <view v-if="ph.businessHours" class="meta-item">
                   <ui-icon name="clock" :size="50" color="#94A3B8" />
-                  <text>{{ p.businessHours }}</text>
+                  <text>{{ ph.businessHours }}</text>
                 </view>
               </view>
             </view>
@@ -80,6 +110,18 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
       <view v-else class="empty-state">
         <view class="empty-icon"><ui-icon name="store" :size="54" color="#94A3B8" /></view>
         <text class="empty-text">未找到药房</text>
+      </view>
+    </view>
+
+    <!-- 常见问题 -->
+    <view class="faq">
+      <view class="faq-hd"><text class="faq-title">常见问题</text></view>
+      <view class="faq-item" v-for="(f, i) in faqs" :key="i" @click="openFaq = openFaq === i ? -1 : i">
+        <view class="faq-q">
+          <text class="faq-q-text">{{ f.q }}</text>
+          <text class="faq-arrow" :class="{ open: openFaq === i }">›</text>
+        </view>
+        <text class="faq-a" v-if="openFaq === i">{{ f.a }}</text>
       </view>
     </view>
   </view>
@@ -135,4 +177,37 @@ function goDetail(id) { uni.navigateTo({ url: '/pages/patient/pharmacy/detail?id
 .card-meta-row { display: flex; gap: 12px; margin-top: 6px; }
 .meta-item { display: flex; align-items: center; gap: 3px; }
 .meta-item text { font-size: 11px; color: #94A3B8; }
+
+/* 取药流程 */
+.flow-card {
+  background: #fff; border-radius: 14px; padding: 14px 16px; margin-bottom: 12px;
+}
+.flow-hd { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+.flow-title { font-size: 14px; font-weight: 700; color: var(--c-text); }
+.flow-sub { font-size: 11px; color: var(--c-text-3); }
+.flow-steps { display: flex; align-items: flex-start; }
+.step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+.step-dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #EFF4FF;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 2;
+}
+.step-text { font-size: 11.5px; color: var(--c-text-2); margin-top: 7px; }
+.step-line {
+  position: absolute; top: 20px; left: 50%; width: 100%; height: 1px;
+  background: repeating-linear-gradient(to right, #DBEAFE 0 4px, transparent 4px 8px);
+  z-index: 1;
+}
+
+/* 常见问题 */
+.faq { background: #fff; border-radius: 14px; padding: 4px 16px 8px; margin-top: 12px; }
+.faq-hd { padding: 12px 0 6px; }
+.faq-title { font-size: 14px; font-weight: 700; color: var(--c-text); }
+.faq-item { border-top: 1px solid #F1F5F9; padding: 12px 0; }
+.faq-q { display: flex; align-items: center; justify-content: space-between; }
+.faq-q-text { font-size: 13px; color: var(--c-text); }
+.faq-arrow { font-size: 16px; color: #CBD5E1; transform: rotate(90deg); transition: transform 0.2s; }
+.faq-arrow.open { transform: rotate(-90deg); }
+.faq-a { font-size: 12px; color: var(--c-text-3); line-height: 1.7; margin-top: 8px; display: block; }
 </style>

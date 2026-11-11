@@ -41,6 +41,23 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         LocalDate appointmentDate = LocalDate.parse(params.get("appointmentDate").toString());
         String timeSlot = params.get("timeSlot").toString();
 
+        // 0. 不允许预约今天之前的日期
+        if (appointmentDate.isBefore(LocalDate.now())) {
+            throw new RuntimeException("不能预约过去的日期");
+        }
+
+        // 0.1 当天已过的时段也不能约（上午12点后、下午18点后、晚上21点后）
+        if (appointmentDate.isEqual(LocalDate.now())) {
+            int hour = java.time.LocalTime.now().getHour();
+            boolean passed =
+                    ("上午".equals(timeSlot) && hour >= 12)
+                    || ("下午".equals(timeSlot) && hour >= 18)
+                    || ("晚上".equals(timeSlot) && hour >= 21);
+            if (passed) {
+                throw new RuntimeException("该时段已过，请选择其他时段");
+            }
+        }
+
         // 1. 检查医生接诊状态
         Doctor doctor = doctorMapper.selectById(doctorId);
         if (doctor == null || doctor.getIsAvailable() == 0) {

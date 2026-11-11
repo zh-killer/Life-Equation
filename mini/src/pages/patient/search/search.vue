@@ -59,29 +59,37 @@
             <view class="cat-ic cat-blue">
               <ui-icon name="stethoscope" :size="40" color="#2563EB" />
             </view>
-            <text class="cat-name">找医生</text>
-            <text class="cat-desc">按科室职称</text>
+            <view class="cat-tx">
+              <text class="cat-name">找医生</text>
+              <text class="cat-desc">按科室职称</text>
+            </view>
           </view>
           <view class="cat" @click="goPage('/pages/patient/disease/disease')">
             <view class="cat-ic cat-orange">
               <ui-icon name="virus" :size="40" color="#F59E0B" />
             </view>
-            <text class="cat-name">查疾病</text>
-            <text class="cat-desc">症状与防治</text>
+            <view class="cat-tx">
+              <text class="cat-name">查疾病</text>
+              <text class="cat-desc">症状与防治</text>
+            </view>
           </view>
           <view class="cat" @click="goPage('/pages/patient/drug/drug')">
             <view class="cat-ic cat-green">
               <ui-icon name="pill" :size="40" color="#10B981" />
             </view>
-            <text class="cat-name">查药品</text>
-            <text class="cat-desc">用法与禁忌</text>
+            <view class="cat-tx">
+              <text class="cat-name">查药品</text>
+              <text class="cat-desc">用法与禁忌</text>
+            </view>
           </view>
           <view class="cat" @click="goPage('/pages/patient/article/article')">
             <view class="cat-ic cat-purple">
               <ui-icon name="news" :size="40" color="#8B5CF6" />
             </view>
-            <text class="cat-name">看资讯</text>
-            <text class="cat-desc">健康科普</text>
+            <view class="cat-tx">
+              <text class="cat-name">看资讯</text>
+              <text class="cat-desc">健康科普</text>
+            </view>
           </view>
         </view>
       </view>
@@ -205,6 +213,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { getDoctors, getDiseases, getDrugs, getArticles } from '@/utils/api'
+import UiIcon from '@/components/ui-icon.vue'
 
 const statusBarHeight = uni.getSystemInfoSync().statusBarHeight || 20
 const autoFocus = ref(true)
@@ -296,10 +305,10 @@ function goHome() {
 }
 
 function goPage(url) { uni.navigateTo({ url }) }
-function goDoctor(id) { uni.navigateTo({ url: '/pages/detail/doctor?id=' + id }) }
-function goDisease(id) { uni.navigateTo({ url: '/pages/patient/disease/detail?id=' + id }) }
-function goDrug(id) { uni.navigateTo({ url: '/pages/patient/drug/detail?id=' + id }) }
-function goArticle(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=' + id }) }
+function goDoctor(id) { uni.navigateTo({ url: '/pages/detail/doctor?id=' + id + '&from=search' }) }
+function goDisease(id) { uni.navigateTo({ url: '/pages/patient/disease/detail?id=' + id + '&from=search' }) }
+function goDrug(id) { uni.navigateTo({ url: '/pages/patient/drug/detail?id=' + id + '&from=search' }) }
+function goArticle(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id=' + id + '&from=search' }) }
 </script>
 
 <style scoped>
@@ -355,23 +364,18 @@ function goArticle(id) { uni.navigateTo({ url: '/pages/patient/article/detail?id
 .chip-hot { background: var(--c-primary-bg); border-color: transparent; }
 .chip-hot .chip-text { color: var(--c-primary); }
 
-.cats { display: flex; gap: 9px; }
+.cats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .cat {
-  flex: 1; background: #fff; border: 1px solid var(--c-border);
-  border-radius: 12px; padding: 14px 6px 12px;
-  display: flex; flex-direction: column; align-items: center;
-  box-shadow: var(--shadow-md);
+  display: flex; align-items: center; gap: 10px;
+  background: #FFFFFF; border-radius: 14px; padding: 14px 12px;
 }
 .cat-ic {
-  width: 42px; height: 42px; border-radius: 12px;
+  width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
 }
-.cat-blue { background: var(--c-primary-bg); }
-.cat-orange { background: var(--c-orange-bg); }
-.cat-green { background: var(--c-green-bg); }
-.cat-purple { background: var(--c-purple-bg); }
-.cat-name { font-size: 12.5px; font-weight: 600; color: var(--c-text); margin-top: 8px; }
-.cat-desc { font-size: 10px; color: var(--c-text-3); margin-top: 2px; }
+.cat-tx { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cat-name { font-size: 14px; font-weight: 700; color: var(--c-text); line-height: 1.2; }
+.cat-desc { font-size: 10.5px; color: var(--c-text-3); line-height: 1.2; }
 
 .blank-tip { display: block; margin-top: 26px; font-size: 11px; color: var(--c-text-3); text-align: center; }
 

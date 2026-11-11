@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { uploadReport, getReportHistory } from '@/utils/api'
+import { uploadReport, getReportHistory, deleteReport } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
 const reportTypes = ['血常规', '尿常规', '肝功能', '肾功能', '血脂', '血糖', '影像报告', '其他']
@@ -71,6 +71,25 @@ async function doUpload() {
     stageText.value = ''
     loading.value = false
   }
+}
+
+function removeHistory(h) {
+  uni.showModal({
+    title: '删除记录',
+    content: '确定删除这条解读记录吗？',
+    confirmColor: '#EF4444',
+    success: async (r) => {
+      if (!r.confirm) return
+      try {
+        await deleteReport(h.id)
+        history.value = history.value.filter((x) => x.id !== h.id)
+        if (result.value && result.value.id === h.id) result.value = null
+        uni.showToast({ title: '已删除', icon: 'none' })
+      } catch (e) {
+        uni.showToast({ title: '删除失败', icon: 'none' })
+      }
+    },
+  })
 }
 
 async function loadHistory() {
@@ -172,6 +191,7 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
             <text class="hi-type">{{ h.reportType || '报告' }}</text>
           </view>
           <text class="hi-time">{{ h.createTime?.substring(0, 10) }}</text>
+          <view class="hi-del" @click.stop="removeHistory(h)"><UiIcon name="close" :size="34" color="#EF4444" /><text>删除</text></view>
         </view>
         <view v-if="!history.length" class="empty-text">暂无历史记录</view>
       </view>
@@ -202,6 +222,11 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
           <UiIcon :name="result.riskLevel === 'HIGH' ? 'shield' : 'checkCircle'" :size="54" color="#fff" />
           <text>{{ riskText(result.riskLevel) }}</text>
         </view>
+      </view>
+
+      <view v-if="result.id" class="result-del" @click="removeHistory(result)">
+        <UiIcon name="close" :size="36" color="#EF4444" />
+        <text>删除这条记录</text>
       </view>
 
       <image v-if="result.reportImage" :src="result.reportImage" class="result-img" mode="aspectFit" />
@@ -328,4 +353,18 @@ uni.getSystemInfo({ success: (r) => { statusBarHeight.value = r.statusBarHeight 
 /* 免责声明 */
 .disclaimer { margin: 12px 16px 24px; padding: 12px 14px; background: #FFFBEB; border-radius: var(--r-md); display: flex; align-items: flex-start; gap: 8px; }
 .disclaimer text { font-size: 12px; color: #B45309; line-height: 1.6; flex: 1; }
+
+.hi-del {
+  display: flex; align-items: center; gap: 2px;
+  margin-left: 10px; padding: 5px 10px;
+  border-radius: 9px; background: #FEF2F2;
+}
+.hi-del text { font-size: 11.5px; color: #EF4444; }
+
+.result-del {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin: 10px 0 4px; padding: 11px;
+  border-radius: 12px; background: #FEF2F2;
+}
+.result-del text { font-size: 13px; color: #EF4444; font-weight: 500; }
 </style>

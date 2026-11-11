@@ -7,6 +7,25 @@ const list = ref([]); const categories = ref([])
 const keyword = ref(''); const activeCat = ref(''); const page = ref(1)
 const loading = ref(false)
 
+// 按名称/类别/科室匹配图标，避免列表千篇一律
+const DISEASE_ICONS = [
+  { re: /脑|神经|卒中|癫痫|帕金森|头痛|失眠|焦虑|抑郁|记忆/, icon: 'brain', color: '#8B5CF6' },
+  { re: /心|血压|冠|心律|胸|动脉/, icon: 'heart', color: '#EF4444' },
+  { re: /糖尿|血糖|甲状腺|内分泌|血脂|肥胖|痛风/, icon: 'flask', color: '#2563EB' },
+  { re: /肺|呼吸|哮喘|气管|感冒|流感|咳嗽|鼻炎|咽/, icon: 'pulse', color: '#10B981' },
+  { re: /胃|肠|消化|肝|胆|胰|便秘|腹泻/, icon: 'pill2', color: '#F59E0B' },
+  { re: /眼|视|青光|白内障|近视|视网膜/, icon: 'eye', color: '#2563EB' },
+  { re: /肾|泌尿|结石|前列腺|尿|膀胱/, icon: 'pill2', color: '#8B5CF6' },
+  { re: /皮肤|疹|过敏|荨麻|湿疹|痤疮/, icon: 'shield', color: '#F59E0B' },
+  { re: /骨|腰|颈|关节|椎|骨折|肩/, icon: 'activity', color: '#94A3B8' },
+  { re: /妇科|月经|子宫|卵巢|孕|乳腺/, icon: 'user', color: '#8B5CF6' },
+]
+function diseaseIcon(d) {
+  const text = ((d && d.name) || '') + ((d && d.category) || '') + ((d && d.department) || '')
+  const hit = DISEASE_ICONS.find((it) => it.re.test(text))
+  return hit || { icon: 'virus', color: '#F59E0B' }
+}
+
 onMounted(async () => {
   try { categories.value = (await getDiseaseCategories()).data || [] } catch {}
   fetchData()
@@ -55,7 +74,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; fetchData() }
       <template v-else-if="list.length">
         <view v-for="d in list" :key="d.id" class="card" @click="goDetail(d.id)">
           <view class="card-icon-wrap">
-            <ui-icon name="virus" :size="40" color="#F59E0B" />
+            <ui-icon :name="diseaseIcon(d).icon" :size="40" :color="diseaseIcon(d).color" />
           </view>
           <view class="card-name-row">
             <text class="card-name">{{ d.name }}</text>

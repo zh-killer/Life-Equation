@@ -99,6 +99,9 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
         if (visionService.isConfigured()) {
             System.err.println("[Report] Using " + visionService.getModelName() + " base64 mode for analysis...");
             aiResult = visionService.analyzeReportFromBytes(imageBytes, mimeType, reportType);
+            if (aiResult != null && aiResult.contains("NOT_A_REPORT")) {
+                throw new RuntimeException("图片里没有识别到检验报告内容，请上传清晰的检验/体检报告单照片");
+            }
             if (aiResult != null && !aiResult.isBlank()) {
                 if (aiResult.startsWith("ApiError:")) {
                     visionError = aiResult.substring("ApiError:".length()).trim();
@@ -117,6 +120,15 @@ public class AiReportInterpretationServiceImpl extends ServiceImpl<AiReportInter
 
         // 3. 降级：视觉识别不可用时，用 DeepSeek 纯文本 + 用户手动输入的数据
         if (!usedVision) {
+            if (reportData == null || reportData.isBlank()) {
+                if (!visionService.isConfigured()) {
+                    throw new RuntimeException("图像识别服务未配置，无法解读图片内容，请稍后再试或联系管理员");
+                }
+                if (visionError != null) {
+                    throw new RuntimeException("图片识别失败：" + visionError + "，请重新上传清晰的报告单");
+                }
+                throw new RuntimeException("未能从图片中识别到检验数据，请上传清晰的报告单，或在「手动补充数据」中填写项目与数值后重试");
+            }
             StringBuilder sb = new StringBuilder();
             if (reportData != null && !reportData.isBlank()) {
                 // 用户手动输入了数据 → DeepSeek 直接解读文本数据

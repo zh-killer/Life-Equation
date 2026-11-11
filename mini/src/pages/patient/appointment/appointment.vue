@@ -1,11 +1,18 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { getUserAppointments, createAppointment, cancelAppointment, payAppointment, getDoctors, verifyIdentity, getFamilyMembers } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
 const appointments = ref([])
 const showCreate = ref(false)
 const showIdentityVerify = ref(false)
+// 今天的日期字符串（本地时区，避免 toISOString 的时区偏移）
+const today = (() => {
+  const d = new Date()
+  const p = (n) => String(n).padStart(2, '0')
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate())
+})()
+
 const bookForm = ref({ doctorId: null, hospitalId: null, appointmentDate: '', timeSlot: '', symptomDesc: '' })
 const identityForm = reactive({ realName: '', idCard: '' })
 const currentIdCard = ref('')
@@ -15,7 +22,32 @@ const familyMembers = ref([])
 const selectedMemberId = ref('')
 
 // 与 doctor_schedule.time_slot 一致（上午/下午/晚上）
-const timeSlots = ['上午', '下午', '晚上']
+// 已过期的时段（按当前时间判断）
+function passedSlots() {
+  const h = new Date().getHours()
+  const out = []
+  if (h >= 12) out.push('上午')
+  if (h >= 18) out.push('下午')
+  if (h >= 21) out.push('晚上')
+  return out
+}
+const ALL_SLOTS = ['上午', '下午', '晚上']
+// 今天只剩还没过的时段；其他日期给全部
+const timeSlots = computed(() => {
+  const d = bookForm.value.appointmentDate
+  if (d === today) {
+    const p = passedSlots()
+    return ALL_SLOTS.filter((x) => !p.includes(x))
+  }
+  return ALL_SLOTS
+})
+
+function onPickDate(e) {
+  bookForm.value.appointmentDate = e.detail.value
+  if (bookForm.value.timeSlot && !timeSlots.value.includes(bookForm.value.timeSlot)) {
+    bookForm.value.timeSlot = ''
+  }
+}
 const statusMap = { UNPAID: '待支付', PENDING: '待确认', CONFIRMED: '已确认', COMPLETED: '已完成', CANCELLED: '已取消' }
 const statusColor = { UNPAID: '#EF4444', PENDING: '#F59E0B', CONFIRMED: '#10B981', COMPLETED: '#94A3B8', CANCELLED: '#94A3B8' }
 const statusBg = { UNPAID: '#FEF2F2', PENDING: '#EFF4FF', CONFIRMED: '#ECFDF5', COMPLETED: '#FFFFFF', CANCELLED: '#FFFFFF' }
@@ -79,6 +111,11 @@ async function submitIdentity() {
 async function submitBook() {
   if (!bookForm.value.doctorId) { uni.showToast({ title: '请选择医生', icon: 'none' }); return }
   if (!bookForm.value.appointmentDate) { uni.showToast({ title: '请选择日期', icon: 'none' }); return }
+  if (bookForm.value.appointmentDate < today) { uni.showToast({ title: '不能预约过去的日期', icon: 'none' }); return }
+  if (!bookForm.value.timeSlot) { uni.showToast({ title: '请选择就诊时段', icon: 'none' }); return }
+  if (bookForm.value.appointmentDate === today && passedSlots().includes(bookForm.value.timeSlot)) {
+    uni.showToast({ title: '该时段已过，请选择其他时段', icon: 'none' }); return
+  }
   loading.value = true
   try {
     const res = await createAppointment(bookForm.value)
@@ -279,7 +316,7 @@ function goReview(a) {
         </view>
         <view class="input-row">
           <text class="label">日期</text>
-          <picker mode="date" :value="bookForm.appointmentDate" @change="e => bookForm.appointmentDate = e.detail.value">
+          <picker mode="date" :start="today" :value="bookForm.appointmentDate" @change="onPickDate">
             <view class="picker-item">
               <text :class="{ ph: !bookForm.appointmentDate }">{{ bookForm.appointmentDate || '请选择日期' }}</text>
               <ui-icon name="chevronRight" :size="54" color="#94A3B8" />

@@ -7,6 +7,22 @@ const list = ref([]); const categories = ref([])
 const keyword = ref(''); const activeCat = ref(''); const otcOnly = ref(false); const page = ref(1)
 const loading = ref(false)
 
+// 按类别/名称匹配图标
+const DRUG_ICONS = [
+  { re: /抗生素|头孢|霉素|沙星|青霉素|抗菌/, icon: 'shield', color: '#10B981' },
+  { re: /降糖|二甲双胍|格列|胰岛素|血糖/, icon: 'flask', color: '#2563EB' },
+  { re: /降压|地平|沙坦|洛尔|普利|血压/, icon: 'heart', color: '#EF4444' },
+  { re: /抗组胺|过敏|氯雷他定|西替利嗪|扑尔敏/, icon: 'shield', color: '#8B5CF6' },
+  { re: /胃|奥美拉唑|多潘立酮|铝碳酸|护胃|抑酸/, icon: 'pill2', color: '#F59E0B' },
+  { re: /解热|镇痛|布洛芬|对乙酰|阿司匹林|双氯芬|止痛/, icon: 'pill', color: '#8B5CF6' },
+  { re: /维生|钙|补|营养/, icon: 'flask', color: '#10B981' },
+]
+function drugIcon(d) {
+  const text = ((d && d.name) || '') + ((d && d.category) || '') + ((d && d.indications) || '')
+  const hit = DRUG_ICONS.find((it) => it.re.test(text))
+  return hit || { icon: 'pill', color: '#8B5CF6' }
+}
+
 onMounted(async () => {
   try { categories.value = (await getDrugCategories()).data || [] } catch {}
   fetchData()
@@ -62,7 +78,7 @@ function clearAll() { keyword.value = ''; activeCat.value = ''; otcOnly.value = 
       <template v-else-if="list.length">
         <view v-for="d in list" :key="d.id" class="card" @click="goDetail(d.id)">
           <view class="card-icon-wrap">
-            <ui-icon name="pill" :size="44" color="#8B5CF6" />
+            <ui-icon :name="drugIcon(d).icon" :size="44" :color="drugIcon(d).color" />
           </view>
           <view class="card-body">
             <view class="card-top">

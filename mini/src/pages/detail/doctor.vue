@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getDoctorDetail, createAppointment, payAppointment, verifyIdentity, checkFavorite, toggleFavorite, getFamilyMembers, getTargetReviews, getDoctorSchedulesPublic } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
@@ -7,10 +7,28 @@ import UiIcon from '@/components/ui-icon.vue'
 // 必须与 doctor_schedule.time_slot 保持一致（上午/下午/晚上），否则晚上的号源在患者端约不到
 const TIME_SLOTS = ['上午', '下午', '晚上']
 
+// 当天已过的时段（上午12点、下午18点、晚上21点之后）
+function passedSlots() {
+  const h = new Date().getHours()
+  const out = []
+  if (h >= 12) out.push('上午')
+  if (h >= 18) out.push('下午')
+  if (h >= 21) out.push('晚上')
+  return out
+}
+
+
 const doctor = ref(null)
 const id = ref('')
 const showBook = ref(false)
 const showIdentityVerify = ref(false)
+// 今天的日期字符串（本地时区，避免 toISOString 的时区偏移）
+const today = (() => {
+  const d = new Date()
+  const p = (n) => String(n).padStart(2, '0')
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate())
+})()
+
 const bookForm = ref({ doctorId: null, hospitalId: null, appointmentDate: '', timeSlot: '', symptomDesc: '' })
 const identityForm = reactive({ realName: '', idCard: '' })
 const currentIdCard = ref('')
@@ -111,7 +129,9 @@ function onDateChange(e) {
   bookForm.value.timeSlot = ''
 
   const slots = []
+  const passed = selectedDate.value === today ? passedSlots() : []
   TIME_SLOTS.forEach(name => {
+    if (passed.includes(name)) return
     const key = `${selectedDate.value}_${name}`
     const sched = scheduleMap.value[key]
     if (sched && sched.bookedCount < sched.maxSlots) {
@@ -175,6 +195,11 @@ async function submitIdentity() {
 
 async function submitBook() {
   if (!bookForm.value.appointmentDate) { uni.showToast({ title: '请选择日期', icon: 'none' }); return }
+  if (bookForm.value.appointmentDate < today) { uni.showToast({ title: '不能预约过去的日期', icon: 'none' }); return }
+  if (!bookForm.value.timeSlot) { uni.showToast({ title: '请选择就诊时段', icon: 'none' }); return }
+  if (bookForm.value.appointmentDate === today && passedSlots().includes(bookForm.value.timeSlot)) {
+    uni.showToast({ title: '该时段已过，请选择其他时段', icon: 'none' }); return
+  }
   if (!bookForm.value.timeSlot) { uni.showToast({ title: '请选择时段', icon: 'none' }); return }
   loading.value = true
   try {
@@ -341,7 +366,7 @@ function askPay(apptId, amount) {
         <!-- 日期选择 -->
         <view class="input-row">
           <text class="label">日期</text>
-          <picker mode="date" :value="selectedDate" @change="onDateChange">
+          <picker mode="date" :start="today" :value="selectedDate" @change="onDateChange">
             <view class="picker-item">
               <text :class="{ ph: !selectedDate }">{{ selectedDate || '请选择日期' }}</text>
               <ui-icon name="chevronRight" :size="54" color="#94A3B8" />

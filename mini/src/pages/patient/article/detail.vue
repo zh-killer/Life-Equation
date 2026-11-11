@@ -4,8 +4,21 @@ import { onLoad } from '@dcloudio/uni-app'
 import { getArticleDetail, checkFavorite, toggleFavorite } from '@/utils/api'
 import UiIcon from '@/components/ui-icon.vue'
 
-const article = ref(null); const id = ref(''); const isFav = ref(false)
-onLoad((opts) => { id.value = opts.id; fetchData() })
+const statusBarHeight = uni.getSystemInfoSync().statusBarHeight || 20
+function goBack() {
+  const pages = getCurrentPages()
+  if (pages && pages.length > 1) { uni.navigateBack(); return }
+  if (fromPage.value === 'search') {
+    uni.redirectTo({ url: '/pages/patient/search/search' })
+    return
+  }
+  uni.reLaunch({ url: '/pages/patient/index/index' })
+}
+
+
+const article = ref(null); const id = ref('')
+const fromPage = ref(''); const isFav = ref(false)
+onLoad((opts) => { id.value = opts.id; fromPage.value = opts.from || ''; fetchData() })
 async function fetchData() {
   try { article.value = (await getArticleDetail(id.value)).data } catch {}
   try {
@@ -31,7 +44,16 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
 </script>
 
 <template>
-  <view class="page" v-if="article">
+      <!-- 顶部导航 -->
+    <view class="topbar" :style="{ paddingTop: statusBarHeight + 'px' }">
+      <view class="topbar-btn" @click="goBack">
+        <ui-icon name="back" :size="36" color="#0F172A" />
+      </view>
+      <text class="topbar-title">资讯详情</text>
+      <view class="topbar-btn ghost"></view>
+    </view>
+
+<view class="page" v-if="article">
     <!-- 文章头部 -->
     <view class="header">
       <text class="title">{{ article.title }}</text>
@@ -62,7 +84,7 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
 
     <!-- 底部操作 -->
     <view class="bottom-bar">
-      <view class="btn-outline" @click="uni.navigateBack()">
+      <view class="btn-outline" @click="goBack">
         <ui-icon name="chevronLeft" :size="64" color="#2563EB" />
         <text>返回</text>
       </view>
@@ -116,4 +138,19 @@ function goConsult() { uni.navigateTo({ url: '/pages/patient/consultation/list' 
   display: flex; align-items: center; justify-content: center; gap: 6px;
 }
 .btn-go text { font-size: 14px; color: #fff; font-weight: 600; }
+
+/* 顶部导航 */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 12px 8px; background: #FFFFFF;
+  position: sticky; top: 0; z-index: 20;
+  border-bottom: 1px solid #F1F5F9;
+}
+.topbar-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #F1F5F9;
+  display: flex; align-items: center; justify-content: center;
+}
+.topbar-btn.ghost { background: transparent; }
+.topbar-title { font-size: 16px; font-weight: 600; color: #0F172A; }
 </style>

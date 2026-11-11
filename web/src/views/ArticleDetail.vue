@@ -13,7 +13,7 @@ onMounted(async () => {
 })
 
 const categoryMap = {
-  NEWS: '健康资讯', SCIENCE: '科学研究', PREVENTION: '疾病预防', LIFE: '健康生活'
+  NEWS: '资讯', SCIENCE: '科普', PREVENTION: '预防', LIFE: '生活', '资讯': '资讯', '科普': '科普', '预防': '预防', '生活': '生活'
 }
 </script>
 

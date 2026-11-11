@@ -12,10 +12,10 @@ const category = ref('')
 const page = ref(1)
 
 const cats = [
-  { label: '健康资讯', value: 'NEWS' },
-  { label: '科普文章', value: 'SCIENCE' },
-  { label: '疾病预防', value: 'PREVENTION' },
-  { label: '健康生活', value: 'LIFE' },
+  { label: '资讯', value: '资讯' },
+  { label: '科普', value: '科普' },
+  { label: '预防', value: '预防' },
+  { label: '生活', value: '生活' },
 ]
 
 onMounted(fetchData)
